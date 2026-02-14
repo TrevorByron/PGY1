@@ -1,0 +1,50 @@
+/* Option 2: White + green, different font + border radius (Style 1 unchanged) */
+[data-style="2"] {
+  --header-logo-color: var(--accent);
+  --font-sans: var(--font-dm-sans);
+  --hero-bg: #ffffff;
+  --hero-bg-overlay: transparent;
+  --hero-fg: #14532d;
+  --hero-fg-muted: #166534;
+  --hero-fg-subtle: #15803d;
+  --hero-card-bg: #f0fdf4;
+  --hero-card-border: #bbf7d0;
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --section: #ffffff;
+  --section-muted: #f0fdf4;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --muted-subtle: #64748b;
+  --border: #dcfce7;
+  --accent: #15803d;
+  --accent-hover: #166534;
+  --accent-fg: #ffffff;
+  --cta-primary-bg: #15803d;
+  --cta-primary-fg: #ffffff;
+  --cta-primary-hover: #166534;
+  --cta-outline-border: #15803d;
+  --cta-outline-fg: #15803d;
+  --cta-outline-hover: #f0fdf4;
+  --dark-bg: #f8fafc;
+  --dark-fg: #0f172a;
+  --dark-muted: #475569;
+  --dark-muted-subtle: #64748b;
+}
+
+/* Style 2: tighter border radius (more structured, less pill-shaped) */
+[data-style="2"] .rounded-full {
+  border-radius: 0.5rem;
+}
+[data-style="2"] .rounded-2xl {
+  border-radius: 0.75rem;
+}
+[data-style="2"] .rounded-xl {
+  border-radius: 0.5rem;
+}
+[data-style="2"] .rounded-lg {
+  border-radius: 0.5rem;
+}
+[data-style="2"] .rounded-md {
+  border-radius: 0.375rem;
+}

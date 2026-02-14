@@ -1,0 +1,31 @@
+/* Option 1: Dark blue hero/CTA, soft borders */
+[data-style="1"] {
+  --hero-bg: #0f172a;
+  --hero-bg-overlay: rgba(15, 23, 42, 0.75);
+  --hero-fg: #ffffff;
+  --hero-fg-muted: #e2e8f0;
+  --hero-fg-subtle: #cbd5e1;
+  --hero-card-bg: rgba(30, 41, 59, 0.5);
+  --hero-card-border: rgba(71, 85, 105, 0.4);
+  --surface: #ffffff;
+  --surface-muted: #f8fafc;
+  --section: #ffffff;
+  --section-muted: #f8fafc;
+  --foreground: #0f172a;
+  --muted: #475569;
+  --muted-subtle: #64748b;
+  --border: #f1f5f9;
+  --accent: #0f172a;
+  --accent-hover: #1e293b;
+  --accent-fg: #ffffff;
+  --cta-primary-bg: #ffffff;
+  --cta-primary-fg: #0f172a;
+  --cta-primary-hover: #f1f5f9;
+  --cta-outline-border: #475569;
+  --cta-outline-fg: #ffffff;
+  --cta-outline-hover: #1e293b;
+  --dark-bg: #0f172a;
+  --dark-fg: #ffffff;
+  --dark-muted: #cbd5e1;
+  --dark-muted-subtle: #94a3b8;
+}
