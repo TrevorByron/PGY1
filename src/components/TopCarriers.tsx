@@ -17,12 +17,13 @@ export default function TopCarriers() {
         <h3 className="text-center text-base font-semibold uppercase tracking-wider text-muted-subtle sm:text-lg">
           We work with top carriers
         </h3>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-12 sm:gap-16">
-          {CARRIERS.map((carrier) => (
-            <div
-              key={carrier.name}
-              className="relative flex h-16 w-36 items-center justify-center sm:h-20 sm:w-40"
-            >
+        <div className="mt-10 -mx-4 overflow-x-scroll overflow-y-hidden px-4 scroll-smooth sm:mx-0 sm:px-0">
+          <div className="flex flex-nowrap items-center justify-start gap-8 sm:gap-16">
+            {CARRIERS.map((carrier) => (
+              <div
+                key={carrier.name}
+                className="relative flex h-16 w-36 shrink-0 items-center justify-center sm:h-20 sm:w-40"
+              >
               <Image
                 src={carrier.src}
                 alt={carrier.alt}
@@ -32,6 +33,7 @@ export default function TopCarriers() {
               />
             </div>
           ))}
+          </div>
         </div>
         <p className="mt-6 text-center text-base text-muted-subtle">
           So you get the best fit for your situation.

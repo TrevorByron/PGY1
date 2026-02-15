@@ -10,7 +10,7 @@ const COPY = {
   headline: "Disability insurance for residents and fellows",
   subhead:
     "Get a GSI policy with no medical exam. One denial elsewhere can lock you out. We help you secure the right coverage in about 1 minute.",
-  cta: "Get your quote — 1 min, 100% private",
+  cta: "Get your quote in less than 1min",
   cardTitle: "Not a big company — here's my mobile number.",
   preferText: "Prefer text? I'll respond quickly.",
 };
@@ -22,8 +22,8 @@ export default function HeroContent() {
     return (
       <>
         <Image
-          src="https://images.unsplash.com/photo-1631217868264-e5b90bb7e133?auto=format&fit=crop&w=2080&q=80"
-          alt="Medical resident walking in a hospital hallway"
+          src="/images/hero-style1-new.png"
+          alt="Healthcare professional with stethoscope in clinical setting"
           fill
           className="object-cover opacity-40"
           priority
@@ -32,7 +32,7 @@ export default function HeroContent() {
         <div className="absolute inset-0 bg-hero-bg-overlay" />
         <div className="relative mx-auto flex min-h-[90vh] max-w-6xl flex-col justify-center px-4 py-24 sm:px-6 lg:flex-row lg:items-center lg:gap-16 lg:px-8">
           <div className="max-w-2xl text-hero-fg">
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+            <h1 className="text-5xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
               {COPY.headline}
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-hero-fg-muted sm:text-xl">

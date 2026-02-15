@@ -1,7 +1,7 @@
 /* Option 1: Dark blue hero/CTA, soft borders */
 [data-style="1"] {
   --hero-bg: #0f172a;
-  --hero-bg-overlay: rgba(15, 23, 42, 0.75);
+  --hero-bg-overlay: rgba(15, 23, 42, 0.5);
   --hero-fg: #ffffff;
   --hero-fg-muted: #e2e8f0;
   --hero-fg-subtle: #cbd5e1;

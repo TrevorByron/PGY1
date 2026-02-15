@@ -33,10 +33,10 @@ export default function Process() {
       <section id="process" className="bg-section py-20 sm:py-28">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col gap-12 lg:flex-row lg:items-center lg:gap-16">
-            <div className="relative aspect-[4/3] w-full overflow-hidden rounded-2xl bg-border lg:max-w-md lg:flex-shrink-0">
+            <div className="relative hidden aspect-[4/3] w-full overflow-hidden rounded-2xl bg-border lg:block lg:max-w-md lg:flex-shrink-0">
               <Image
-                src="https://images.unsplash.com/photo-1587351021759-3e566b6af7cc?auto=format&fit=crop&w=800&q=80"
-                alt="Hospital building"
+                src="/images/process-style1.png"
+                alt="Medical professionals in an operating room"
                 fill
                 className="object-cover"
                 sizes="(max-width: 1024px) 100vw, 50vw"

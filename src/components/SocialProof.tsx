@@ -82,15 +82,16 @@ export default function SocialProof() {
             Trusted by residents and fellows at
           </h3>
           {HOSPITAL_LOGOS.length > 0 ? (
-            <div className="mt-10 flex flex-wrap items-center justify-center gap-12 sm:gap-16">
-              {HOSPITAL_LOGOS.map((logo) => {
-                const src = `/hospitals/${logo.src}`;
-                const isSvg = logo.src.endsWith(".svg");
-                return (
-                  <div
-                    key={logo.src}
-                    className="relative flex h-16 w-36 items-center justify-center sm:h-20 sm:w-40"
-                  >
+            <div className="mt-10 -mx-4 overflow-x-auto overflow-y-hidden px-4 scroll-smooth sm:mx-0 sm:overflow-visible sm:px-0">
+              <div className="flex flex-nowrap items-center justify-start gap-8 sm:flex-wrap sm:justify-center sm:gap-16">
+                {HOSPITAL_LOGOS.map((logo) => {
+                  const src = `/hospitals/${logo.src}`;
+                  const isSvg = logo.src.endsWith(".svg");
+                  return (
+                    <div
+                      key={logo.src}
+                      className="relative flex h-16 w-36 shrink-0 items-center justify-center sm:h-20 sm:w-40"
+                    >
                     {isSvg ? (
                       <img
                         src={src}
@@ -106,9 +107,10 @@ export default function SocialProof() {
                         className="max-h-16 w-auto max-w-[9rem] object-contain object-center sm:max-h-20 sm:max-w-[10rem]"
                       />
                     )}
-                  </div>
-                );
-              })}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
           ) : (
             <div className="mt-6 flex flex-wrap items-center justify-center gap-x-12 gap-y-4">
