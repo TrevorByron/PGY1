@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: "%s | PGY1 Financial Solutions",
   },
   description:
-    "Disability insurance for residents and fellows. Get your GSI policy before it's too late. 1 min quote — 100% private. Jay Weinberg, CLU ChFC.",
+    "Disability insurance for residents and fellows. Get your GSI policy before it's too late. Take 2 mins to get a quote — 100% private. Jay Weinberg, CLU ChFC.",
   openGraph: {
     title: "Physician Disability Insurance | PGY1 Financial Solutions",
     description:

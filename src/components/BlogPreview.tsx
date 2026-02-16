@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import BlogImage from "./BlogImage";
 import { useStyle } from "./StyleProvider";
 import Style2Illustration from "./Style2Illustration";
+import { formatDate, calculateReadTime } from "@/lib/utils";
 
 const STUB_POSTS = [
   {
@@ -10,18 +12,24 @@ const STUB_POSTS = [
     title: "When should residents get disability insurance?",
     excerpt: "The best time is early in training — before your health or eligibility changes.",
     date: "2025-01-15",
+    image: "https://images.unsplash.com/photo-1551601651-2a8555f1a136?w=800&h=450&fit=crop",
+    readTime: "5 min read",
   },
   {
     slug: "gsi-vs-fully-underwritten",
     title: "GSI vs. fully underwritten: what's the difference?",
     excerpt: "Why securing GSI first can protect your options.",
     date: "2025-01-08",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=450&fit=crop",
+    readTime: "4 min read",
   },
   {
     slug: "own-occupation-explained",
     title: "Why own-occupation matters for physicians",
     excerpt: "What it means and why it's the standard you want.",
     date: "2024-12-20",
+    image: "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=800&h=450&fit=crop",
+    readTime: "6 min read",
   },
 ];
 
@@ -51,13 +59,28 @@ export default function BlogPreview() {
                   <Link
                     key={post.slug}
                     href={`/blog/${post.slug}`}
-                    className="group rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-muted hover:shadow"
+                    className="group overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition hover:border-muted hover:shadow"
                   >
-                    <h3 className="font-semibold text-foreground group-hover:underline">
-                      {post.title}
-                    </h3>
-                    <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
-                    <p className="mt-3 text-xs text-muted-subtle">{post.date}</p>
+                    <div className="relative aspect-video w-full overflow-hidden bg-border">
+                      <BlogImage
+                        src={post.image}
+                        alt=""
+                        fill
+                        className="object-cover transition group-hover:scale-105"
+                        sizes="(max-width: 640px) 100vw, 50vw"
+                      />
+                    </div>
+                    <div className="p-6">
+                      <h3 className="font-semibold text-foreground group-hover:underline">
+                        {post.title}
+                      </h3>
+                      <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
+                      <div className="mt-3 flex items-center gap-3 text-xs text-muted-subtle">
+                        <span>{formatDate(post.date)}</span>
+                        <span>•</span>
+                        <span>{post.readTime}</span>
+                      </div>
+                    </div>
                   </Link>
                 ))}
               </div>
@@ -90,13 +113,28 @@ export default function BlogPreview() {
             <Link
               key={post.slug}
               href={`/blog/${post.slug}`}
-              className="group rounded-2xl border border-border bg-surface p-6 shadow-sm transition hover:border-muted hover:shadow"
+              className="group overflow-hidden rounded-2xl border border-border bg-surface shadow-sm transition hover:border-muted hover:shadow"
             >
-              <h3 className="font-semibold text-foreground group-hover:underline">
-                {post.title}
-              </h3>
-              <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
-              <p className="mt-3 text-xs text-muted-subtle">{post.date}</p>
+              <div className="relative aspect-video w-full overflow-hidden bg-border">
+                <BlogImage
+                  src={post.image}
+                  alt=""
+                  fill
+                  className="object-cover transition group-hover:scale-105"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </div>
+              <div className="p-6">
+                <h3 className="font-semibold text-foreground group-hover:underline">
+                  {post.title}
+                </h3>
+                <p className="mt-2 text-sm text-muted">{post.excerpt}</p>
+                <div className="mt-3 flex items-center gap-3 text-xs text-muted-subtle">
+                  <span>{formatDate(post.date)}</span>
+                  <span>•</span>
+                  <span>{post.readTime}</span>
+                </div>
+              </div>
             </Link>
           ))}
         </div>

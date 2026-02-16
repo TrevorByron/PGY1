@@ -2,24 +2,34 @@
 
 import Image from "next/image";
 
+// Avatar URLs from Facepile component
+const AVATARS = [
+  "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=100&h=100&fit=crop&crop=faces",
+  "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=faces",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop&crop=faces",
+];
+
 const TESTIMONIALS = [
   {
     quote:
       "Jay made the process simple and answered every question. I locked in my GSI during residency and now I have peace of mind.",
     name: "Sarah M.",
     title: "Resident, Internal Medicine",
+    avatar: AVATARS[0],
   },
   {
     quote:
       "I was worried about my medical history. He explained my options clearly and helped me get coverage without the stress I expected.",
     name: "David K.",
     title: "Fellow, Cardiology",
+    avatar: AVATARS[1],
   },
   {
     quote:
       "Not a big firm — just someone who actually picks up the phone. That mattered a lot during a busy rotation.",
     name: "Jennifer L.",
     title: "Resident, Pediatrics",
+    avatar: AVATARS[2],
   },
 ];
 
@@ -35,28 +45,8 @@ export default function SocialProof() {
   return (
     <section id="testimonials" className="bg-section py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
-        {/* Stats */}
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground sm:text-4xl">5+</p>
-            <p className="mt-1 text-sm text-muted">Carriers we work with</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground sm:text-4xl">Years</p>
-            <p className="mt-1 text-sm text-muted">Years helping physicians</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground sm:text-4xl">GSI</p>
-            <p className="mt-1 text-sm text-muted">Available at select programs</p>
-          </div>
-          <div className="text-center">
-            <p className="text-3xl font-bold text-foreground sm:text-4xl">50</p>
-            <p className="mt-1 text-sm text-muted">States licensed</p>
-          </div>
-        </div>
-
         {/* What physicians say */}
-        <div className="mt-16 border-t border-border pt-16">
+        <div>
           <h2 className="text-center text-2xl font-bold text-foreground sm:text-3xl">
             What physicians say
           </h2>
@@ -67,12 +57,31 @@ export default function SocialProof() {
                 className="rounded-xl border border-border bg-section-muted p-6"
               >
                 <p className="text-muted">&ldquo;{t.quote}&rdquo;</p>
-                <footer className="mt-4">
-                  <p className="font-semibold text-foreground">{t.name}</p>
-                  <p className="text-sm text-muted">{t.title}</p>
+                <footer className="mt-4 flex items-center gap-3">
+                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-border bg-border">
+                    <Image
+                      src={t.avatar}
+                      alt={t.name}
+                      width={40}
+                      height={40}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">{t.name}</p>
+                    <p className="text-sm text-muted">{t.title}</p>
+                  </div>
                 </footer>
               </blockquote>
             ))}
+          </div>
+          <div className="mt-10 text-center">
+            <a
+              href="/testimonials"
+              className="inline-flex items-center gap-2 font-medium text-foreground underline hover:no-underline"
+            >
+              View all testimonials →
+            </a>
           </div>
         </div>
 
@@ -82,31 +91,31 @@ export default function SocialProof() {
             Trusted by residents and fellows at
           </h3>
           {HOSPITAL_LOGOS.length > 0 ? (
-            <div className="mt-10 -mx-4 overflow-x-auto overflow-y-hidden px-4 scroll-smooth sm:mx-0 sm:overflow-visible sm:px-0">
-              <div className="flex flex-nowrap items-center justify-start gap-8 sm:flex-wrap sm:justify-center sm:gap-16">
-                {HOSPITAL_LOGOS.map((logo) => {
+            <div className="mt-10 overflow-hidden">
+              <div className="flex animate-scroll items-center gap-8 sm:gap-16">
+                {[...HOSPITAL_LOGOS, ...HOSPITAL_LOGOS].map((logo, index) => {
                   const src = `/hospitals/${logo.src}`;
                   const isSvg = logo.src.endsWith(".svg");
                   return (
                     <div
-                      key={logo.src}
+                      key={`${logo.src}-${index}`}
                       className="relative flex h-16 w-36 shrink-0 items-center justify-center sm:h-20 sm:w-40"
                     >
-                    {isSvg ? (
-                      <img
-                        src={src}
-                        alt={logo.alt}
-                        className="max-h-16 w-auto max-w-[9rem] object-contain object-center sm:max-h-20 sm:max-w-[10rem]"
-                      />
-                    ) : (
-                      <Image
-                        src={src}
-                        alt={logo.alt}
-                        width={160}
-                        height={80}
-                        className="max-h-16 w-auto max-w-[9rem] object-contain object-center sm:max-h-20 sm:max-w-[10rem]"
-                      />
-                    )}
+                      {isSvg ? (
+                        <img
+                          src={src}
+                          alt={logo.alt}
+                          className="max-h-16 w-auto max-w-[9rem] object-contain object-center sm:max-h-20 sm:max-w-[10rem]"
+                        />
+                      ) : (
+                        <Image
+                          src={src}
+                          alt={logo.alt}
+                          width={160}
+                          height={80}
+                          className="max-h-16 w-auto max-w-[9rem] object-contain object-center sm:max-h-20 sm:max-w-[10rem]"
+                        />
+                      )}
                     </div>
                   );
                 })}

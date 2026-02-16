@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useStyle } from "./StyleProvider";
 import Style2Illustration from "./Style2Illustration";
 
@@ -18,23 +19,34 @@ export default function About() {
               />
             </div>
             <div className="flex-1">
-              <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-                About Jay
-              </h2>
+              <div className="flex items-center gap-4">
+                <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-border bg-border sm:h-20 sm:w-20">
+                  <Image
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoe6axk5d3VT-TuaGqMsbe7wkL8iTgjVlHpw&s"
+                    alt="Jay Weinberg"
+                    width={80}
+                    height={80}
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+                <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+                  About Jay
+                </h2>
+              </div>
               <p className="mt-6 text-lg leading-relaxed text-muted">
                 Jay Weinberg, CLU, ChFC, connects disability insurance to doctors — especially residents and fellows — so you can protect your income before it&apos;s too late.
               </p>
               <p className="mt-4 text-muted">
-                We&apos;re not a big company. You get direct access, clear answers, and a process that fits your schedule. Our goal is to help you secure the right coverage (including GSI when available) without the runaround.
+                You get direct access, clear answers, and a process that fits your schedule. My goal is to help you secure the right coverage (including GSI when available) without the runaround.
               </p>
               <p className="mt-4 text-muted">
                 PGY1 Financial Solutions Corp works with top carriers to compare quotes and find the best fit for your specialty and stage of training.
               </p>
               <a
-                href="#get-quote"
+                href="/quote"
                 className="mt-8 inline-block rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition hover:bg-accent-hover"
               >
-                Get your quote
+                Take 2 mins to get a quote
               </a>
             </div>
           </div>
@@ -47,23 +59,34 @@ export default function About() {
     <section id="about" className="bg-section-muted py-20 sm:py-28">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
-            About Jay
-          </h2>
+          <div className="flex items-center gap-4">
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border-2 border-border bg-border sm:h-20 sm:w-20">
+              <Image
+                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoe6axk5d3VT-TuaGqMsbe7wkL8iTgjVlHpw&s"
+                alt="Jay Weinberg"
+                width={80}
+                height={80}
+                className="h-full w-full object-cover"
+              />
+            </div>
+            <h2 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+              About Jay
+            </h2>
+          </div>
           <p className="mt-6 text-lg leading-relaxed text-muted">
             Jay Weinberg, CLU, ChFC, connects disability insurance to doctors — especially residents and fellows — so you can protect your income before it&apos;s too late.
           </p>
           <p className="mt-4 text-muted">
-            We&apos;re not a big company. You get direct access, clear answers, and a process that fits your schedule. Our goal is to help you secure the right coverage (including GSI when available) without the runaround.
+            You get direct access, clear answers, and a process that fits your schedule. My goal is to help you secure the right coverage (including GSI when available) without the runaround.
           </p>
           <p className="mt-4 text-muted">
             PGY1 Financial Solutions Corp works with top carriers to compare quotes and find the best fit for your specialty and stage of training.
           </p>
           <a
-            href="#get-quote"
+            href="/quote"
             className="mt-8 inline-block rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition hover:bg-accent-hover"
           >
-            Get your quote
+            Take 2 mins to get a quote
           </a>
         </div>
       </div>

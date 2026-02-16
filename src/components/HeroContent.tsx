@@ -1,7 +1,9 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useStyle } from "./StyleProvider";
+import Facepile from "./Facepile";
 
 const PHONE = "6094328862";
 const PHONE_DISPLAY = "(609) 432-8862";
@@ -9,10 +11,10 @@ const PHONE_DISPLAY = "(609) 432-8862";
 const COPY = {
   headline: "Disability insurance for residents and fellows",
   subhead:
-    "Get a GSI policy with no medical exam. One denial elsewhere can lock you out. We help you secure the right coverage in about 1 minute.",
-  cta: "Get your quote in less than 1min",
-  cardTitle: "Not a big company — here's my mobile number.",
-  preferText: "Prefer text? I'll respond quickly.",
+    "Get a GSI policy with no medical exam. One denial elsewhere can lock you out. We help you secure the right coverage in about 2 minutes.",
+  cta: "Take 2 mins to get a quote",
+  cardTitle: "Insurance is personal — if you prefer, here's my mobile number.",
+  preferText: "Text me — I'll respond quickly.",
 };
 
 export default function HeroContent() {
@@ -22,8 +24,8 @@ export default function HeroContent() {
     return (
       <>
         <Image
-          src="/images/hero-style1-new.png"
-          alt="Healthcare professional with stethoscope in clinical setting"
+          src="/images/hero-physicians.png"
+          alt="Medical professionals in white coats discussing in hospital hallway"
           fill
           className="object-cover opacity-40"
           priority
@@ -39,29 +41,29 @@ export default function HeroContent() {
               {COPY.subhead}
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-              <a
-                href="#get-quote"
+              <Link
+                href="/quote"
                 className="inline-flex items-center justify-center rounded-full bg-cta-primary-bg px-8 py-4 text-base font-semibold text-cta-primary-fg shadow-lg transition hover:bg-cta-primary-hover"
               >
                 {COPY.cta}
-              </a>
+              </Link>
             </div>
             <div className="mt-10 rounded-xl border border-hero-card-border bg-hero-card-bg p-4 backdrop-blur sm:p-5">
-              <p className="text-sm font-medium text-hero-fg-muted">
-                {COPY.cardTitle}
-              </p>
-              <a
-                href={`tel:${PHONE}`}
-                className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
-              >
-                {PHONE_DISPLAY}
-              </a>
-              <a
-                href={`sms:${PHONE}`}
-                className="mt-1 block text-sm text-hero-fg-subtle hover:text-hero-fg"
-              >
-                {COPY.preferText}
-              </a>
+              <Facepile />
+              <div className="mt-6 pt-6 border-t border-hero-card-border">
+                <p className="text-sm font-medium text-hero-fg-muted">
+                  {COPY.cardTitle}
+                </p>
+                <a
+                  href={`sms:${PHONE}`}
+                  className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
+                >
+                  {PHONE_DISPLAY}
+                </a>
+                <p className="mt-1 text-sm text-hero-fg-subtle">
+                  {COPY.preferText}
+                </p>
+              </div>
             </div>
           </div>
           <div className="mt-12 hidden lg:block lg:flex-1" />
@@ -119,29 +121,29 @@ export default function HeroContent() {
               {COPY.subhead}
             </p>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
-              <a
-                href="#get-quote"
+              <Link
+                href="/quote"
                 className="inline-flex items-center justify-center rounded-lg bg-cta-primary-bg px-8 py-4 text-base font-semibold text-cta-primary-fg shadow-[0_0_24px_rgba(30,136,229,0.4)] transition hover:bg-cta-primary-hover hover:shadow-[0_0_32px_rgba(30,136,229,0.5)]"
               >
                 {COPY.cta}
-              </a>
+              </Link>
             </div>
             <div className="mx-auto mt-10 max-w-md rounded-xl border border-hero-card-border bg-hero-card-bg p-4 backdrop-blur-sm sm:p-5">
-              <p className="text-sm font-medium text-hero-fg-muted">
-                {COPY.cardTitle}
-              </p>
-              <a
-                href={`tel:${PHONE}`}
-                className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
-              >
-                {PHONE_DISPLAY}
-              </a>
-              <a
-                href={`sms:${PHONE}`}
-                className="mt-1 block text-sm text-hero-fg-subtle hover:text-hero-fg"
-              >
-                {COPY.preferText}
-              </a>
+              <Facepile centered />
+              <div className="mt-6 pt-6 border-t border-hero-card-border">
+                <p className="text-sm font-medium text-hero-fg-muted">
+                  {COPY.cardTitle}
+                </p>
+                <a
+                  href={`sms:${PHONE}`}
+                  className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
+                >
+                  {PHONE_DISPLAY}
+                </a>
+                <p className="mt-1 text-sm text-hero-fg-subtle">
+                  {COPY.preferText}
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -160,29 +162,29 @@ export default function HeroContent() {
           {COPY.subhead}
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
-          <a
-            href="#get-quote"
+          <Link
+            href="/quote"
             className="inline-flex items-center justify-center rounded-full bg-cta-primary-bg px-8 py-4 text-base font-semibold text-cta-primary-fg shadow-lg transition hover:bg-cta-primary-hover"
           >
             {COPY.cta}
-          </a>
+          </Link>
         </div>
         <div className="mt-10 rounded-xl border border-hero-card-border bg-hero-card-bg p-4 sm:p-5">
-          <p className="text-sm font-medium text-hero-fg-muted">
-            {COPY.cardTitle}
-          </p>
-          <a
-            href={`tel:${PHONE}`}
-            className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
-          >
-            {PHONE_DISPLAY}
-          </a>
-          <a
-            href={`sms:${PHONE}`}
-            className="mt-1 block text-sm text-hero-fg-subtle hover:text-hero-fg"
-          >
-            {COPY.preferText}
-          </a>
+          <Facepile />
+          <div className="mt-6 pt-6 border-t border-hero-card-border">
+            <p className="text-sm font-medium text-hero-fg-muted">
+              {COPY.cardTitle}
+            </p>
+            <a
+              href={`sms:${PHONE}`}
+              className="mt-2 inline-block text-xl font-semibold text-hero-fg hover:underline"
+            >
+              {PHONE_DISPLAY}
+            </a>
+            <p className="mt-1 text-sm text-hero-fg-subtle">
+              {COPY.preferText}
+            </p>
+          </div>
         </div>
       </div>
       <div className="mt-12 flex flex-1 items-center justify-center lg:mt-0 lg:flex-[1]">

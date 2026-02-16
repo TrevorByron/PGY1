@@ -17,7 +17,7 @@ export default function QuoteForm() {
           Get your quote
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center text-lg text-muted">
-          Takes about 1 minute to get started. We never sell your information — 100% private.
+          Takes about 2 minutes to get started. We never sell your information — 100% private.
         </p>
 
         <div className="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-sm">

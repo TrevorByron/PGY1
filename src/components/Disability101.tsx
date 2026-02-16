@@ -75,7 +75,7 @@ export default function Disability101() {
               Own-occupation
             </h3>
             <p className="mt-2 text-muted">
-              You&apos;re disabled if you can&apos;t do your specific job (e.g. your specialty), not just “any” job. Essential for physicians.
+              You&apos;re disabled if you can&apos;t do your specific job (e.g. your specialty), not just "any" job. Essential for physicians.
             </p>
           </div>
           <div className="rounded-2xl border border-border p-6">

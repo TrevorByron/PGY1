@@ -7,7 +7,7 @@ import Style2Illustration from "./Style2Illustration";
 const steps = [
   {
     step: 1,
-    title: "Take 1 min to provide basic info",
+    title: "Take 2 mins to provide basic info",
     description:
       "No in-depth medical exam. Just the essentials so we can understand your situation and see if a GSI or other policy fits.",
   },

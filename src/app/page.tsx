@@ -4,7 +4,6 @@ import TopCarriers from "@/components/TopCarriers";
 import Audience from "@/components/Audience";
 import CTABlock from "@/components/CTABlock";
 import SocialProof from "@/components/SocialProof";
-import QuoteForm from "@/components/QuoteForm";
 import FAQ from "@/components/FAQ";
 import About from "@/components/About";
 import Disability101 from "@/components/Disability101";
@@ -19,7 +18,6 @@ export default function Home() {
       <Audience />
       <CTABlock />
       <SocialProof />
-      <QuoteForm />
       <FAQ />
       <About />
       <Disability101 />

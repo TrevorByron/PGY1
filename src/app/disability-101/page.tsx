@@ -10,11 +10,12 @@ export const metadata: Metadata = {
 export default function Disability101Page() {
   return (
     <main className="min-h-screen bg-section">
-      <div className="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
         <Link href="/" className="text-sm font-medium text-muted hover:text-foreground">
           ← Back to home
         </Link>
-        <h1 className="mt-8 text-4xl font-bold tracking-tight text-foreground">
+        <div className="max-w-3xl" style={{ width: "100%" }}>
+          <h1 className="mt-8 text-4xl font-bold tracking-tight text-foreground">
           Disability insurance 101
         </h1>
         <p className="mt-4 text-lg text-muted">
@@ -54,7 +55,7 @@ export default function Disability101Page() {
               Why residents and fellows should act now
             </h2>
             <p className="mt-4 text-muted">
-              Locking in coverage during training often means better rates and access to GSI. If you wait and your health changes, or you apply for another policy and get denied, you could lose GSI eligibility and pay more later. Getting a quote takes about a minute — and we never sell your information.
+              Locking in coverage during training often means better rates and access to GSI. If you wait and your health changes, or you apply for another policy and get denied, you could lose GSI eligibility and pay more later. Getting a quote takes about 2 minutes — and we never sell your information.
             </p>
           </section>
         </article>
@@ -64,14 +65,15 @@ export default function Disability101Page() {
             Ready to get started?
           </h2>
           <p className="mt-2 text-muted">
-            Get your quote — 1 min, 100% private.
+            Take 2 mins to get a quote — 100% private.
           </p>
           <a
-            href="/#get-quote"
+            href="/quote"
             className="mt-4 inline-block rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition hover:bg-accent-hover"
           >
-            Get your quote
+            Take 2 mins to get a quote
           </a>
+        </div>
         </div>
       </div>
     </main>
