@@ -1,18 +1,23 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 /**
  * Facepile component showing avatars with "Helping over 10,000 residents & fellows over 20+ years" text
  * Uses real human headshots from Unsplash
+ * Dynamically adjusts the number of faces shown based on container width
  */
 export default function Facepile({ centered = false }: { centered?: boolean }) {
   const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+  const [maxFaces, setMaxFaces] = useState<number>(5); // Start conservative, will update after measurement
+  const containerRef = useRef<HTMLDivElement>(null);
+  const facepileRowRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = (index: number) => {
     setFailedImages((prev) => new Set(prev).add(index));
   };
+
   // Unsplash photo IDs for diverse professional headshots
   // Using verified Unsplash photo IDs that reliably load
   const headshots = [
@@ -33,13 +38,94 @@ export default function Facepile({ centered = false }: { centered?: boolean }) {
     "https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?w=100&h=100&fit=crop&crop=faces",
   ];
 
+  useEffect(() => {
+    const calculateMaxFaces = () => {
+      if (!facepileRowRef.current || !containerRef.current) return;
+
+      // Use requestAnimationFrame to ensure measurement happens after layout
+      requestAnimationFrame(() => {
+        if (!facepileRowRef.current) return;
+        
+        // Get the actual available width - use the facepile row's clientWidth
+        // This gives us the inner width excluding scrollbars
+        const containerWidth = facepileRowRef.current.clientWidth;
+        
+        if (containerWidth === 0) return; // Not ready yet
+        
+        // Face sizes: mobile = 40px (h-10 w-10), desktop = 48px (sm:h-12 sm:w-12)
+        // Overlap: -space-x-2 = 8px (0.5rem)
+        // Check if we're on mobile or desktop based on container width
+        const isMobile = containerWidth < 640; // sm breakpoint
+        const faceSize = isMobile ? 40 : 48;
+        const overlap = 8; // -space-x-2 = 8px
+        
+        // Formula for total width with n faces:
+        // totalWidth = faceSize + (n-1) * (faceSize - overlap)
+        // Solving for n: n = 1 + (totalWidth - faceSize) / (faceSize - overlap)
+        
+        // Be very conservative: use larger buffer and subtract more from result
+        // This accounts for sub-pixel rendering, borders, and rounding errors
+        const buffer = 20; // Increased buffer to prevent overflow
+        const availableWidth = Math.max(0, containerWidth - buffer);
+        
+        if (availableWidth < faceSize) {
+          setMaxFaces(1);
+          return;
+        }
+        
+        // Calculate max faces conservatively
+        // Formula: totalWidth = faceSize + (n-1) * (faceSize - overlap)
+        // Solving: n = 1 + (totalWidth - faceSize) / (faceSize - overlap)
+        const calculatedCount = Math.floor((availableWidth - faceSize) / (faceSize - overlap)) + 1;
+        // Subtract 2 to be extra safe and prevent any overflow
+        const maxCount = Math.max(1, calculatedCount - 2);
+        
+        // Ensure at least 1 face, and cap at total available headshots
+        const clampedCount = Math.max(1, Math.min(maxCount, headshots.length));
+        setMaxFaces(clampedCount);
+      });
+    };
+
+    // Calculate on mount (with a delay to ensure DOM is ready)
+    const timeoutId = setTimeout(() => {
+      calculateMaxFaces();
+    }, 100);
+
+    // Recalculate on resize
+    const resizeObserver = new ResizeObserver(() => {
+      calculateMaxFaces();
+    });
+
+    // Observe both the container and facepile row to catch all resize events
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+    if (facepileRowRef.current) {
+      resizeObserver.observe(facepileRowRef.current);
+    }
+
+    // Also listen to window resize as fallback
+    window.addEventListener("resize", calculateMaxFaces);
+
+    return () => {
+      clearTimeout(timeoutId);
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", calculateMaxFaces);
+    };
+  }, [headshots.length]);
+
+  // Filter out failed images and limit to maxFaces
+  const visibleHeadshots = headshots
+    .slice(0, maxFaces)
+    .filter((_, i) => !failedImages.has(i));
+
   return (
-    <div className={`flex flex-col gap-3 ${centered ? "items-center" : "items-start"}`}>
-      <div className="flex items-center -space-x-2">
-        {headshots.map((src, i) => {
-          if (failedImages.has(i)) {
-            return null;
-          }
+    <div 
+      ref={containerRef}
+      className={`flex flex-col gap-3 ${centered ? "items-center" : "items-start"}`}
+    >
+      <div ref={facepileRowRef} className="flex items-center -space-x-2 w-full overflow-hidden">
+        {visibleHeadshots.map((src, i) => {
           return (
             <div
               key={i}
