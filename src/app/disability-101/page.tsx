@@ -4,7 +4,12 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Disability Insurance 101 for Physicians | PGY1",
   description:
-    "Learn the basics: own-occupation, GSI, and why residents should secure disability insurance early.",
+    "Learn the basics of disability insurance for physicians: own-occupation vs any-occupation, GSI (Guaranteed Standard Issue), and why residents and fellows should secure coverage early. Get your quote in 2 minutes.",
+  openGraph: {
+    title: "Disability Insurance 101 for Physicians",
+    description:
+      "A short guide to the basics every physician should know about disability insurance, GSI, and own-occupation coverage.",
+  },
 };
 
 export default function Disability101Page() {
@@ -46,7 +51,7 @@ export default function Disability101Page() {
               What is GSI (Guaranteed Standard Issue)?
             </h2>
             <p className="mt-4 text-muted">
-              GSI policies are offered at many residency and fellowship programs. They require no medical exam and typically don&apos;t ask health questions — so pre-existing conditions and some hazardous activities are overlooked. The catch: if you&apos;ve already been denied disability insurance elsewhere, you may no longer qualify for GSI at your institution. So the best move is to secure GSI first, then consider additional coverage if needed.
+              GSI policies are offered at many residency and fellowship programs. They require no medical exam and typically don&apos;t ask health questions — so pre-existing conditions and some hazardous activities are overlooked. The catch: if you&apos;ve already been denied disability insurance elsewhere, you may no longer qualify for GSI at your institution. So the best move is to secure GSI first, then consider additional coverage if needed. <Link href="/quote" className="font-medium text-foreground underline hover:no-underline">Get your quote in 2 minutes</Link> to check if GSI is available at your program.
             </p>
           </section>
 
@@ -55,7 +60,7 @@ export default function Disability101Page() {
               Why residents and fellows should act now
             </h2>
             <p className="mt-4 text-muted">
-              Locking in coverage during training often means better rates and access to GSI. If you wait and your health changes, or you apply for another policy and get denied, you could lose GSI eligibility and pay more later. Getting a quote takes about 2 minutes — and we never sell your information.
+              Locking in coverage during training often means better rates and access to GSI. If you wait and your health changes, or you apply for another policy and get denied, you could lose GSI eligibility and pay more later. <Link href="/quote" className="font-medium text-foreground underline hover:no-underline">Getting a quote takes about 2 minutes</Link> — and we never sell your information. Learn more about <Link href="/blog/when-to-get-disability-insurance" className="font-medium text-foreground underline hover:no-underline">when residents should get disability insurance</Link> in our blog.
             </p>
           </section>
         </article>

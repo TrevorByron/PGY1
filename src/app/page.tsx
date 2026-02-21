@@ -2,7 +2,7 @@ import Hero from "@/components/Hero";
 import Process from "@/components/Process";
 import TopCarriers from "@/components/TopCarriers";
 import Audience from "@/components/Audience";
-import CTABlock from "@/components/CTABlock";
+import BottomCTASection from "@/components/BottomCTASection";
 import SocialProof from "@/components/SocialProof";
 import FAQ from "@/components/FAQ";
 import About from "@/components/About";
@@ -16,12 +16,12 @@ export default function Home() {
       <Process />
       <TopCarriers />
       <Audience />
-      <CTABlock />
       <SocialProof />
-      <FAQ />
-      <About />
       <Disability101 />
       <BlogPreview />
+      <FAQ />
+      <About />
+      <BottomCTASection />
     </main>
   );
 }

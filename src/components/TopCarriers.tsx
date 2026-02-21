@@ -3,11 +3,11 @@
 import Image from "next/image";
 
 const CARRIERS: { name: string; src: string; alt: string }[] = [
-  { name: "Guardian", src: "/carriers/Guardian-logo-dark.png", alt: "Guardian" },
-  { name: "Mass Mutual", src: "/carriers/MassMutual.jpg", alt: "Mass Mutual" },
-  { name: "Principal", src: "/carriers/principal.png", alt: "Principal" },
-  { name: "Ameritas", src: "/carriers/Ameritas_Bison_color.png", alt: "Ameritas" },
-  { name: "The Standard", src: "/carriers/the_standard.svg", alt: "The Standard" },
+  { name: "Guardian", src: "/carriers/Guardian-logo-dark.png", alt: "Guardian Life Insurance Company disability insurance provider" },
+  { name: "Mass Mutual", src: "/carriers/MassMutual.jpg", alt: "MassMutual disability insurance provider" },
+  { name: "Principal", src: "/carriers/principal.png", alt: "Principal Financial Group disability insurance provider" },
+  { name: "Ameritas", src: "/carriers/Ameritas_Bison_color.png", alt: "Ameritas disability insurance provider" },
+  { name: "The Standard", src: "/carriers/the_standard.svg", alt: "The Standard disability insurance provider" },
 ];
 
 export default function TopCarriers() {

@@ -34,11 +34,11 @@ const TESTIMONIALS = [
 ];
 
 const HOSPITAL_LOGOS: { src: string; alt: string }[] = [
-  { src: "johns-hopkins.png", alt: "Johns Hopkins Medicine" },
-  { src: "mgh.png", alt: "Massachusetts General Hospital" },
-  { src: "nyp.png", alt: "NewYork-Presbyterian" },
-  { src: "cleveland-clinic.png", alt: "Cleveland Clinic" },
-  { src: "cedars-sinai.png", alt: "Cedars Sinai Health System" },
+  { src: "johns-hopkins.png", alt: "Johns Hopkins Medicine hospital logo" },
+  { src: "mgh.png", alt: "Massachusetts General Hospital logo" },
+  { src: "nyp.png", alt: "NewYork-Presbyterian hospital logo" },
+  { src: "cleveland-clinic.png", alt: "Cleveland Clinic hospital logo" },
+  { src: "cedars-sinai.png", alt: "Cedars Sinai Health System hospital logo" },
 ];
 
 export default function SocialProof() {

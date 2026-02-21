@@ -1,8 +1,33 @@
-"use client";
-
 import Link from "next/link";
 import type { Metadata } from "next";
 
+export const metadata: Metadata = {
+  title: "Get Your Disability Insurance Quote | PGY1 Financial Solutions",
+  description:
+    "Get your disability insurance quote in 2 minutes. 100% private. No obligation. GSI policies available for residents and fellows. Jay Weinberg, CLU ChFC.",
+  openGraph: {
+    title: "Get Your Disability Insurance Quote | PGY1 Financial Solutions",
+    description:
+      "Get your disability insurance quote in 2 minutes. 100% private. GSI policies available for residents and fellows.",
+    type: "website",
+  },
+};
+
+/**
+ * Fillout Form Configuration
+ * 
+ * SETUP INSTRUCTIONS:
+ * 1. Create a form at https://www.fillout.com
+ * 2. Get your form ID from the Fillout dashboard
+ * 3. Replace "YOUR_FILLOUT_FORM_ID" below with your actual form ID
+ * 4. Or use environment variable: process.env.NEXT_PUBLIC_FILLOUT_FORM_ID
+ * 
+ * Example form URL: https://form.fillout.com/t/ABC123
+ * In that case, your form ID would be "ABC123"
+ * 
+ * For production, consider using an environment variable:
+ * const FILLOUT_FORM_ID = process.env.NEXT_PUBLIC_FILLOUT_FORM_ID || "YOUR_FILLOUT_FORM_ID";
+ */
 const FILLOUT_FORM_ID = "YOUR_FILLOUT_FORM_ID";
 
 export default function QuotePage() {

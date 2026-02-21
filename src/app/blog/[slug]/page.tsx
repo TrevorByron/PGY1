@@ -79,6 +79,20 @@ export default async function BlogPostPage({ params }: Props) {
             </div>
             <div className="mt-8 text-lg leading-relaxed text-muted [&>p]:mt-4">
               <p>{post.body}</p>
+              <div className="mt-8 rounded-xl border border-border bg-section-muted p-6">
+                <p className="font-semibold text-foreground">
+                  Ready to get your quote?
+                </p>
+                <p className="mt-2 text-sm text-muted">
+                  Take 2 mins to get a quote — 100% private. No obligation.
+                </p>
+                <Link
+                  href="/quote"
+                  className="mt-4 inline-block rounded-full bg-accent px-6 py-3 text-sm font-medium text-accent-fg transition hover:bg-accent-hover"
+                >
+                  Get Your Quote →
+                </Link>
+              </div>
             </div>
           </article>
 

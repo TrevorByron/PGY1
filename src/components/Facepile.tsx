@@ -8,7 +8,15 @@ import { useState, useEffect, useRef } from "react";
  * Uses real human headshots from Unsplash
  * Dynamically adjusts the number of faces shown based on container width
  */
-export default function Facepile({ centered = false }: { centered?: boolean }) {
+type FacepileVariant = "hero" | "dark";
+
+export default function Facepile({
+  centered = false,
+  variant = "hero",
+}: {
+  centered?: boolean;
+  variant?: FacepileVariant;
+}) {
   const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
   const [maxFaces, setMaxFaces] = useState<number>(5); // Start conservative, will update after measurement
   const containerRef = useRef<HTMLDivElement>(null);
@@ -129,7 +137,11 @@ export default function Facepile({ centered = false }: { centered?: boolean }) {
           return (
             <div
               key={i}
-              className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-hero-card-bg bg-hero-card-bg sm:h-12 sm:w-12"
+              className={`relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 sm:h-12 sm:w-12 ${
+                variant === "dark"
+                  ? "border-dark-muted/50 bg-dark-muted/20"
+                  : "border-hero-card-bg bg-hero-card-bg"
+              }`}
               aria-hidden
             >
               <Image
@@ -144,7 +156,11 @@ export default function Facepile({ centered = false }: { centered?: boolean }) {
           );
         })}
       </div>
-      <p className={`text-sm font-medium text-hero-fg-muted sm:text-base ${centered ? "text-center" : "text-left"}`}>
+      <p
+        className={`text-sm font-medium sm:text-base ${centered ? "text-center" : "text-left"} ${
+          variant === "dark" ? "text-dark-muted" : "text-hero-fg-muted"
+        }`}
+      >
         Helping over 10,000 residents & fellows over 20+ years
       </p>
     </div>

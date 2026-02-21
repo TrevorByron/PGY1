@@ -1,12 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import BlogImage from "@/components/BlogImage";
+import BottomCTASection from "@/components/BottomCTASection";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Blog | PGY1 Financial Solutions",
   description:
-    "Practical guidance on disability insurance for physicians, residents, and fellows.",
+    "Practical guidance on disability insurance for physicians, residents, and fellows. Learn about GSI policies, own-occupation coverage, and when to secure disability insurance.",
+  openGraph: {
+    title: "Blog | PGY1 Financial Solutions",
+    description:
+      "Practical guidance on disability insurance for physicians, residents, and fellows.",
+  },
 };
 
 const STUB_POSTS = [
@@ -89,7 +95,7 @@ export default function BlogPage() {
           <aside className="lg:col-span-1">
             <div className="sticky top-24 rounded-xl border border-border bg-section-muted p-6">
               <h2 className="text-xl font-semibold text-foreground">
-                Get your quote
+                Ready to get a quote?
               </h2>
               <p className="mt-2 text-sm text-muted">
                 Take 2 mins to get a quote — 100% private.
@@ -104,6 +110,7 @@ export default function BlogPage() {
           </aside>
         </div>
       </div>
+      <BottomCTASection />
     </main>
   );
 }

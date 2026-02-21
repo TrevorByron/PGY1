@@ -7,6 +7,9 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { StyleProvider } from "@/components/StyleProvider";
 import StyleSwitcher from "@/components/StyleSwitcher";
+import { StructuredData } from "@/components/StructuredData";
+import { Analytics } from "@/components/Analytics";
+import { FloatingCTA } from "@/components/FloatingCTA";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,13 +59,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <StructuredData />
+      </head>
       <body className={`${geistSans.variable} ${geistMono.variable} ${dmSans.variable} ${playfair.variable} ${oswald.variable} antialiased`}>
         <StyleProvider>
           <Header />
           {children}
           <Footer />
           <StyleSwitcher />
+          <FloatingCTA />
         </StyleProvider>
+        <Analytics />
       </body>
     </html>
   );

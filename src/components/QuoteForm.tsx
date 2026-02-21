@@ -1,9 +1,21 @@
 "use client";
 
 /**
- * Fillout embed: replace FILLOUT_FORM_ID with your form ID from fillout.com
- * Example: https://form.fillout.com/t/ABC123
- * Or use iframe: <iframe src="https://form.fillout.com/t/YOUR_FORM_ID" ... />
+ * Fillout Form Configuration
+ * 
+ * SETUP INSTRUCTIONS:
+ * 1. Create a form at https://www.fillout.com
+ * 2. Get your form ID from the Fillout dashboard
+ * 3. Replace "YOUR_FILLOUT_FORM_ID" below with your actual form ID
+ * 4. Or use environment variable: process.env.NEXT_PUBLIC_FILLOUT_FORM_ID
+ * 
+ * Example form URL: https://form.fillout.com/t/ABC123
+ * In that case, your form ID would be "ABC123"
+ * 
+ * For production, consider using an environment variable:
+ * const FILLOUT_FORM_ID = process.env.NEXT_PUBLIC_FILLOUT_FORM_ID || "YOUR_FILLOUT_FORM_ID";
+ * 
+ * Connect Fillout to Google Sheets or your backoffice for lead capture.
  */
 const FILLOUT_FORM_ID = "YOUR_FILLOUT_FORM_ID";
 
@@ -17,7 +29,7 @@ export default function QuoteForm() {
           Get your quote
         </h2>
         <p className="mx-auto mt-4 max-w-xl text-center text-lg text-muted">
-          Takes about 2 minutes to get started. We never sell your information — 100% private.
+          Take 2 mins to get started. We never sell your information — 100% private.
         </p>
 
         <div className="mt-8 rounded-2xl border border-border bg-surface p-6 shadow-sm">

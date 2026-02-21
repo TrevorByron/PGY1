@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import BottomCTASection from "@/components/BottomCTASection";
 
 export const metadata: Metadata = {
   title: "About PGY1 | PGY1 Financial Solutions",
   description:
-    "PGY1 Financial Solutions helps residents and fellows secure disability insurance. Learn how we work with top carriers to find the right coverage for your specialty.",
+    "PGY1 Financial Solutions helps residents and fellows secure disability insurance. Jay Weinberg, CLU ChFC, with 20+ years of experience, works with top carriers including Guardian, Mass Mutual, Principal, Ameritas, and The Standard to find the right GSI and own-occupation coverage for your specialty.",
+  openGraph: {
+    title: "About PGY1 Financial Solutions",
+    description:
+      "Learn how PGY1 Financial Solutions helps residents and fellows secure disability insurance with specialized knowledge and top carriers.",
+  },
 };
 
 export default function AboutPage() {
@@ -65,16 +71,10 @@ export default function AboutPage() {
                 </div>
               </div>
             </div>
-
-            <Link
-              href="/quote"
-              className="mt-8 inline-block rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition hover:bg-accent-hover"
-            >
-              Take 2 mins to get a quote
-            </Link>
           </div>
         </div>
       </div>
+      <BottomCTASection />
     </main>
   );
 }

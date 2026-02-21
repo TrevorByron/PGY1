@@ -8,6 +8,13 @@ import Facepile from "./Facepile";
 const PHONE = "6094328862";
 const PHONE_DISPLAY = "(609) 432-8862";
 
+// Configurable hero stats - update with actual numbers
+const HERO_STATS = {
+  yearsExperience: "20+",
+  physiciansProtected: "500+",
+  topCarriers: "5",
+};
+
 const COPY = {
   headline: "Disability insurance for residents and fellows",
   subhead:
@@ -40,6 +47,27 @@ export default function HeroContent() {
             <p className="mt-6 text-lg leading-relaxed text-hero-fg-muted sm:text-xl">
               {COPY.subhead}
             </p>
+            {/* Trust badges */}
+            <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-hero-fg-subtle">
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>{HERO_STATS.yearsExperience} Years Experience</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>{HERO_STATS.physiciansProtected} Physicians Protected</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>CLU, ChFC Certified</span>
+              </div>
+            </div>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
               <Link
                 href="/quote"
@@ -120,6 +148,27 @@ export default function HeroContent() {
             <p className="mt-6 text-lg leading-relaxed text-hero-fg-muted sm:text-xl">
               {COPY.subhead}
             </p>
+            {/* Trust badges */}
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-4 text-sm text-hero-fg-subtle">
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>{HERO_STATS.yearsExperience} Years Experience</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>{HERO_STATS.physiciansProtected} Physicians Protected</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+                <span>CLU, ChFC Certified</span>
+              </div>
+            </div>
             <div className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
               <Link
                 href="/quote"
@@ -161,6 +210,27 @@ export default function HeroContent() {
         <p className="mt-6 text-lg leading-relaxed text-hero-fg-muted sm:text-xl">
           {COPY.subhead}
         </p>
+        {/* Trust badges */}
+        <div className="mt-6 flex flex-wrap items-center gap-4 text-sm text-hero-fg-subtle">
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>{HERO_STATS.yearsExperience} Years Experience</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>{HERO_STATS.physiciansProtected} Physicians Protected</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5 text-hero-fg" fill="currentColor" viewBox="0 0 20 20" aria-hidden="true">
+              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            <span>CLU, ChFC Certified</span>
+          </div>
+        </div>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center">
           <Link
             href="/quote"

@@ -10,18 +10,21 @@ const steps = [
     title: "Take 2 mins to provide basic info",
     description:
       "No in-depth medical exam. Just the essentials so we can understand your situation and see if a GSI or other policy fits.",
+    timeline: "2 minutes",
   },
   {
     step: 2,
     title: "We evaluate and work with you on quotes",
     description:
       "Our team finds the best provider for you and prepares side-by-side quotes. We answer your questions and explain options in plain language.",
+    timeline: "Quotes within 24 hours",
   },
   {
     step: 3,
     title: "Get a policy before things get complicated",
     description:
       "Lock in coverage while you're eligible. We handle the paperwork so you can focus on training and your career.",
+    timeline: "Policy in place within days",
   },
 ];
 
@@ -50,7 +53,7 @@ export default function Process() {
                 Three simple steps from first contact to protected income.
               </p>
               <div className="mt-10 space-y-8">
-                {steps.map(({ step, title, description }) => (
+                {steps.map(({ step, title, description, timeline }) => (
                   <div key={step} className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-lg font-bold text-accent-fg">
                       {step}
@@ -58,6 +61,9 @@ export default function Process() {
                     <div>
                       <h3 className="text-xl font-semibold text-foreground">{title}</h3>
                       <p className="mt-2 text-muted">{description}</p>
+                      {timeline && (
+                        <p className="mt-2 text-sm font-medium text-accent">{timeline}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -88,7 +94,7 @@ export default function Process() {
                 Three simple steps from first contact to protected income.
               </p>
               <div className="mt-10 space-y-8">
-                {steps.map(({ step, title, description }) => (
+                {steps.map(({ step, title, description, timeline }) => (
                   <div key={step} className="flex gap-4">
                     <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-lg font-bold text-accent-fg">
                       {step}
@@ -96,6 +102,9 @@ export default function Process() {
                     <div>
                       <h3 className="text-xl font-semibold text-foreground">{title}</h3>
                       <p className="mt-2 text-muted">{description}</p>
+                      {timeline && (
+                        <p className="mt-2 text-sm font-medium text-accent">{timeline}</p>
+                      )}
                     </div>
                   </div>
                 ))}
@@ -117,7 +126,7 @@ export default function Process() {
           Three simple steps from first contact to protected income.
         </p>
         <div className="mt-16 grid gap-12 sm:grid-cols-3">
-          {steps.map(({ step, title, description }) => (
+          {steps.map(({ step, title, description, timeline }) => (
             <div key={step} className="relative">
               <div className="flex h-12 w-12 items-center justify-center rounded-full bg-accent text-lg font-bold text-accent-fg">
                 {step}
@@ -126,6 +135,9 @@ export default function Process() {
                 {title}
               </h3>
               <p className="mt-2 text-muted">{description}</p>
+              {timeline && (
+                <p className="mt-2 text-sm font-medium text-accent">{timeline}</p>
+              )}
             </div>
           ))}
         </div>

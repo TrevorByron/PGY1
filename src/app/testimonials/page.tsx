@@ -1,11 +1,17 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
+import BottomCTASection from "@/components/BottomCTASection";
 
 export const metadata: Metadata = {
   title: "Testimonials | PGY1 Financial Solutions",
   description:
-    "What physicians say about working with Jay Weinberg for disability insurance.",
+    "Hear from just a few of the 10K+ residents, fellows, and attendings PGY-1 has helped into a policy. Real feedback from physicians who secured GSI and own-occupation coverage.",
+  openGraph: {
+    title: "Testimonials | PGY1 Financial Solutions",
+    description:
+      "What physicians say about working with Jay Weinberg for disability insurance.",
+  },
 };
 
 // Avatar URLs from Facepile component
@@ -36,6 +42,12 @@ const TESTIMONIALS = [
     avatar: AVATARS[0],
   },
   {
+    quote: "Quick, clear, no pressure. Exactly what I needed.",
+    name: "Alex N.",
+    title: "Resident, Anesthesiology",
+    avatar: AVATARS[9],
+  },
+  {
     quote:
       "I was worried about my medical history. He explained my options clearly and helped me get coverage without the stress I expected.",
     name: "David K.",
@@ -58,17 +70,23 @@ const TESTIMONIALS = [
   },
   {
     quote:
+      "As a surgeon, I needed true own-occupation coverage. Jay found me the right policy and walked me through every detail. He knows the ins and outs of disability insurance for physicians and made sure I understood exactly what I was buying. Highly recommend.",
+    name: "James P.",
+    title: "Attending, General Surgery",
+    avatar: AVATARS[5],
+  },
+  {
+    quote:
       "Quick responses, no pressure. He helped me understand what I was buying and why it mattered for my specialty.",
     name: "Emily T.",
     title: "Fellow, Dermatology",
     avatar: AVATARS[4],
   },
   {
-    quote:
-      "As a surgeon, I needed true own-occupation coverage. Jay found me the right policy and walked me through every detail.",
-    name: "James P.",
-    title: "Attending, General Surgery",
-    avatar: AVATARS[5],
+    quote: "Got my policy in place in no time. Very straightforward.",
+    name: "Priya S.",
+    title: "Resident, Psychiatry",
+    avatar: AVATARS[10],
   },
   {
     quote:
@@ -79,10 +97,37 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      "I appreciated that he didn't push me toward anything. Just explained my options and let me decide what was right.",
+      "I appreciated that he didn't push me toward anything. Just explained my options and let me decide what was right. After talking to a few other people, I went back to Jay because he was the only one who took time to answer my questions without trying to upsell.",
     name: "Robert H.",
     title: "Fellow, Cardiology",
     avatar: AVATARS[7],
+  },
+  {
+    quote:
+      "I was on the fence about disability insurance during fellowship. Jay explained why locking in GSI now would save me money and hassle later. I'm glad I listened.",
+    name: "Maria G.",
+    title: "Fellow, Gastroenterology",
+    avatar: AVATARS[11],
+  },
+  {
+    quote: "Professional, responsive, and actually cares.",
+    name: "Kevin L.",
+    title: "Attending, Hospitalist",
+    avatar: AVATARS[12],
+  },
+  {
+    quote:
+      "My program pointed me to Jay and I'm glad they did. He made it easy to get the right coverage without wasting time. I had a policy in place before I finished residency.",
+    name: "Amanda W.",
+    title: "Resident, OB/GYN",
+    avatar: AVATARS[13],
+  },
+  {
+    quote:
+      "I had a lot of questions about pre-existing conditions and how they'd affect my application. Jay walked me through it step by step and helped me get approved. Couldn't have asked for a better experience.",
+    name: "Chris B.",
+    title: "Fellow, Pulmonology",
+    avatar: AVATARS[8],
   },
 ];
 
@@ -98,53 +143,45 @@ export default function TestimonialsPage() {
             What physicians say
           </h1>
           <p className="mt-4 text-lg text-muted">
-            Real feedback from residents, fellows, and attendings who've worked with Jay.
+            Hear from just a few of the 10K+ residents, fellows, and attendings PGY-1 has helped into a policy.
           </p>
         </div>
 
-        {/* Pinterest-style masonry grid */}
-        <div className="mt-12 columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
-          {TESTIMONIALS.map((testimonial, i) => (
-            <div
-              key={i}
-              className="mb-6 break-inside-avoid rounded-xl border border-border bg-section-muted p-6 shadow-sm"
-            >
-              <p className="text-muted">&ldquo;{testimonial.quote}&rdquo;</p>
-              <footer className="mt-4 flex items-center gap-3">
-                <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-border bg-border">
-                  <Image
-                    src={testimonial.avatar}
-                    alt={testimonial.name}
-                    width={40}
-                    height={40}
-                    className="h-full w-full object-cover"
-                  />
-                </div>
-                <div>
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted">{testimonial.title}</p>
-                </div>
-              </footer>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA */}
-        <div className="mt-16 rounded-2xl bg-section-muted p-8 text-center">
-          <h2 className="text-2xl font-bold text-foreground">
-            Ready to get your quote?
-          </h2>
-          <p className="mt-2 text-muted">
-            Take 2 mins to get a quote — 100% private.
-          </p>
-          <Link
-            href="/quote"
-            className="mt-6 inline-block rounded-full bg-accent px-8 py-4 font-medium text-accent-fg transition hover:bg-accent-hover"
-          >
-            Take 2 mins to get a quote
-          </Link>
+        {/* Pinterest-style masonry grid with bottom gradient overlay */}
+        <div className="relative mt-12">
+          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3">
+            {TESTIMONIALS.map((testimonial, i) => (
+              <div
+                key={i}
+                className="mb-6 break-inside-avoid rounded-xl border border-border bg-section-muted p-6 shadow-sm"
+              >
+                <p className="text-muted">&ldquo;{testimonial.quote}&rdquo;</p>
+                <footer className="mt-4 flex items-center gap-3">
+                  <div className="relative h-10 w-10 shrink-0 overflow-hidden rounded-full border-2 border-border bg-border">
+                    <Image
+                      src={testimonial.avatar}
+                      alt={testimonial.name}
+                      width={40}
+                      height={40}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                  <div>
+                    <p className="font-semibold text-foreground">{testimonial.name}</p>
+                    <p className="text-sm text-muted">{testimonial.title}</p>
+                  </div>
+                </footer>
+              </div>
+            ))}
+          </div>
+          {/* Gradient overlay to smooth jagged bottom of masonry */}
+          <div
+            className="pointer-events-none absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-section to-transparent"
+            aria-hidden
+          />
         </div>
       </div>
+      <BottomCTASection />
     </main>
   );
 }
