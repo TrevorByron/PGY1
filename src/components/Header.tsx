@@ -4,6 +4,27 @@ import { useState } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
 
+function GiftIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M20 12v10H4V12" />
+      <rect x="2" y="7" width="20" height="5" rx="1" />
+      <line x1="12" y1="22" x2="12" y2="7" />
+      <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+      <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+    </svg>
+  );
+}
+
 const PHONE = "6094328862";
 const PHONE_DISPLAY = "(609) 432-8862";
 
@@ -48,6 +69,13 @@ export default function Header() {
             className="text-sm text-muted hover:text-foreground"
           >
             Testimonials
+          </Link>
+          <Link
+            href="/refer"
+            className="flex items-center gap-1.5 text-sm text-muted hover:text-foreground"
+          >
+            <GiftIcon className="h-4 w-4" />
+            Refer friends
           </Link>
           <Link
             href="/quote"
@@ -136,6 +164,14 @@ export default function Header() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Testimonials
+              </Link>
+              <Link
+                href="/refer"
+                className="flex items-center gap-2 rounded-md px-3 py-2 text-base font-medium text-muted hover:bg-surface-muted hover:text-foreground"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <GiftIcon className="h-4 w-4" />
+                Refer friends
               </Link>
             </div>
           </nav>

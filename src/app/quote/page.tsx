@@ -35,7 +35,7 @@ export default function QuotePage() {
 
   return (
     <main className="min-h-screen bg-dark-bg">
-      <div className="mx-auto max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:px-8">
+      <div className="mx-auto max-w-6xl px-4 pt-8 pb-20 sm:px-6 sm:pt-10 sm:pb-28 lg:px-8">
         <Link href="/" className="text-sm font-medium text-dark-muted hover:text-dark-fg">
           ← Back to home
         </Link>
