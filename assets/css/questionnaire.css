@@ -209,8 +209,14 @@
       .nav-link { display: none; }
       .nav-cta { padding: 8px 16px; font-size: 13px; }
 
+      .questionnaire-embed__host,
+      .questionnaire-embed-host {
+        min-height: 160vh;
+        height: 160vh;
+      }
+
       .questionnaire-page {
-        padding: 12px 4px 20px;
+        padding: 12px 0 20px;
         min-height: calc(100vh - 56px - 96px);
       }
       .questionnaire-shell { border-radius: 14px; }
