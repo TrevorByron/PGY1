@@ -1,0 +1,26 @@
+{
+  "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/questionnaire/index.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/questionnaire",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/questionnaire/",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [{ "key": "X-Content-Type-Options", "value": "nosniff" }]
+    }
+  ]
+}

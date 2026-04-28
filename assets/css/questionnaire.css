@@ -1,0 +1,228 @@
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --dark:      #08152b;
+      --navy:      #0d2044;
+      --teal:      #3aadde;
+      --teal-dim:  #2d96c8;
+      --white:     #ffffff;
+      --bg:        #f7f8fc;
+      --text:      #0d1e3a;
+      --muted:     #64748b;
+      --border:    #e2e8f0;
+    }
+
+    body {
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      text-decoration: none;
+      color: inherit;
+    }
+    .nav-logo-primary {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .nav-logo-primary > img {
+      width: auto;
+      height: 45px;
+      object-fit: contain;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    .nav-logo-fallback {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+    }
+    .nav-logo-fallback-icon {
+      width: auto;
+      height: 45px;
+      display: block;
+      flex-shrink: 0;
+    }
+    .nav-logo .wm,
+    .nav-logo-fallback .wm {
+      font-size: 20px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.5px;
+    }
+    .nav-logo .sub,
+    .nav-logo-fallback .sub {
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 1.4px;
+      text-transform: uppercase;
+      color: var(--muted);
+      display: block;
+    }
+
+    .nav-right { display: flex; align-items: center; gap: 20px; }
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .15s;
+    }
+    .nav-link:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--teal);
+      color: var(--dark);
+      padding: 9px 20px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      transition: background .15s, transform .1s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--teal-dim); transform: translateY(-1px); }
+
+    .questionnaire-page {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 24px 40px 36px;
+      min-height: calc(100vh - 64px - 96px);
+      position: relative;
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 110%, rgba(58,173,222,.08) 0%, transparent 65%),
+        var(--bg);
+    }
+
+    .questionnaire-shell {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      width: min(1180px, 100%);
+      margin: 0 auto;
+      border-radius: 18px;
+      border: 1px solid rgba(8,21,43,.08);
+      background: var(--white);
+      box-shadow: 0 16px 48px rgba(8,21,43,.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .questionnaire-embed-seo {
+      padding: 24px 28px 8px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(58,173,222,.06) 0%, transparent 100%);
+    }
+    .questionnaire-embed-sh {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--teal-dim);
+      margin: 0 0 10px;
+    }
+    .questionnaire-embed-lead {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 52rem;
+    }
+
+    .questionnaire-embed {
+      flex: 1;
+      min-height: 70vh;
+    }
+    /* Fillout host: height in CSS (avoid inline) */
+    .questionnaire-embed__host,
+    .questionnaire-embed-host {
+      width: 100%;
+      min-height: 120vh;
+      height: 120vh;
+    }
+    .questionnaire-embed > div {
+      width: 100%;
+      min-height: inherit;
+    }
+
+    footer {
+      background: #040e1c;
+      padding: 28px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      overflow: hidden;
+    }
+    footer p { font-size: 12px; color: rgba(255,255,255,.3); position: relative; z-index: 1; }
+    footer a { color: rgba(255,255,255,.4); text-decoration: none; transition: color .15s; }
+    footer a:hover { color: rgba(255,255,255,.8); }
+    .footer-links { display: flex; gap: 20px; position: relative; z-index: 1; }
+
+    .dot-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(58,173,222,.26) 1px, transparent 1px);
+      background-size: 26px 26px;
+      background-attachment: fixed;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @media (max-width: 900px) {
+      .questionnaire-page { padding: 20px 32px 28px; }
+      .questionnaire-embed-seo { padding: 20px 24px 6px; }
+      footer { padding: 24px 32px; }
+    }
+
+    @media (max-width: 640px) {
+      nav { padding: 0 20px; height: 56px; }
+      .nav-link { display: none; }
+      .nav-cta { padding: 8px 16px; font-size: 13px; }
+
+      .questionnaire-page {
+        padding: 12px 20px 20px;
+        min-height: calc(100vh - 56px - 96px);
+      }
+      .questionnaire-shell { border-radius: 14px; }
+      .questionnaire-embed-seo { padding: 16px 18px 4px; }
+      .questionnaire-embed-lead { font-size: 14px; }
+      .questionnaire-embed { min-height: 72vh; }
+
+      footer {
+        padding: 20px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+      }
+      .footer-links { flex-wrap: wrap; gap: 14px 20px; }
+    }
