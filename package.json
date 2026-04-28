@@ -1,0 +1,8 @@
+{
+  "name": "pgy1-static-site",
+  "private": true,
+  "scripts": {
+    "vercel-build": "echo \"Static site: no build step required\"",
+    "build": "echo \"Static site: no build step required\""
+  }
+}
