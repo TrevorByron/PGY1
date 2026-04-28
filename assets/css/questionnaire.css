@@ -219,7 +219,7 @@
         padding: 12px 0 0;
         min-height: calc(100vh - 56px - 96px);
       }
-      .questionnaire-shell { border-radius: 14px; }
+      .questionnaire-shell { border-radius: 0; }
       .questionnaire-embed-seo { padding: 16px 18px 4px; }
       .questionnaire-embed-lead { font-size: 14px; }
       .questionnaire-embed { min-height: 72vh; }
@@ -232,3 +232,14 @@
       }
       .footer-links { flex-wrap: wrap; gap: 14px 20px; }
     }
+
+
+    @media (max-width: 400px) {
+      .questionnaire-embed__host,
+      .questionnaire-embed-host {
+        min-height: 200vh;
+        height: 200vh;
+      }
+    }
+
+   
