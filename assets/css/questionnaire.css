@@ -216,7 +216,7 @@
       }
 
       .questionnaire-page {
-        padding: 12px 0 20px;
+        padding: 12px 0 0;
         min-height: calc(100vh - 56px - 96px);
       }
       .questionnaire-shell { border-radius: 14px; }
