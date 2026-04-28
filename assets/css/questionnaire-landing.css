@@ -97,6 +97,7 @@ main.questionnaire-main {
   position: relative;
   display: inline-block;
   color: var(--text, #0d1e3a);
+  z-index: 0;
 }
 
 .q-hero-intro h1 .highlight::after {
@@ -104,10 +105,11 @@ main.questionnaire-main {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 3px;
+  bottom: 0px;
   height: 3px;
   border-radius: 2px;
   background: var(--teal, #3aadde);
+  z-index: -1;
 }
 
 .q-hero-intro .hero-badge {
