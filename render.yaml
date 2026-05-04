@@ -1,0 +1,9 @@
+# Render Blueprint: use Dashboard → Blueprints → Sync, or copy build/start into an existing Web Service.
+# Build Command: npm install   Start Command: npm start
+services:
+  - type: web
+    name: pgy1-web
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /
