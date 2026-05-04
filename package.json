@@ -2,10 +2,12 @@
   "name": "pgy1-static-site",
   "private": true,
   "scripts": {
+    "start": "node server.js",
     "vercel-build": "echo \"Static site: no build step required\"",
     "build": "echo \"Static site: no build step required\""
   },
   "dependencies": {
-    "@vercel/analytics": "^2.0.1"
+    "@vercel/analytics": "^2.0.1",
+    "express": "^5.1.0"
   }
 }
