@@ -105,6 +105,15 @@
       transition: color .15s;
     }
     .nav-link:hover { color: var(--text); }
+    .nav-link-tel,
+    .nav-link-tel:visited {
+      color: var(--muted);
+      -webkit-text-fill-color: var(--muted);
+    }
+    .nav-link-tel:hover {
+      color: var(--text);
+      -webkit-text-fill-color: var(--text);
+    }
 
     .nav-cta {
       background: var(--teal);
@@ -388,6 +397,19 @@
       color: rgba(255,255,255,.5); font-size: 13px;
       font-weight: 500; white-space: nowrap;
     }
+    a.trust-item,
+    a.trust-item:visited {
+      text-decoration: none;
+      color: rgba(255,255,255,.5);
+      -webkit-text-fill-color: rgba(255,255,255,.5);
+    }
+    .trust-item a,
+    .trust-item a:visited {
+      color: inherit;
+      text-decoration: none;
+      font-weight: inherit;
+      -webkit-text-fill-color: currentColor;
+    }
     .trust-item svg { color: var(--teal); opacity: .8; width: 15px; height: 15px; flex-shrink: 0; }
 
     /* ── COVERAGE + SEO FAQ (below fold) ─────────────────── */
@@ -652,12 +674,17 @@
 
     .phone-btn {
       display: inline-flex; align-items: center; gap: 9px;
-      color: var(--teal-dim); font-size: 15px; font-weight: 700;
+      font-size: 15px; font-weight: 700;
       text-decoration: none; border: 1.5px solid var(--teal-dim);
       padding: 11px 22px; border-radius: 100px;
       transition: background .15s, color .15s;
     }
-    .phone-btn:hover { background: var(--teal); border-color: var(--teal); color: var(--dark); }
+    .phone-btn,
+    .phone-btn:visited {
+      color: var(--teal-dim);
+      -webkit-text-fill-color: var(--teal-dim);
+    }
+    .phone-btn:hover { background: var(--teal); border-color: var(--teal); color: var(--dark); -webkit-text-fill-color: var(--dark); }
     .phone-btn svg { width: 15px; height: 15px; }
 
     /* ── TESTIMONIALS (Pinterest-style column masonry) ──── */
@@ -791,6 +818,15 @@
     footer p { font-size: 12px; color: rgba(255,255,255,.3); position: relative; z-index: 1; }
     footer a { color: rgba(255,255,255,.4); text-decoration: none; transition: color .15s; }
     footer a:hover { color: rgba(255,255,255,.8); }
+    footer a.footer-tel,
+    footer a.footer-tel:visited {
+      color: rgba(255,255,255,.4);
+      -webkit-text-fill-color: rgba(255,255,255,.4);
+    }
+    footer a.footer-tel:hover {
+      color: rgba(255,255,255,.8);
+      -webkit-text-fill-color: rgba(255,255,255,.8);
+    }
     .footer-links { display: flex; gap: 20px; position: relative; z-index: 1; }
 
     /* ════════════════════════════════════════════════════════
