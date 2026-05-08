@@ -245,4 +245,49 @@
       }
     }
 
+    /* Landscape phones can get a very short viewport; give them extra room. */
+    @media (max-width: 900px) and (orientation: landscape) {
+      .questionnaire-embed__host,
+      .questionnaire-embed-host {
+        min-height: 220vh;
+        height: 220vh;
+      }
+    }
+
+    @supports (height: 100dvh) {
+      .questionnaire-embed__host,
+      .questionnaire-embed-host {
+        min-height: 120dvh;
+        height: 120dvh;
+      }
+
+      @media (max-width: 640px) {
+        .questionnaire-embed__host,
+        .questionnaire-embed-host {
+          min-height: 160dvh;
+          height: 160dvh;
+        }
+
+        .questionnaire-page {
+          min-height: calc(100dvh - 56px - 96px);
+        }
+      }
+
+      @media (max-width: 400px) {
+        .questionnaire-embed__host,
+        .questionnaire-embed-host {
+          min-height: 200dvh;
+          height: 200dvh;
+        }
+      }
+
+      @media (max-width: 900px) and (orientation: landscape) {
+        .questionnaire-embed__host,
+        .questionnaire-embed-host {
+          min-height: 220dvh;
+          height: 220dvh;
+        }
+      }
+    }
+
    
