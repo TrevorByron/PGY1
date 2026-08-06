@@ -4,10 +4,12 @@
  * and other assets are returned as text/html and social previews break.
  */
 const express = require("express");
+const fs = require("fs");
 const path = require("path");
 
 const app = express();
 const root = __dirname;
+const rootIndex = path.join(root, "index.html");
 
 app.use(
   express.static(root, {
@@ -30,7 +32,18 @@ app.use((req, res, next) => {
     res.status(404).end();
     return;
   }
-  res.sendFile(path.join(root, "index.html"));
+
+  const relativeDir = path.normalize(req.path).replace(/^(\.\.(\/|\\|$))+/, "");
+  const nestedIndex = path.resolve(path.join(root, relativeDir, "index.html"));
+  const underRoot =
+    nestedIndex === rootIndex || nestedIndex.startsWith(root + path.sep);
+
+  if (underRoot && fs.existsSync(nestedIndex)) {
+    res.sendFile(nestedIndex);
+    return;
+  }
+
+  res.sendFile(rootIndex);
 });
 
 const port = Number(process.env.PORT) || 3000;
