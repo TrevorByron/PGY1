@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://pgy1.com/sitemap.xml
+Sitemap: https://www.pgy1.com/sitemap.xml
