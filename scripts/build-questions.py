@@ -191,6 +191,7 @@ def head(title, desc, canonical, extra_ld):
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/main.css" />
   <link rel="stylesheet" href="/assets/css/questions.css" />
+  <link rel="stylesheet" href="/assets/css/refresh.css" />
   <script type="application/ld+json">{json.dumps(extra_ld, ensure_ascii=False)}</script>
 </head>
 <body>
