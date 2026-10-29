@@ -51,7 +51,7 @@ body::after {
   background: var(--grain);
   background-size: 200px 200px;
   mix-blend-mode: soft-light;
-  opacity: 0.38;
+  opacity: 0.19;
 }
 
 /* Shared: textured dark surface */
