@@ -402,3 +402,33 @@ footer a, footer a.footer-tel, footer a.footer-tel:visited {
 @media (prefers-reduced-transparency: reduce) {
   nav, .stat-card, .qa-home-card { backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
+
+/* ── Nav that follows the section underneath (set by main.js) ── */
+nav {
+  transition: background-color .35s ease, border-color .35s ease, box-shadow .35s ease;
+}
+nav .nav-link, nav .nav-cta { transition: color .35s ease, background .35s ease, box-shadow .35s ease; }
+
+nav.nav--on-dark {
+  background: rgba(8, 21, 43, 0.5);
+  border-color: rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 30px -14px rgba(0, 0, 0, 0.6);
+}
+nav.nav--on-dark .nav-link,
+nav.nav--on-dark .nav-link-tel,
+nav.nav--on-dark .nav-link-tel:visited {
+  color: rgba(232, 242, 250, 0.88);
+  -webkit-text-fill-color: rgba(232, 242, 250, 0.88);
+}
+nav.nav--on-dark .nav-link:hover { color: #fff; -webkit-text-fill-color: #fff; }
+nav.nav--on-dark .nav-cta {
+  background: linear-gradient(180deg, #8fd6f5 0%, #3aadde 60%);
+  color: #06142a;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 6px 14px -8px rgba(58, 173, 222, 0.8);
+}
+
+nav.nav--on-light {
+  background: rgba(245, 243, 237, 0.92);
+  border-color: rgba(13, 30, 58, 0.08);
+  box-shadow: 0 8px 24px -18px rgba(13, 30, 58, 0.35);
+}

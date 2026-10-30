@@ -148,3 +148,35 @@
     });
   }
 })();
+
+/* ── Nav: switch between dark glass and light paper depending on the section underneath ── */
+(function () {
+  const nav = document.querySelector('nav');
+  if (!nav) return;
+  const DARK = '.header-and-questionnaire, .qa-hero, .section-dark, .cta-section, .qa-cta-band, footer';
+  const logo = nav.querySelector('.nav-logo-primary > img');
+  const srcDark = logo && logo.getAttribute('src');
+  const srcLight = srcDark && srcDark.replace('horizontal-logo.svg', 'horizontal-logo-light.svg');
+  if (srcLight) new Image().src = srcLight;
+  let ticking = false;
+  let current = null;
+  function update() {
+    ticking = false;
+    const r = nav.getBoundingClientRect();
+    const y = r.top + r.height / 2;
+    let dark = false;
+    document.querySelectorAll(DARK).forEach((el) => {
+      const b = el.getBoundingClientRect();
+      if (b.top <= y && b.bottom >= y) dark = true;
+    });
+    if (dark === current) return;
+    current = dark;
+    nav.classList.toggle('nav--on-dark', dark);
+    nav.classList.toggle('nav--on-light', !dark);
+    if (logo && srcLight) logo.setAttribute('src', dark ? srcLight : srcDark);
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  update();
+})();
