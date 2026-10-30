@@ -432,3 +432,26 @@ nav.nav--on-light {
   border-color: rgba(13, 30, 58, 0.08);
   box-shadow: 0 8px 24px -18px rgba(13, 30, 58, 0.35);
 }
+
+/* ── Homepage: deep blue only for the hero, "Why it matters" and the footer ── */
+.questionnaire-landing-below .section,
+.questionnaire-landing-below .section-alt,
+.questionnaire-landing-below #questions,
+.questionnaire-landing-below .section.gsi-home {
+  background: var(--paper) !important;
+}
+.questionnaire-landing-below .section-dark {
+  background: #08152b var(--tex-band) center / cover no-repeat !important;
+}
+.questionnaire-landing-below .section + .section,
+.questionnaire-landing-below .section + .cta-section--light { border-top: 1px solid var(--hairline); }
+.questionnaire-landing-below .section-dark + .section,
+.questionnaire-landing-below .section + .section-dark { border-top: 0; }
+
+.cta-section.cta-section--light { background: var(--paper) !important; }
+.cta-section--light h2 { color: var(--ink); }
+.cta-section--light p { color: var(--muted); }
+.cta-section--light .proof-text { color: var(--muted); }
+.cta-section--light .proof-text strong { color: var(--ink); }
+.cta-section--light .proof-avatars span { border-color: var(--paper); background: var(--paper-2); color: var(--ink); }
+.questionnaire-landing-below .gsi-home .gsi-search { box-shadow: 0 0 0 6px rgba(13, 30, 58, 0.04), 0 18px 40px -28px rgba(13, 30, 58, 0.35); }

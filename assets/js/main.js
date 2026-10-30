@@ -153,7 +153,7 @@
 (function () {
   const nav = document.querySelector('nav');
   if (!nav) return;
-  const DARK = '.header-and-questionnaire, .qa-hero, .section-dark, .cta-section, .qa-cta-band, footer';
+  const DARK = '.header-and-questionnaire, .qa-hero, .section-dark, .cta-section:not(.cta-section--light), .qa-cta-band, footer';
   const logo = nav.querySelector('.nav-logo-primary > img');
   const srcDark = logo && logo.getAttribute('src');
   const srcLight = srcDark && srcDark.replace('horizontal-logo.svg', 'horizontal-logo-light.svg');

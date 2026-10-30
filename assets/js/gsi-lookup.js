@@ -116,135 +116,85 @@
     return;
   }
 
-  /* ── Rendering ────────────────────────────────────── */
+  /* ── Rendering: a result card under the search, shown only after "Check" ── */
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const where = (h) => h.st.map((s) => STATE_NAMES[s]).join(', ');
   const byId = (id) => H.find((o) => o.id === id);
-
-  const intro = document.querySelector('.gsi-intro');
-  const checked = document.querySelector('.gsi-checked');
-  const profile = document.getElementById('gsi-profile');
-  const why = document.querySelector('.gsi-why');
-  const baseTitle = document.title;
-  const CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
-  const DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>';
-  const ARROW = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
-
-  const SIDE = (label) =>
-    '<aside class="gsi-side"><div class="gsi-side__card">' +
-      '<img src="/assets/images/jay-face.jpg" alt="" width="64" height="64" />' +
-      '<p class="gsi-side__name">Jay Weinberg, CLU, ChFC</p>' +
-      `<p class="gsi-side__label">${label}</p>` +
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const CTA =
+    '<div class="gsi-card__actions">' +
       '<a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a>' +
-      '<a class="gsi-side__tel" href="tel:+16094328862">or call (609) 432-8862</a>' +
-      '<a class="gsi-side__tel" href="mailto:jay@pgy1.com">jay@pgy1.com</a>' +
-    '</div></aside>';
+      '<a class="gsi-card__tel" href="tel:+16094328862">or call Jay at (609) 432-8862</a>' +
+    '</div>';
 
-  const INLINE_CTA = '<div class="gsi-inline-cta"><a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a><a href="tel:+16094328862">or call Jay at (609) 432-8862</a></div>';
-
-  const CLIP =
-    '<section class="gsi-block"><h2>Watch Jay explain GSI</h2>' +
-    '<figure class="qa-clip"><video src="/assets/video/what-is-gsi-disability-insurance.mp4" poster="/assets/video/what-is-gsi-disability-insurance.jpg" controls playsinline preload="none" title="Jay Weinberg answers: What is a GSI disability policy?"></video>' +
-    '<figcaption class="qa-clip__side"><span class="qa-video__label">What is a GSI disability policy?</span>' +
-    '<p>Thirty seconds from his webinar for residents and fellows.</p>' +
-    `<a class="qa-link" href="/questions/what-is-gsi-disability-insurance/">Read the full answer ${ARROW}</a></figcaption></figure></section>`;
-
-  function enterProfile(state, title, whereLine, crumb, bodyHtml, url) {
-    intro.hidden = true;
-    result.hidden = true;
-    checked.hidden = false;
-    document.getElementById('gsi-status').innerHTML = state;
-    document.getElementById('gsi-name').textContent = title;
-    document.getElementById('gsi-where').textContent = whereLine;
-    document.getElementById('gsi-crumb-state').textContent = crumb;
-    profile.innerHTML = bodyHtml;
-    profile.hidden = false;
-    if (why) why.hidden = true;
-    document.title = title + ' GSI disability insurance | PGY1.com';
-    history.replaceState(null, '', url);
+  function render(htmlStr, url) {
+    result.innerHTML = htmlStr;
+    result.hidden = false;
+    if (url) history.replaceState(null, '', url);
   }
 
-  function leaveProfile() {
-    checked.hidden = true;
-    profile.hidden = true;
-    profile.innerHTML = '';
-    intro.hidden = false;
-    if (why) why.hidden = false;
-    document.title = baseTitle;
-    input.value = '';
-    history.replaceState(null, '', '/gsi/');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    setTimeout(() => input.focus(), 250);
+  // "Looking up…" step: a short pause with a status line, so the answer reads as a lookup, not a link
+  let lookupTimer = null, stepTimer = null;
+  function lookingUp(label, then) {
+    clearTimeout(lookupTimer); clearTimeout(stepTimer);
+    form.classList.add('is-busy');
+    render(
+      '<div class="gsi-card gsi-card--loading" role="status">' +
+        '<span class="gsi-spinner" aria-hidden="true"></span>' +
+        `<div><p class="gsi-card__loading-title">Looking up ${esc(label)}</p>` +
+        `<p class="gsi-card__loading-step">Checking Jay's list of ${H.length} hospitals and programs</p></div>` +
+      '</div>'
+    );
+    const step = result.querySelector('.gsi-card__loading-step');
+    stepTimer = setTimeout(() => { if (step) step.textContent = 'Matching names, health systems and affiliated programs'; }, reduce ? 0 : 650);
+    lookupTimer = setTimeout(() => { clearTimeout(stepTimer); form.classList.remove('is-busy'); then(); }, reduce ? 150 : 1300);
   }
 
   function showProfile(h) {
     const siblings = h.y ? H.filter((o) => o !== h && o.y === h.y) : [];
     const sib = siblings.length
-      ? `<section class="gsi-block"><h2>Also on Jay's list from ${esc(h.y)}</h2><ul class="gsi-siblings">` +
-        siblings.map((o) => `<li><a href="/gsi/?h=${o.id}" data-id="${o.id}">${esc(o.d)}<span>${esc(where(o))}</span></a></li>`).join('') +
-        '</ul></section>'
+      ? `<p class="gsi-card__more"><span>Also on the list from ${esc(h.y)}:</span> ` +
+        siblings.slice(0, 5).map((o) => `<a href="/gsi/?h=${o.id}" data-id="${o.id}">${esc(o.d)}</a>`).join('') +
+        (siblings.length > 5 ? `<em>+${siblings.length - 5} more</em>` : '') + '</p>'
       : '';
-    enterProfile(
-      `<span class="gsi-badge is-yes">${CHECK}GSI available</span><span class="gsi-checked__note">Checked against Jay's list</span>`,
-      h.d,
-      (h.y ? h.y + ' · ' : '') + where(h),
-      where(h),
-      '<div class="qa-shell gsi-profile-grid"><div class="gsi-profile-main">' +
-        '<section class="gsi-block"><h2>At a glance</h2><dl class="gsi-facts">' +
-          '<div><dt>Policy</dt><dd>Guardian guaranteed standard issue (GSI)</dd></div>' +
-          '<div><dt>Health questions</dt><dd>None</dd></div>' +
-          '<div><dt>Who can get it</dt><dd>Residents and fellows in eligible programs</dd></div>' +
-          '<div><dt>How long it takes</dt><dd>A few days to a week</dd></div>' +
-        '</dl>' +
-        '<p class="gsi-warn"><strong>Don\'t apply for any other disability policy first.</strong> Most GSI policies ask whether you\'ve applied before, and if you have, you may not be eligible.</p>' + INLINE_CTA + '</section>' +
-        '<section class="gsi-block"><h2>What happens next</h2><ol class="gsi-steps">' +
-          '<li><strong>Answer a few questions.</strong> The questionnaire takes about 2 minutes and covers your training, program and current coverage.</li>' +
-          `<li><strong>Jay confirms your eligibility.</strong> He checks the GSI against your program and start date.</li>` +
-          '<li><strong>Decide together.</strong> Jay walks you through the policy and whether anything else makes sense for you.</li>' +
-        '</ol></section>' +
-        CLIP + sib +
-      '</div>' + SIDE('Places this policy for residents and fellows here') + '</div>',
+    render(
+      '<article class="gsi-card gsi-card--yes">' +
+        '<p class="gsi-card__status"><span class="gsi-dot"></span>On Jay\'s GSI list</p>' +
+        `<h2>${esc(h.d)}</h2>` +
+        `<p class="gsi-card__where">${h.y ? esc(h.y) + ' · ' : ''}${esc(where(h))}</p>` +
+        '<p>Residents and fellows at this program can get a Guardian guaranteed standard issue policy, with no health questions. <strong>Talk to Jay before you apply for any other disability policy.</strong> Applying elsewhere first can make you ineligible.</p>' +
+        CTA + sib +
+      '</article>',
       '/gsi/?h=' + h.id
     );
   }
 
   function showNotFound(q) {
-    enterProfile(
-      `<span class="gsi-badge is-no">${DASH}Not on Jay's list</span><span class="gsi-checked__note">Checked against Jay's list</span>`,
-      q,
-      'We couldn\'t match this to a hospital on Jay\'s GSI list.',
-      'Not found',
-      '<div class="qa-shell gsi-profile-grid"><div class="gsi-profile-main">' +
-        '<section class="gsi-block"><h2>That doesn\'t mean there\'s no GSI</h2>' +
-        '<p class="gsi-p">Hospitals go by different names, offers change, and some GSIs are through other insurance companies. Jay keeps track of the ones he knows about and will point you to the right person if he can\'t offer it himself.</p>' +
-        '<p class="gsi-warn"><strong>Until you know, don\'t apply for any other disability policy.</strong> Most GSI policies ask whether you\'ve applied before.</p>' + INLINE_CTA + '</section>' +
-        '<section class="gsi-block"><h2>What to do</h2><ol class="gsi-steps">' +
-          '<li><strong>Tell Jay where you\'re training.</strong> Start the questionnaire or email jay@pgy1.com with your hospital and program.</li>' +
-          '<li><strong>Jay checks for a GSI.</strong> If he can\'t offer it, he\'ll tell you who can.</li>' +
-          '<li><strong>Then decide.</strong> With or without a GSI, Jay walks you through what makes sense.</li>' +
-        '</ol></section>' +
-        CLIP +
-      '</div>' + SIDE('Will check your hospital for you') + '</div>',
+    render(
+      '<article class="gsi-card gsi-card--no">' +
+        '<p class="gsi-card__status"><span class="gsi-dot"></span>Not on Jay\'s list</p>' +
+        `<h2>We couldn't find "${esc(q)}"</h2>` +
+        '<p>That doesn\'t mean there\'s no GSI. Hospitals go by different names, offers change, and some GSIs are through other insurance companies. Jay keeps track of the ones he knows about and will point you to the right person if he can\'t offer it himself.</p>' +
+        CTA +
+        '<p class="gsi-card__more">Or <a href="#all">browse the full list by state</a>.</p>' +
+      '</article>',
       '/gsi/?q=' + encodeURIComponent(q)
     );
   }
 
   function showChoices(q, hits) {
-    result.innerHTML =
-      '<article class="gsi-profile gsi-profile--list">' +
-        `<p class="gsi-profile__status is-yes"><span class="gsi-dot"></span>${hits.length} matches on Jay's list</p>` +
+    render(
+      '<article class="gsi-card">' +
+        `<p class="gsi-card__status"><span class="gsi-dot"></span>${hits.length} matches on Jay's list</p>` +
         '<h2>Which one is yours?</h2>' +
-        '<ul class="gsi-choices">' +
+        '<ul class="gsi-card__choices">' +
           hits.slice(0, 8).map((o) => `<li><a href="/gsi/?h=${o.id}" data-id="${o.id}"><span>${esc(o.d)}</span><small>${o.y ? esc(o.y) + ' · ' : ''}${esc(where(o))}</small></a></li>`).join('') +
         '</ul>' +
-        (hits.length > 8 ? '<p class="gsi-profile__hint">Keep typing to narrow it down.</p>' : '') +
-      '</article>';
-    result.hidden = false;
-    history.replaceState(null, '', '/gsi/?q=' + encodeURIComponent(q));
+        (hits.length > 8 ? '<p class="gsi-card__more">Keep typing to narrow it down.</p>' : '') +
+      '</article>',
+      '/gsi/?q=' + encodeURIComponent(q)
+    );
   }
-
-  document.querySelector('.gsi-again').addEventListener('click', leaveProfile);
-  document.querySelector('.gsi-back').addEventListener('click', (ev) => { ev.preventDefault(); leaveProfile(); });
 
   /* ── Combobox ─────────────────────────────────────── */
   let options = [];
@@ -275,8 +225,7 @@
     picked = null;
     form.classList.remove('is-picked');
     closeOptions();
-    showProfile(h);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    lookingUp(h.d, () => showProfile(h));
   }
   function pick(h) {
     picked = h;
@@ -287,13 +236,15 @@
   }
   function submit(q) {
     q = q.trim();
-    if (!q) return;
+    if (!q) { input.focus(); return; }
     if (picked && picked.d === q) { choose(picked); return; }
-    const hits = score(q);
     closeOptions();
-    if (!hits.length) { showNotFound(q); window.scrollTo({ top: 0, behavior: 'smooth' }); }
-    else if (hits.length === 1 || lastScores[0] > lastScores[1]) choose(hits[0]);
-    else showChoices(q, hits);
+    const hits = score(q);
+    lookingUp(q, () => {
+      if (!hits.length) showNotFound(q);
+      else if (hits.length === 1 || lastScores[0] > lastScores[1]) { input.value = hits[0].d; showProfile(hits[0]); }
+      else showChoices(q, hits);
+    });
   }
 
   input.addEventListener('input', () => {
@@ -324,6 +275,7 @@
     const h = byId(a.dataset.id);
     if (!h) return;
     ev.preventDefault();
+    if (!result.contains(a)) form.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
     choose(h);
   });
 
