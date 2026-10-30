@@ -18,6 +18,13 @@ import re
 import sys
 
 DRAFT = True
+# Dates shown on every question page and in its Article schema. Bump UPDATED when content changes.
+PUBLISHED = "2026-10-30"
+UPDATED = "2026-10-30"
+# Flip to True once Jay has read and approved the pages; the byline then says he reviewed them.
+REVIEWED_BY_JAY = False
+JAY = {"@type": "Person", "@id": "https://www.pgy1.com/#jay", "name": "Jay Weinberg", "honorificSuffix": "CLU, ChFC",
+       "url": "https://www.pgy1.com/#about"}
 SITE = "https://www.pgy1.com"
 PHONE_DISPLAY = "(609) 432-8862"
 PHONE_TEL = "+16094328862"
@@ -52,6 +59,12 @@ def secs(ts):
     for p in parts:
         total = total * 60 + p
     return total
+
+
+def pretty_date(iso):
+    y, m, d = (int(x) for x in iso.split("-"))
+    months = "January February March April May June July August September October November December".split()
+    return f"{months[m - 1]} {d}, {y}"
 
 
 def slugify(text):
@@ -187,6 +200,7 @@ def head(title, desc, canonical, extra_ld):
   <meta name="twitter:image" content="https://www.pgy1.com/assets/images/unfurl.png?v=20260508" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <script>window.va = window.va || function () {{ (window.vaq = window.vaq || []).push(arguments); }};</script>
   <script defer src="/_vercel/insights/script.js"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="/assets/css/main.css" />
@@ -259,13 +273,15 @@ def page(q, by_slug):
                 "headline": q["title"],
                 "description": q["description"],
                 "url": url,
-                "author": {"@type": "Person", "name": "Jay Weinberg", "honorificSuffix": "CLU, ChFC", "url": SITE + "/"},
+                "author": JAY,
                 "publisher": {"@id": SITE + "/#organization"},
+                "datePublished": PUBLISHED,
+                "dateModified": UPDATED,
                 "mainEntityOfPage": url,
             },
             {
                 "@type": "VideoObject",
-                "name": q["video_title"],
+                "name": (q["title"] if q.get("clip") else q["video_title"]),
                 "description": q["description"],
                 **({
                     "thumbnailUrl": f"{SITE}/assets/video/{q['clip']}.jpg",
@@ -344,7 +360,7 @@ def page(q, by_slug):
     <h1>{html.escape(q['title'])}</h1>
     <div class="qa-author">
       <span class="qa-author__mark"><img src="/assets/images/Icon.svg" alt="" width="22" height="22" /></span>
-      <span><strong>Jay Weinberg, CLU, ChFC</strong><span>Physician disability insurance specialist · PGY1 Financial Solutions</span></span>
+      <span><strong>Jay Weinberg, CLU, ChFC</strong><span>Physician disability insurance specialist · PGY1 Financial Solutions</span><span class="qa-dateline">{"Reviewed by Jay · " if REVIEWED_BY_JAY else ""}Updated <time datetime="{UPDATED}">{pretty_date(UPDATED)}</time></span></span>
     </div>
   </div>
 </header>

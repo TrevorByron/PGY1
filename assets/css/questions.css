@@ -508,3 +508,4 @@
 @media (max-width: 640px) {
   .qa-clip video { flex-basis: 100%; width: 100%; max-width: 380px; margin: 0 auto; }
 }
+.qa-author .qa-dateline { display: block; font-size: 13px; color: #94a3b8; }

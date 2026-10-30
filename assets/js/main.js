@@ -180,3 +180,26 @@
   window.addEventListener('resize', onScroll);
   update();
 })();
+
+/* ── Conversion events (Vercel Web Analytics custom events; recorded on Pro/Enterprise plans, ignored otherwise) ── */
+(function () {
+  function track(name, data) {
+    try { if (typeof window.va === 'function') window.va('event', { name: name, data: data }); } catch (e) { /* never block a click */ }
+  }
+  window.pgy1Track = track;
+  function where(el) {
+    const s = el.closest('section[id], header[id], nav, footer, aside, .qa-cta-band, .cta-section, .gsi-card');
+    if (!s) return 'page';
+    if (s.id) return s.id;
+    return s.tagName.toLowerCase() === 'nav' ? 'nav' : s.tagName.toLowerCase() === 'footer' ? 'footer' : (s.className.split(' ')[0] || 'page');
+  }
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href');
+    const page = location.pathname;
+    if (href.includes('questionnaire-embed')) track('Questionnaire CTA', { page: page, place: where(a) });
+    else if (href.startsWith('tel:')) track('Call click', { page: page, place: where(a) });
+    else if (href.startsWith('mailto:')) track('Email click', { page: page, place: where(a) });
+  });
+})();

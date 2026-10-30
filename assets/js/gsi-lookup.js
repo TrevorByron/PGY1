@@ -111,6 +111,7 @@
       ev.preventDefault();
       const q = input.value.trim();
       if (!q) { input.focus(); return; }
+      if (window.pgy1Track) window.pgy1Track('GSI lookup from homepage', { picked: !!(chosen && chosen.d === q) });
       location.href = chosen && chosen.d === q ? '/gsi/?h=' + chosen.id : '/gsi/?q=' + encodeURIComponent(q);
     });
     return;
@@ -127,6 +128,7 @@
       '<a class="gsi-card__tel" href="tel:+16094328862">or call Jay at (609) 432-8862</a>' +
     '</div>';
 
+  const track = (name, data) => { if (window.pgy1Track) window.pgy1Track(name, data); };
   function render(htmlStr, url) {
     result.innerHTML = htmlStr;
     result.hidden = false;
@@ -151,6 +153,7 @@
   }
 
   function showProfile(h) {
+    track('GSI lookup', { result: 'found', hospital: h.id });
     const siblings = h.y ? H.filter((o) => o !== h && o.y === h.y) : [];
     const sib = siblings.length
       ? `<p class="gsi-card__more"><span>Also on the list from ${esc(h.y)}:</span> ` +
@@ -170,6 +173,7 @@
   }
 
   function showNotFound(q) {
+    track('GSI lookup', { result: 'not_found', query: q.slice(0, 120) });
     render(
       '<article class="gsi-card gsi-card--no">' +
         '<p class="gsi-card__status"><span class="gsi-dot"></span>Not on Jay\'s list</p>' +
@@ -183,6 +187,7 @@
   }
 
   function showChoices(q, hits) {
+    track('GSI lookup', { result: 'several', query: q.slice(0, 120) });
     render(
       '<article class="gsi-card">' +
         `<p class="gsi-card__status"><span class="gsi-dot"></span>${hits.length} matches on Jay's list</p>` +
