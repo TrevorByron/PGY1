@@ -93,10 +93,11 @@
 .gsi-card__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 22px; }
 .gsi-card__tel { color: rgba(232, 242, 250, 0.85); font-size: 15px; text-decoration: none; }
 .gsi-card__tel:hover { color: #fff; text-decoration: underline; }
-.gsi-card__more { margin-top: 20px !important; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 14px !important; }
+.gsi-card__more { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; margin-top: 20px !important; padding-top: 16px; border-top: 1px solid rgba(255, 255, 255, 0.1); font-size: 14px !important; }
 .gsi-card__more span { color: rgba(226, 238, 248, 0.6); }
 .gsi-card__more a { color: var(--sky, #8fd0f0); text-decoration: none; }
-.gsi-card__more a[data-id] { margin-right: 14px; white-space: nowrap; }
+.gsi-card__more > span { flex-basis: 100%; }
+.gsi-card__more a { overflow-wrap: anywhere; }
 .gsi-card__more a:hover { text-decoration: underline; }
 .gsi-card__more em { font-style: normal; color: rgba(226, 238, 248, 0.5); }
 .gsi-card__choices { list-style: none; margin: 18px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
@@ -240,3 +241,36 @@
 
 /* Lookup hero always fills the screen; grows if a result needs more room */
 .qa-hero.gsi-hero { min-height: 100vh; min-height: 100svh; box-sizing: border-box; }
+
+/* Link from a lookup result to a hospital's program page */
+.gsi-card__guide { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(143, 208, 240, 0.45); background: rgba(143, 208, 240, 0.1); color: #e8f6fd; font-size: 15px; font-weight: 600; text-decoration: none; }
+.gsi-card__guide:hover { background: rgba(143, 208, 240, 0.2); }
+.gsi-state a.has-page { font-weight: 600; }
+.gsi-state a.has-page::after { content: " · guide"; font-weight: 400; color: #1f6f99; }
+
+/* ── Program page (/gsi/<hospital>/) ─────────────────── */
+.gsi-program-status { margin-bottom: 14px; color: #8ff0bf; }
+.gsi-program-status .gsi-dot { background: #5ee0a0; box-shadow: 0 0 0 4px rgba(94, 224, 160, 0.18); }
+.gsi-program-hero .qa-lede { max-width: 700px; }
+.gsi-table { width: 100%; border-collapse: separate; border-spacing: 0; margin: 4px 0 0; background: var(--card, #fbfaf7); border: 1px solid var(--hairline, rgba(13, 30, 58, 0.1)); border-radius: 16px; overflow: hidden; font-size: 15px; }
+.gsi-table th, .gsi-table td { padding: 13px 18px; text-align: left; vertical-align: top; line-height: 1.5; border-top: 1px solid var(--hairline, rgba(13, 30, 58, 0.1)); }
+.gsi-table tr:first-child th, .gsi-table tr:first-child td { border-top: 0; }
+.gsi-table th { width: 34%; font-weight: 600; color: #5d6878; }
+.gsi-table td { color: var(--ink, #0d1e3a); font-weight: 500; }
+.gsi-table__note { margin: 12px 0 0 !important; font-size: 14px !important; color: #5d6878 !important; }
+.gsi-program-questions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; margin-top: 4px; }
+.gsi-sources { list-style: disc; padding-left: 20px; margin: 8px 0 0; }
+.gsi-sources a { color: #1f6f99; }
+.qa-side__sticky .gsi-side__card { margin-top: 24px; }
+@media (max-width: 640px) {
+  .gsi-table th, .gsi-table td { display: block; width: auto; }
+  .gsi-table td { border-top: 0; padding-top: 0; }
+  .gsi-program-questions { grid-template-columns: minmax(0, 1fr); }
+}
+.gsi-side__card { display: flex; flex-direction: column; align-items: flex-start; padding: 26px 24px; border-radius: 20px; background: #0d2044 var(--tex-hero) center / cover; color: #fff; box-shadow: 0 30px 60px -34px rgba(8, 21, 43, 0.7); }
+.gsi-side__card img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.6); }
+.gsi-side__name { margin: 14px 0 0; font-size: 17px; font-weight: 700; }
+.gsi-side__label { margin: 4px 0 20px; font-size: 14px; line-height: 1.45; color: rgba(226, 238, 248, 0.75); }
+.gsi-side__card .btn-primary { width: 100%; justify-content: center; padding: 13px 18px; font-size: 15px; }
+.gsi-side__tel { margin-top: 10px; font-size: 14px; color: rgba(232, 242, 250, 0.85); text-decoration: none; }
+.gsi-side__tel:hover { color: #fff; text-decoration: underline; }

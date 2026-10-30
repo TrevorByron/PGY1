@@ -75,7 +75,8 @@ def page(rows):
     for st in state_keys:
         items = sorted(by_state[st], key=lambda r: r["display"].lower())
         lis = "".join(
-            f'<li><a href="/gsi/?h={r["id"]}" data-id="{r["id"]}"'
+            (f'<li><a href="{r["page"]}" class="has-page"' if r.get("page") else f'<li><a href="/gsi/?h={r["id"]}" data-id="{r["id"]}"')
+            + ""
             + (f' title="{html.escape(r["system"])}"' if r["system"] else "")
             + f'>{html.escape(r["display"])}</a></li>'
             for r in items
@@ -151,16 +152,156 @@ def page(rows):
     )
 
 
+def load_programs(rows):
+    """data/gsi-programs/*.json: full pages for hospitals Jay has a direct relationship with."""
+    by_name = {r["name"]: r for r in rows}
+    progs = []
+    folder = os.path.join(ROOT, "data", "gsi-programs")
+    for fn in sorted(os.listdir(folder)) if os.path.isdir(folder) else []:
+        if not fn.endswith(".json"):
+            continue
+        pr = json.load(open(os.path.join(folder, fn)))
+        assert pr["hospital"] in by_name, f"{fn}: hospital not in gsi-hospitals.csv: {pr['hospital']}"
+        pr["row"] = by_name[pr["hospital"]]
+        progs.append(pr)
+    return progs
+
+
+def question_title(slug):
+    path = os.path.join(ROOT, "questions", slug, "index.html")
+    m = re.search(r"<h1>(.*?)</h1>", open(path).read(), re.S) if os.path.exists(path) else None
+    assert m, f"question page not built: {slug} (run build-questions.py first)"
+    return html.unescape(m.group(1))
+
+
+def program_page(pr):
+    r = pr["row"]
+    url = f"{bq.SITE}/gsi/{pr['slug']}/"
+    state = r["states"][0]
+    facts = "".join(f"<tr><th scope=\"row\">{html.escape(k)}</th><td>{html.escape(v)}</td></tr>" for k, v in pr["facts"])
+    qs = "".join(
+        f'<a class="qa-rel" href="/questions/{s}/"><span class="qa-rel__stage">Jay answers</span>'
+        f'<span class="qa-rel__title">{html.escape(question_title(s))}</span>{bq.ARROW}</a>'
+        for s in pr["questions"]
+    )
+    sources = "".join(f'<li><a href="{html.escape(u)}" rel="nofollow">{html.escape(t)}</a></li>' for t, u in pr["sources"])
+    clip = pr.get("clip")
+    clip_html = (
+        f"""<figure class="qa-clip">
+      <video src="/assets/video/{clip}.mp4" poster="/assets/video/{clip}.jpg" controls playsinline preload="none" title="Jay Weinberg answers: {html.escape(pr['clip_title'])}"></video>
+      <figcaption class="qa-clip__side">
+        <span class="qa-video__label">{html.escape(pr['clip_title'])}</span>
+        <p>Jay's answer, from his webinar for residents and fellows.</p>
+        <a class="qa-link" href="/questions/{clip}/">Read the full answer {bq.ARROW}</a>
+      </figcaption>
+    </figure>"""
+        if clip else ""
+    )
+    ld = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "name": pr["title"],
+                "description": pr["description"],
+                "url": url,
+                "author": bq.JAY,
+                "datePublished": bq.PUBLISHED,
+                "dateModified": bq.UPDATED,
+                "about": {"@type": "Hospital", "name": r["display"],
+                          "address": {"@type": "PostalAddress", "addressLocality": pr.get("city", ""), "addressRegion": state, "addressCountry": "US"}},
+                "publisher": {"@id": bq.SITE + "/#organization"},
+            },
+            {
+                "@type": "BreadcrumbList",
+                "itemListElement": [
+                    {"@type": "ListItem", "position": 1, "name": "GSI lookup", "item": bq.SITE + "/gsi/"},
+                    {"@type": "ListItem", "position": 2, "name": r["display"], "item": url},
+                ],
+            },
+        ],
+    }
+    head = bq.head(pr["seo_title"], pr["description"], url, ld).replace(
+        '<link rel="stylesheet" href="/assets/css/refresh.css" />',
+        '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
+    return (
+        head
+        + bq.NAV
+        + f"""<header class="qa-hero qa-hero--page gsi-program-hero">
+  <div class="qa-shell">
+    <div class="qa-crumbs"><a href="/gsi/">GSI lookup</a><span aria-hidden="true">/</span><span>{STATES[state]}</span></div>
+    <p class="gsi-card__status gsi-program-status"><span class="gsi-dot"></span>On Jay's GSI list</p>
+    <h1>{html.escape(pr['title'])}</h1>
+    <p class="qa-lede">{html.escape(pr['lede'])}</p>
+    <div class="qa-author">
+      <span class="qa-author__mark"><img src="/assets/images/Icon.svg" alt="" width="22" height="22" /></span>
+      <span><strong>Jay Weinberg, CLU, ChFC</strong><span>Broker for Cooper's GSI program · PGY1 Financial Solutions</span><span class="qa-dateline">{"Reviewed by Jay · " if bq.REVIEWED_BY_JAY else ""}Updated <time datetime="{bq.UPDATED}">{bq.pretty_date(bq.UPDATED)}</time></span></span>
+    </div>
+  </div>
+</header>
+<main class="qa-shell qa-grid">
+  <article class="qa-main">
+    <section class="qa-short" aria-label="Short answer">
+      <p class="qa-eyebrow">Can Cooper residents get a GSI policy?</p>
+      <p class="qa-short__text">{html.escape(pr['short'])}</p>
+    </section>
+    <div class="qa-body">
+      <h2 id="at-a-glance">Cooper's GSI at a glance</h2>
+      <table class="gsi-table">{facts}</table>
+      <p class="gsi-table__note">{html.escape(pr['facts_note'])}</p>
+      <h2 id="before-you-apply">Get it before any other application</h2>
+      <p>Most GSI policies ask whether you've applied for disability insurance before. If you have, there's a good chance you won't be eligible, so lock in the GSI first, then decide whether to add anything on top.</p>
+    </div>
+    {clip_html}
+    <div class="qa-body">
+      <h2 id="program-questions">Questions Cooper residents ask</h2>
+    </div>
+    <div class="gsi-program-questions">{qs}</div>
+    <section class="qa-sources">
+      <h2>Sources</h2>
+      <ul class="gsi-sources">{sources}</ul>
+    </section>
+  </article>
+  <aside class="qa-side">
+    <div class="qa-side__sticky">
+      <div class="qa-toc">
+        <p class="qa-eyebrow">On this page</p>
+        <ol><li><a href="#at-a-glance">Cooper's GSI at a glance</a></li><li><a href="#before-you-apply">Get it before any other application</a></li><li><a href="#program-questions">Questions Cooper residents ask</a></li></ol>
+      </div>
+      <div class="gsi-side__card">
+        <img src="/assets/images/jay-face.jpg" alt="" width="64" height="64" />
+        <p class="gsi-side__name">Jay Weinberg, CLU, ChFC</p>
+        <p class="gsi-side__label">Places Cooper's GSI policy for residents and fellows</p>
+        <a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a>
+        <a class="gsi-side__tel" href="tel:+16094328862">or call (609) 432-8862</a>
+      </div>
+    </div>
+  </aside>
+</main>
+"""
+        + bq.CTA
+        + bq.FOOTER
+    )
+
+
 def main():
     rows = load()
-    data = [{"id": r["id"], "d": r["display"], "y": r["system"], "n": r["name"], "st": r["states"], "a": r["aliases"]} for r in rows]
+    progs = load_programs(rows)
+    for pr in progs:
+        pr["row"]["page"] = f"/gsi/{pr['slug']}/"
+    data = [{"id": r["id"], "d": r["display"], "y": r["system"], "n": r["name"], "st": r["states"], "a": r["aliases"],
+             **({"p": r["page"]} if r.get("page") else {})} for r in rows]
     with open(os.path.join(ROOT, "assets", "js", "gsi-data.js"), "w") as f:
         f.write("/* Generated by scripts/build-gsi.py from data/gsi-hospitals.csv. Don't edit by hand. */\n")
         f.write("window.GSI_HOSPITALS=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
     out = os.path.join(ROOT, "gsi", "index.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(page(rows))
-    print(f"Built /gsi/ with {len(rows)} hospitals. Draft/noindex: {bq.DRAFT}")
+    for pr in progs:
+        out = os.path.join(ROOT, "gsi", pr["slug"], "index.html")
+        os.makedirs(os.path.dirname(out), exist_ok=True)
+        open(out, "w").write(program_page(pr))
+    print(f"Built /gsi/ with {len(rows)} hospitals and {len(progs)} program page(s). Draft/noindex: {bq.DRAFT}")
 
 
 if __name__ == "__main__":

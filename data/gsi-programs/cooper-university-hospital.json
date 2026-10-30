@@ -1,0 +1,37 @@
+{
+  "_note": "Program page for a hospital Jay has a direct relationship with. Every fact here must come from a source listed below or from Jay. Shown at /gsi/<slug>/.",
+  "slug": "cooper-university-hospital",
+  "hospital": "Cooper Medical School of Rowan University | Cooper University Hospital",
+  "title": "Cooper University Hospital GSI disability insurance",
+  "seo_title": "Cooper University Hospital GSI Disability Insurance for Residents & Fellows | PGY1.com",
+  "description": "Cooper University Health Care residents and fellows can get a Guardian GSI disability policy with no medical underwriting. What the program includes, and why to get it before applying anywhere else.",
+  "city": "Camden",
+  "lede": "Residents and fellows at Cooper University Health Care can get a Guardian guaranteed standard issue (GSI) disability policy with no medical underwriting. Jay Weinberg is the broker named on Cooper's GSI program flyer.",
+  "short": "Yes. Cooper's residents and fellows are eligible for a Guardian GSI policy: no health questions, true own-occupation coverage with medical specialty language, and the option to start small and increase later. Get it before you complete any other disability application.",
+  "facts": [
+    ["Who's eligible", "Residents and fellows at Cooper University Health Care"],
+    ["Insurance company", "Guardian (issued by Berkshire Life Insurance Company of America, a Guardian subsidiary)"],
+    ["Health questions", "None. Guaranteed standard issue, no medical underwriting"],
+    ["Definition of disability", "True own occupation to age 67, with medical specialty language"],
+    ["Monthly benefit", "Up to $7,500, subject to new-professional limits, or up to $15,000 with financial underwriting"],
+    ["Increase later", "Future Increase Option rider: start with a smaller benefit and add coverage later, up to $15,000 total"],
+    ["Waiting period", "90 days"],
+    ["Benefits paid to", "Age 67"],
+    ["Mental health claims", "Paid for up to 24 months"],
+    ["Partial disability", "Enhanced Partial Benefit rider: triggered by a 15% loss of income, or of time or duties"]
+  ],
+  "facts_note": "From Cooper's GSI program flyer (2023). Terms can change, and optional riders cost extra. Jay confirms the current offer before you apply.",
+  "clip": "apply-underwritten-before-gsi",
+  "clip_title": "Should I apply before checking for a GSI?",
+  "questions": [
+    "what-is-gsi-disability-insurance",
+    "do-gsi-policies-cost-more",
+    "gsi-eligibility-and-limitations",
+    "mental-health-and-disability-insurance",
+    "already-applied-can-i-still-get-gsi",
+    "future-increase-option"
+  ],
+  "sources": [
+    ["Cooper University Health Care GSI program flyer (PDF)", "https://blogs.cooperhealth.org/lifeatthecoop/files/2023/09/Cooper-GSI.pdf"]
+  ]
+}
