@@ -85,7 +85,7 @@ def about():
     <div>
       <p class="qa-eyebrow qa-eyebrow--light">About Jay</p>
       <h1>Jay Weinberg, CLU, ChFC</h1>
-      <p class="qa-lede">Founder of PGY1 Financial Solutions Corp. An independent disability insurance broker whose practice is exclusively with physicians, and most of it with residents and fellows.</p>
+      <p class="qa-lede">Founder of PGY1 Financial Solutions Corp. An independent disability insurance broker whose practice is exclusively with physicians.</p>
     </div>
   </div>
 </header>
@@ -93,7 +93,7 @@ def about():
   <article class="qa-main">
     <section class="qa-short" aria-label="In Jay's words">
       <p class="qa-eyebrow">In Jay's words</p>
-      <p class="qa-short__text">“My name is Jay Weinberg, and I specialize in disability insurance for physicians. I've been in this line of work for over 25 years, and my practice is exclusively with physicians.”</p>
+      <p class="qa-short__text">“My name is Jay Weinberg, and I specialize in disability insurance for physicians. I've been in this line of work for over 25 years, and in a given year, I provide lectures to well over 100 residency programs, fellowship programs, graduating medical students, and some associations and societies.”</p>
     </section>
     <div class="pg-facts">
       <div><strong>25+</strong><span>years in physician disability insurance</span></div>
@@ -102,10 +102,10 @@ def about():
     </div>
     <div class="qa-body">
       <h2 id="what-jay-does">What Jay does</h2>
-      <p>Jay helps medical students, residents and fellows put the right disability insurance in place before they need it, and keep it as they move into attending life. That usually starts with one question: does your hospital have a guaranteed standard issue (GSI) policy? If it does, residents there can get coverage with no health questions. <a href="/gsi/">Look up your hospital</a>.</p>
+      <p>Jay has spent his career making sure physicians don't reach their attending years without the income protection they've earned, and he built PGY1.com specifically for residents and fellows. For them it usually starts with one question: does your hospital have a guaranteed standard issue (GSI) policy? If it does, residents there can get coverage with no health questions. <a href="/gsi/">Look up your hospital</a>.</p>
       <p>He's an independent broker, which means he represents multiple insurance companies rather than one. He also offers <a href="/life-insurance/">life insurance</a>. In 2024 Jay received Guardian's #1 Individual Disability Insurance Broker Award.</p>
       <h2 id="lectures">Lectures and webinars</h2>
-      <p>In a given year Jay lectures to well over 100 residency programs, fellowship programs, medical schools, societies and associations. He also hosts free webinars every spring for graduating medical students and through the year for residents and fellows. Many of the <a href="/questions/">answers on this site</a> come straight from those webinars, with short clips of Jay explaining each one.</p>
+      <p>In a given year Jay lectures to well over 100 residency programs, fellowship programs, medical schools, societies and associations. He also hosts free webinars for graduating medical students, residents and fellows. Many of the <a href="/questions/">answers on this site</a> come straight from those webinars, with short clips of Jay explaining each one.</p>
       <h2 id="what-jay-doesnt-do">What Jay doesn't do</h2>
       <p>Jay is upfront about this in his webinars. He's not a student loan specialist, and for anything complicated he points people to their financial aid office or a student loan specialist. He doesn't offer investment advice or Roth IRAs. He has no financial ties to mortgage brokers. The student loan, housing and Roth IRA pages here are his general guidance from his spring webinar, not personal advice.</p>
       <h2 id="credentials">Credentials</h2>
