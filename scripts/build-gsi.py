@@ -93,7 +93,7 @@ def page(rows):
     desc = ("Check whether your residency or fellowship hospital offers a guaranteed standard issue (GSI) disability policy, "
             "with no health questions. The " + str(len(rows)) + " teaching hospitals and programs where Jay Weinberg offers one.")
     return (
-        bq.head("Does Your Hospital Have a GSI Disability Policy? | PGY1.com", desc, url, ld)
+        bq.head("Does Your Hospital Have a GSI Disability Policy? | PGY1.com", desc, url, ld, og_image=bq.SITE + "/assets/og/gsi.jpg", og_type="website")
         .replace('<link rel="stylesheet" href="/assets/css/refresh.css" />',
                  '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
         + bq.NAV
@@ -263,7 +263,7 @@ def profile_page(r, pr):
                 {"@type": "ListItem", "position": 2, "name": name, "item": url}]},
         ],
     }
-    head = bq.head(f"{name} GSI Disability Insurance for Residents & Fellows | PGY1.com", desc, url, ld).replace(
+    head = bq.head(f"{name} GSI Disability Insurance for Residents & Fellows | PGY1.com", desc, url, ld, og_image=f"{bq.SITE}/assets/og/gsi-{slugify(r['display'])}.jpg").replace(
         '<link rel="stylesheet" href="/assets/css/refresh.css" />',
         '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
     if not specific:  # generic profiles stay out of search until Jay adds something specific

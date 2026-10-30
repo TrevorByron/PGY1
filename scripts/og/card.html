@@ -1,0 +1,26 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Newsreader;src:url(../../assets/fonts/newsreader-latin-400-normal.woff2)}
+@font-face{font-family:Newsreader;font-style:italic;src:url(../../assets/fonts/newsreader-latin-400-italic.woff2)}
+@font-face{font-family:Inter;font-weight:500;src:url(fonts/inter-latin-500-normal.woff2)}
+@font-face{font-family:Inter;font-weight:700;src:url(fonts/inter-latin-700-normal.woff2)}
+@font-face{font-family:Inter;font-weight:800;src:url(fonts/inter-latin-800-normal.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{position:relative;background:#08152b url(../../assets/textures/dark-hero.webp) center/cover;color:#fff;font-family:Inter,sans-serif;padding:64px 72px}
+body::after{content:"";position:absolute;inset:0;background:url(../../assets/textures/grain.png);opacity:.19;mix-blend-mode:overlay;pointer-events:none}
+.logo{height:40px}
+.eyebrow{margin-top:54px;font-size:20px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#7fcdf0}
+h1{margin-top:18px;max-width:1000px;font-family:Newsreader,Georgia,serif;font-weight:400;font-size:var(--fs,72px);line-height:1.06;letter-spacing:-.02em}
+h1 em{font-style:italic;color:#8fd6f5}
+.by{position:absolute;left:72px;bottom:56px;display:flex;align-items:center;gap:18px}
+.by img{width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid #3aadde}
+.by b{display:block;font-size:22px;font-weight:700}
+.by span{display:block;margin-top:4px;font-size:17px;font-weight:500;color:rgba(226,238,248,.75)}
+.url{position:absolute;right:72px;bottom:70px;font-size:20px;font-weight:800;color:#08152b;background:#3aadde;border-radius:999px;padding:12px 24px}
+</style></head><body>
+<img class="logo" src="../../assets/images/horizontal-logo-light.svg">
+<p class="eyebrow" id="e"></p>
+<h1 id="t"></h1>
+<div class="by"><img src="../../assets/images/jay-face.jpg"><div><b>Jay Weinberg, CLU, ChFC</b><span id="s">Physician disability insurance specialist</span></div></div>
+<div class="url">pgy1.com</div>
+</body></html>

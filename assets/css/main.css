@@ -924,3 +924,4 @@
       .stats-grid { grid-template-columns: 1fr; }
       .hero-badge { font-size: 9px; }
     }
+.about-more { color: #1f6f99; font-weight: 600; white-space: nowrap; text-decoration: none; } .about-more:hover { text-decoration: underline; }

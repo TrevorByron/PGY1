@@ -8,8 +8,8 @@ Reads one markdown file (format described at the top of that file) and writes:
     questions/index.html            the hub page
     questions/<slug>/index.html     one page per question
 
-Pages are marked noindex while DRAFT = True. Flip it once Jay has signed off,
-rebuild, and add the URLs to sitemap.xml.
+Pages are noindex until LAUNCH = True in scripts/site_config.py. Run scripts/build-all.sh
+after changing it; that also rewrites sitemap.xml.
 """
 import html
 import json
@@ -17,14 +17,11 @@ import os
 import re
 import sys
 
-DRAFT = True
-# Dates shown on every question page and in its Article schema. Bump UPDATED when content changes.
-PUBLISHED = "2026-10-30"
-UPDATED = "2026-10-30"
-# Flip to True once Jay has read and approved the pages; the byline then says he reviewed them.
-REVIEWED_BY_JAY = False
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from site_config import LAUNCH, REVIEWED_BY_JAY, PUBLISHED, UPDATED  # noqa: E402
+DRAFT = not LAUNCH
 JAY = {"@type": "Person", "@id": "https://www.pgy1.com/#jay", "name": "Jay Weinberg", "honorificSuffix": "CLU, ChFC",
-       "url": "https://www.pgy1.com/#about"}
+       "url": "https://www.pgy1.com/about/"}
 SITE = "https://www.pgy1.com"
 PHONE_DISPLAY = "(609) 432-8862"
 PHONE_TEL = "+16094328862"
@@ -51,6 +48,9 @@ VIDEOS = {
     "Roth IRA (2019 clip)": ("wQk-ccpDshI", "2019-04-05", "4 3 19 Jay Weinberg speaking on Roth IRA"),
 }
 VIDEO_BY_ID = {v[0]: v for v in VIDEOS.values()}
+# ISO 8601 durations for the local clips (written by scripts/clip-durations.sh)
+_dur = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "clip-durations.json")
+CLIP_DURATIONS = json.load(open(_dur)) if os.path.exists(_dur) else {}
 
 
 def secs(ts):
@@ -174,9 +174,10 @@ def parse(path):
     return qs
 
 
-def head(title, desc, canonical, extra_ld):
+def head(title, desc, canonical, extra_ld, og_image=None, og_type="article"):
     robots = '<meta name="robots" content="noindex,follow" />' if DRAFT else '<meta name="robots" content="index,follow" />'
     t, d = html.escape(title), html.escape(desc)
+    img = og_image or "https://www.pgy1.com/assets/images/unfurl.png?v=20260508"
     return f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -187,17 +188,19 @@ def head(title, desc, canonical, extra_ld):
   <meta name="description" content="{d}" />
   <link rel="canonical" href="{canonical}" />
   {robots}
-  <meta property="og:type" content="article" />
+  <meta property="og:type" content="{og_type}" />
   <meta property="og:locale" content="en_US" />
   <meta property="og:title" content="{t}" />
   <meta property="og:description" content="{d}" />
   <meta property="og:url" content="{canonical}" />
   <meta property="og:site_name" content="PGY1.com" />
-  <meta property="og:image" content="https://www.pgy1.com/assets/images/unfurl.png?v=20260508" />
+  <meta property="og:image" content="{img}" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="{t}" />
   <meta name="twitter:description" content="{d}" />
-  <meta name="twitter:image" content="https://www.pgy1.com/assets/images/unfurl.png?v=20260508" />
+  <meta name="twitter:image" content="{img}" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <script>window.va = window.va || function () {{ (window.vaq = window.vaq || []).push(arguments); }};</script>
@@ -219,6 +222,7 @@ NAV = f"""<nav>
     </span>
   </a>
   <div class="nav-right">
+    <a href="/about/" class="nav-link">About Jay</a>
     <a href="/gsi/" class="nav-link">GSI lookup</a>
     <a href="/questions/" class="nav-link">Questions</a>
     <a href="tel:{PHONE_TEL}" class="nav-link nav-link-tel"><span>{PHONE_DISPLAY}</span></a>
@@ -232,8 +236,11 @@ FOOTER = f"""<footer>
   <p>© 2026 PGY1 Financial Solutions Corp · Jay Weinberg, CLU ChFC</p>
   <div class="footer-links">
     <a href="tel:{PHONE_TEL}" class="footer-tel"><span>{PHONE_DISPLAY}</span></a>
+    <a href="/about/">About Jay</a>
     <a href="/gsi/">GSI lookup</a>
     <a href="/questions/">Questions</a>
+    <a href="/match-day-checklist/">Match Day checklist</a>
+    <a href="/life-insurance/">Life insurance</a>
     <a href="/">Home</a>
   </div>
 </footer>
@@ -285,7 +292,8 @@ def page(q, by_slug):
                 "description": q["description"],
                 **({
                     "thumbnailUrl": f"{SITE}/assets/video/{q['clip']}.jpg",
-                    "uploadDate": "2026-10-29",
+                    "uploadDate": "2026-10-30",
+                    **({"duration": CLIP_DURATIONS[q["clip"]]} if q["clip"] in CLIP_DURATIONS else {}),
                     "contentUrl": f"{SITE}/assets/video/{q['clip']}.mp4",
                 } if q.get("clip") else {
                     "thumbnailUrl": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg",
@@ -339,8 +347,11 @@ def page(q, by_slug):
         if q.get("note") else ""
     )
     if q["stage"] == "Medical school to residency":
-        side_card = ('<p class="qa-side__title">Just matched?</p><p>Disability insurance is usually near the top of the list. '
-                     '<a href="/questions/disability-insurance-before-residency/">Do these three things before you apply</a>.</p>')
+        side_card = ('<p class="qa-side__title">Just matched?</p><p>Work through Jay\'s <a href="/match-day-checklist/">Match Day checklist</a>. '
+                     'Disability insurance is usually near the top. <a href="/questions/disability-insurance-before-residency/">Do these three things before you apply</a>.</p>')
+    elif q["stage"] == "Life insurance":
+        side_card = ('<p class="qa-side__title">Looking at term life?</p><p>Jay offers life insurance too. '
+                     '<a href="/life-insurance/">Start a life insurance quote</a> or email <a href="mailto:jay@pgy1.com">jay@pgy1.com</a>.</p>')
     else:
         side_card = ('<p class="qa-side__title">Does your hospital have a GSI policy?</p><p>'
                      '<a href="/gsi/">Look up your hospital</a> on Jay\'s list of teaching hospitals with a GSI, '
@@ -352,7 +363,7 @@ def page(q, by_slug):
         for s in q["related"] if s in by_slug
     )
     return (
-        head(f"{q['title']} | PGY1.com", q["description"], url, ld)
+        head(f"{q['title']} | PGY1.com", q["description"], url, ld, og_image=f"{SITE}/assets/og/q-{q['slug']}.jpg")
         + NAV
         + f"""<header class="qa-hero qa-hero--page">
   <div class="qa-shell">
@@ -438,7 +449,7 @@ def hub(qs):
     }
     desc = "Jay Weinberg, CLU, ChFC, answers the disability and life insurance questions residents, fellows and graduating medical students ask most, with clips from his webinars."
     return (
-        head("Disability Insurance Questions for Residents & Fellows | PGY1.com", desc, url, ld)
+        head("Disability Insurance Questions for Residents & Fellows | PGY1.com", desc, url, ld, og_image=f"{SITE}/assets/og/questions.jpg", og_type="website")
         + NAV
         + f"""<header class="qa-hero qa-hero--hub">
   <div class="qa-shell">

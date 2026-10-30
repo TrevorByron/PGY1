@@ -1,0 +1,40 @@
+/* About Jay + Match Day checklist (built by scripts/build-pages.py) */
+.pg-about-hero__inner { display: flex; align-items: center; gap: 40px; }
+.pg-about-photo { flex: none; width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 5px solid rgba(58, 173, 222, 0.9); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
+@media (max-width: 720px) {
+  .pg-about-hero__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .pg-about-photo { width: 128px; height: 128px; border-width: 4px; }
+}
+.pg-facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 28px; }
+.pg-facts div { padding: 20px 20px 18px; border: 1px solid var(--border, #e2e8f0); border-radius: 16px; background: #fff; }
+.pg-facts strong { display: block; font-size: 34px; line-height: 1; font-weight: 800; letter-spacing: -1px; color: #0d2044; }
+.pg-facts span { display: block; margin-top: 8px; font-size: 14px; line-height: 1.45; color: #475569; }
+@media (max-width: 640px) { .pg-facts { grid-template-columns: minmax(0, 1fr); } }
+
+.cl-progress { display: flex; align-items: center; gap: 12px; margin: 36px 0 0; font-size: 15px; font-weight: 600; color: #0d2044; }
+.cl-print { margin-left: auto; padding: 7px 14px; border: 1px solid var(--border, #cbd5e1); border-radius: 999px; background: #fff; font: inherit; font-size: 14px; font-weight: 600; color: #0d2044; cursor: pointer; }
+.cl-print:hover { border-color: #3aadde; }
+.cl-group { margin-top: 40px; }
+.cl-group h2 { margin: 0 0 14px; font-size: 22px; letter-spacing: -0.3px; color: #0d2044; }
+.cl-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.cl-item label { display: flex; gap: 16px; padding: 18px 20px; border: 1px solid var(--border, #e2e8f0); border-radius: 16px; background: #fff; cursor: pointer; transition: border-color .15s, background .15s; }
+.cl-item label:hover { border-color: rgba(58, 173, 222, 0.6); }
+.cl-item input { position: absolute; opacity: 0; pointer-events: none; }
+.cl-box { flex: none; width: 24px; height: 24px; margin-top: 1px; border: 2px solid #94a3b8; border-radius: 7px; background: #fff; transition: all .15s; }
+.cl-item input:focus-visible + .cl-box { outline: 3px solid rgba(58, 173, 222, 0.5); outline-offset: 2px; }
+.cl-item input:checked + .cl-box { border-color: #3aadde; background: #3aadde url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2308152b' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / 16px no-repeat; }
+.cl-item input:checked ~ .cl-text strong { color: #64748b; text-decoration: line-through; text-decoration-color: rgba(100, 116, 139, 0.5); }
+.cl-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.cl-text strong { font-size: 16.5px; line-height: 1.35; color: #0d2044; }
+.cl-text span { font-size: 15px; line-height: 1.55; color: #475569; }
+.cl-text a { display: inline-flex; align-items: center; gap: 4px; color: #1f6f99; font-weight: 600; text-decoration: none; }
+.cl-text a:hover { text-decoration: underline; }
+.cl-text a .qa-arrow { width: 14px; height: 14px; }
+@media print {
+  nav, footer, .qa-side, .qa-cta-band, .cl-print, body::after { display: none !important; }
+  .qa-hero { background: none !important; color: #000 !important; }
+  .qa-grid { display: block !important; }
+  .cl-item label { break-inside: avoid; border-color: #999; }
+}
+.cl-group, .cl-list, .cl-item, .cl-item label { min-width: 0; }
+.cl-text span { overflow-wrap: anywhere; }
