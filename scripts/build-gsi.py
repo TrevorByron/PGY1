@@ -91,7 +91,7 @@ def page(rows):
         "publisher": {"@type": "Organization", "name": "PGY1 Financial Solutions Corp", "url": bq.SITE},
     }
     desc = ("Check whether your residency or fellowship hospital offers a guaranteed standard issue (GSI) disability policy, "
-            "with no health questions. Jay Weinberg's list of " + str(len(rows)) + " teaching hospitals and programs.")
+            "with no health questions. The " + str(len(rows)) + " teaching hospitals and programs where Jay Weinberg offers one.")
     return (
         bq.head("Does Your Hospital Have a GSI Disability Policy? | PGY1.com", desc, url, ld)
         .replace('<link rel="stylesheet" href="/assets/css/refresh.css" />',
@@ -101,7 +101,7 @@ def page(rows):
   <div class="qa-shell">
       <p class="qa-eyebrow qa-eyebrow--light">GSI lookup</p>
       <h1>Does your hospital have a <em>GSI</em> policy?</h1>
-      <p class="qa-lede">Jay keeps a list of the teaching hospitals where residents and fellows can get a Guardian guaranteed standard issue policy, with no health questions. Type your hospital, program or medical school.</p>
+      <p class="qa-lede">Jay offers a Guardian guaranteed standard issue policy, with no health questions, to residents and fellows at the hospitals below. Type your hospital, program or medical school.</p>
       <form class="gsi-search" role="search" action="/gsi/" method="get" autocomplete="off">
         <label for="gsi-q" class="gsi-sr">Hospital or program</label>
         <svg class="gsi-search__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
@@ -110,7 +110,7 @@ def page(rows):
         <ul id="gsi-options" class="gsi-options" role="listbox" hidden></ul>
       </form>
       <div id="gsi-result" class="gsi-result" aria-live="polite" hidden></div>
-      <p class="gsi-hero__count">{len(rows)} hospitals and programs · list as of {AS_OF}</p>
+      <p class="gsi-hero__count">{len(rows)} hospitals and programs · as of {AS_OF} · don't see yours? <a href="mailto:jay@pgy1.com">Ask Jay</a></p>
   </div>
 </header>
 <main>
@@ -135,8 +135,8 @@ def page(rows):
   <section class="gsi-all" id="all">
     <div class="qa-shell">
       <div class="gsi-all__head">
-        <h2>All {len(rows)} hospitals and programs on Jay's list</h2>
-        <p>Grouped by state. GSI offers can change or end at any time, and some hospitals have a GSI through another insurance company. Jay confirms eligibility before you apply.</p>
+        <h2>The {len(rows)} hospitals and programs Jay works with</h2>
+        <p>Grouped by state. Offers can change, and Jay confirms eligibility before you apply. Don't see your program? <a href="mailto:jay@pgy1.com">Ask Jay</a> and he'll find out.</p>
       </div>
       <div class="gsi-states">
 {chr(10).join(groups)}

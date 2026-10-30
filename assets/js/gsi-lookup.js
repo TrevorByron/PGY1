@@ -144,7 +144,7 @@
       '<div class="gsi-card gsi-card--loading" role="status">' +
         '<span class="gsi-spinner" aria-hidden="true"></span>' +
         `<div><p class="gsi-card__loading-title">Looking up ${esc(label)}</p>` +
-        `<p class="gsi-card__loading-step">Checking Jay's list of ${H.length} hospitals and programs</p></div>` +
+        `<p class="gsi-card__loading-step">Checking the ${H.length} hospitals and programs Jay works with</p></div>` +
       '</div>'
     );
     const step = result.querySelector('.gsi-card__loading-step');
@@ -176,13 +176,17 @@
 
   function showNotFound(q) {
     track('GSI lookup', { result: 'not_found', query: q.slice(0, 120) });
+    const subject = encodeURIComponent('GSI question: ' + q);
     render(
-      '<article class="gsi-card gsi-card--no">' +
-        '<p class="gsi-card__status"><span class="gsi-dot"></span>Not on Jay\'s list</p>' +
-        `<h2>We couldn't find "${esc(q)}"</h2>` +
-        '<p>That doesn\'t mean there\'s no GSI. Hospitals go by different names, offers change, and some GSIs are through other insurance companies. Jay keeps track of the ones he knows about and will point you to the right person if he can\'t offer it himself.</p>' +
-        CTA +
-        '<p class="gsi-card__more">Or <a href="#all">browse the full list by state</a>.</p>' +
+      '<article class="gsi-card gsi-card--ask">' +
+        '<p class="gsi-card__status"><span class="gsi-dot"></span>Ask Jay about this one</p>' +
+        `<h2>${esc(q)}</h2>` +
+        '<p>It isn\'t one of the hospitals listed here, but there may still be an option for your program. Ask Jay directly and he\'ll find out. <strong>Until you hear back, don\'t apply for any other disability policy.</strong></p>' +
+        '<div class="gsi-card__actions">' +
+          `<a class="btn-primary" href="mailto:jay@pgy1.com?subject=${subject}">Email Jay about it</a>` +
+          '<a class="gsi-card__tel" href="tel:+16094328862">or call (609) 432-8862</a>' +
+        '</div>' +
+        '<p class="gsi-card__more gsi-card__more--text">Or <a href="/#questionnaire-embed">start the questionnaire</a> and tell him where you\'re training.</p>' +
       '</article>',
       '/gsi/?q=' + encodeURIComponent(q)
     );
