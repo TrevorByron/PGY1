@@ -224,15 +224,26 @@
     [...list.children].forEach((li, k) => li.classList.toggle('is-active', k === i));
     if (i >= 0) input.setAttribute('aria-activedescendant', 'gsi-opt-' + i);
   }
+  let picked = null; // hospital chosen from the dropdown, waiting for "Check"
   function choose(h) {
     input.value = h.d;
+    picked = null;
+    form.classList.remove('is-picked');
     closeOptions();
     showProfile(h);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+  function pick(h) {
+    picked = h;
+    input.value = h.d;
+    form.classList.add('is-picked');
+    closeOptions();
+    form.querySelector('button[type=submit]').focus();
+  }
   function submit(q) {
     q = q.trim();
     if (!q) return;
+    if (picked && picked.d === q) { choose(picked); return; }
     const hits = score(q);
     closeOptions();
     if (!hits.length) { showNotFound(q); window.scrollTo({ top: 0, behavior: 'smooth' }); }
@@ -240,19 +251,23 @@
     else showChoices(q, hits);
   }
 
-  input.addEventListener('input', () => renderOptions(score(input.value)));
+  input.addEventListener('input', () => {
+    picked = null;
+    form.classList.remove('is-picked');
+    renderOptions(score(input.value));
+  });
   input.addEventListener('keydown', (ev) => {
     if (list.hidden) return;
     if (ev.key === 'ArrowDown') { ev.preventDefault(); setActive(Math.min(active + 1, options.length - 1)); }
     else if (ev.key === 'ArrowUp') { ev.preventDefault(); setActive(Math.max(active - 1, 0)); }
     else if (ev.key === 'Escape') { closeOptions(); }
-    else if (ev.key === 'Enter' && active >= 0) { ev.preventDefault(); choose(options[active]); }
+    else if (ev.key === 'Enter' && active >= 0) { ev.preventDefault(); pick(options[active]); }
   });
   list.addEventListener('mousedown', (ev) => {
     const li = ev.target.closest('li[data-i]');
     if (!li) return;
     ev.preventDefault();
-    choose(options[+li.dataset.i]);
+    pick(options[+li.dataset.i]);
   });
   input.addEventListener('blur', () => setTimeout(closeOptions, 120));
   form.addEventListener('submit', (ev) => { ev.preventDefault(); submit(input.value); });

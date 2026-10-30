@@ -415,3 +415,7 @@
   .gsi-inline-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; margin-top: 20px; }
   .gsi-inline-cta a:not(.btn-primary) { font-size: 15px; color: #1f6f99; }
 }
+/* A hospital picked from the dropdown, ready to check */
+.gsi-search.is-picked { box-shadow: 0 0 0 8px rgba(143, 208, 240, 0.22), 0 30px 60px -30px rgba(2, 8, 20, 0.8); }
+.gsi-search.is-picked input { font-weight: 600; }
+.gsi-search.is-picked .gsi-search__icon { color: #1f6f99; }
