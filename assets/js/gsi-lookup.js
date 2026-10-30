@@ -2,11 +2,23 @@
    Each row: id, d (display name), y (health system), n (Jay's original name), st (states), a (aliases). */
 (function () {
   const H = window.GSI_HOSPITALS || [];
-  const form = document.querySelector('.gsi-hero .gsi-search');
-  const input = document.getElementById('gsi-q');
-  const list = document.getElementById('gsi-options');
-  const result = document.getElementById('gsi-result');
-  if (!form || !input || !H.length) return;
+  const result = document.getElementById('gsi-result');           // present only on /gsi/
+  const form = document.querySelector(result ? '.gsi-hero .gsi-search' : '.gsi-home .gsi-search');
+  if (!form || !H.length) return;
+  const input = form.querySelector('input');
+  let list = form.querySelector('.gsi-options');
+  if (!list) {                                                      // homepage: add the dropdown
+    list = document.createElement('ul');
+    list.className = 'gsi-options';
+    list.id = 'gsi-options-home';
+    list.setAttribute('role', 'listbox');
+    list.hidden = true;
+    form.appendChild(list);
+    input.setAttribute('role', 'combobox');
+    input.setAttribute('aria-controls', list.id);
+    input.setAttribute('aria-autocomplete', 'list');
+    input.setAttribute('aria-expanded', 'false');
+  }
 
   const STATE_NAMES = { AL: 'Alabama', AR: 'Arkansas', AZ: 'Arizona', CA: 'California', CT: 'Connecticut', DC: 'Washington, DC', DE: 'Delaware', FL: 'Florida', GA: 'Georgia', IL: 'Illinois', IN: 'Indiana', KY: 'Kentucky', LA: 'Louisiana', MA: 'Massachusetts', MD: 'Maryland', ME: 'Maine', MI: 'Michigan', MN: 'Minnesota', MO: 'Missouri', MS: 'Mississippi', NC: 'North Carolina', NE: 'Nebraska', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NV: 'Nevada', NY: 'New York', OH: 'Ohio', OK: 'Oklahoma', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', TN: 'Tennessee', TX: 'Texas', VA: 'Virginia', VT: 'Vermont', WA: 'Washington', WI: 'Wisconsin' };
   const STOP = new Set(['the', 'of', 'at', 'and', 'for', 'in', 'hospital', 'medical', 'center', 'centre', 'health', 'university', 'med', 'ctr', 'system', 'residency', 'program']);
@@ -70,6 +82,39 @@
     return out.map((o) => o.e.h);
   }
   window.__gsiScore = score;
+
+  /* ── Homepage: dropdown, then "Check" opens the lookup page ── */
+  if (!result) {
+    const escH = (t) => String(t).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    const whereH = (h) => h.st.map((st) => STATE_NAMES[st]).join(', ');
+    let opts = [], act = -1, chosen = null;
+    const close = () => { list.hidden = true; input.setAttribute('aria-expanded', 'false'); };
+    const mark = (i) => { act = i; [...list.children].forEach((li, k) => li.classList.toggle('is-active', k === i)); };
+    const choose = (h) => { chosen = h; input.value = h.d; form.classList.add('is-picked'); close(); form.querySelector('button[type=submit]').focus(); };
+    input.addEventListener('input', () => {
+      chosen = null; form.classList.remove('is-picked');
+      opts = input.value.trim() ? score(input.value).slice(0, 6) : []; act = -1;
+      if (!opts.length) { close(); return; }
+      list.innerHTML = opts.map((h, i) => `<li role="option" data-i="${i}"><span class="gsi-opt__name">${escH(h.d)}</span><span class="gsi-opt__meta">${h.y ? escH(h.y) + ' · ' : ''}${escH(whereH(h))}</span></li>`).join('');
+      list.hidden = false; input.setAttribute('aria-expanded', 'true');
+    });
+    input.addEventListener('keydown', (ev) => {
+      if (list.hidden) return;
+      if (ev.key === 'ArrowDown') { ev.preventDefault(); mark(Math.min(act + 1, opts.length - 1)); }
+      else if (ev.key === 'ArrowUp') { ev.preventDefault(); mark(Math.max(act - 1, 0)); }
+      else if (ev.key === 'Escape') close();
+      else if (ev.key === 'Enter' && act >= 0) { ev.preventDefault(); choose(opts[act]); }
+    });
+    list.addEventListener('mousedown', (ev) => { const li = ev.target.closest('li[data-i]'); if (!li) return; ev.preventDefault(); choose(opts[+li.dataset.i]); });
+    input.addEventListener('blur', () => setTimeout(close, 120));
+    form.addEventListener('submit', (ev) => {
+      ev.preventDefault();
+      const q = input.value.trim();
+      if (!q) { input.focus(); return; }
+      location.href = chosen && chosen.d === q ? '/gsi/?h=' + chosen.id : '/gsi/?q=' + encodeURIComponent(q);
+    });
+    return;
+  }
 
   /* ── Rendering ────────────────────────────────────── */
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

@@ -419,3 +419,10 @@
 .gsi-search.is-picked { box-shadow: 0 0 0 8px rgba(143, 208, 240, 0.22), 0 30px 60px -30px rgba(2, 8, 20, 0.8); }
 .gsi-search.is-picked input { font-weight: 600; }
 .gsi-search.is-picked .gsi-search__icon { color: #1f6f99; }
+
+/* Homepage band sits on a light-leak paper texture (between About and Testimonials) */
+.section.gsi-home { background: var(--paper, #f5f3ed) url("/assets/textures/light-band.webp") center / cover no-repeat; }
+.gsi-home .section-sub { color: #3f4a5c; }
+.gsi-home .gsi-search { border-color: rgba(13, 30, 58, 0.08); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.55), 0 24px 50px -30px rgba(13, 30, 58, 0.45); }
+.gsi-home__note { color: #5d6878; }
+.gsi-home__note a { color: #1f6f99; }
