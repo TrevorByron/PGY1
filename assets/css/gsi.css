@@ -1,0 +1,225 @@
+/* /gsi/ hospital lookup. Builds on main.css, questions.css and refresh.css tokens. */
+
+.gsi-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+.gsi-hero { padding: 168px 0 72px; }
+.gsi-hero h1 em { font-style: italic; color: var(--sky, #8fd0f0); }
+.gsi-hero .qa-lede { max-width: 680px; }
+
+/* Search */
+.gsi-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 720px;
+  margin-top: 36px;
+  padding: 8px 8px 8px 20px;
+  background: rgba(251, 250, 247, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 18px;
+  box-shadow: 0 0 0 8px rgba(255, 255, 255, 0.08), 0 30px 60px -30px rgba(2, 8, 20, 0.8);
+}
+.gsi-search__icon { color: #5d6878; flex: 0 0 auto; }
+.gsi-search input {
+  flex: 1;
+  min-width: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  font-size: 18px;
+  color: var(--ink, #0d1e3a);
+  padding: 12px 4px;
+  outline: none;
+}
+.gsi-search input::placeholder { color: #8a93a1; }
+.gsi-search input::-webkit-search-cancel-button { display: none; }
+.gsi-search .btn-primary { padding: 13px 24px; border: 0; cursor: pointer; font-family: inherit; }
+
+.gsi-options {
+  position: absolute;
+  z-index: 20;
+  left: 0;
+  right: 0;
+  top: calc(100% + 10px);
+  margin: 0;
+  padding: 6px;
+  list-style: none;
+  background: var(--card, #fbfaf7);
+  border: 1px solid rgba(13, 30, 58, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 30px 60px -24px rgba(2, 8, 20, 0.6);
+  max-height: 380px;
+  overflow: auto;
+}
+.gsi-options li {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.gsi-options li:hover, .gsi-options li.is-active { background: var(--paper-2, #ece9e0); }
+.gsi-opt__name { font-size: 16px; font-weight: 600; color: var(--ink, #0d1e3a); }
+.gsi-opt__meta { font-size: 13px; color: #5d6878; }
+
+/* Result card */
+.gsi-result {
+  max-width: 720px;
+  margin-top: 20px;
+  padding: 26px 28px;
+  border-radius: 20px;
+  background: rgba(8, 21, 43, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  color: #fff;
+}
+.gsi-result__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--sky, #8fd0f0);
+}
+.gsi-dot { width: 9px; height: 9px; border-radius: 50%; background: #5ee0a0; box-shadow: 0 0 0 4px rgba(94, 224, 160, 0.18); }
+.gsi-result--none .gsi-dot { background: #fbbf24; box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18); }
+.gsi-result--none .gsi-result__status { color: #fcd34d; }
+.gsi-result h2 {
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+.gsi-result h2 span { display: block; font-family: "Inter", sans-serif; font-size: 15px; letter-spacing: 0; color: rgba(226, 238, 248, 0.7); margin-top: 6px; }
+.gsi-result p { margin: 0; font-size: 16px; line-height: 1.6; color: rgba(232, 242, 250, 0.82); }
+.gsi-result p strong { color: #fff; }
+.gsi-result__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; margin-top: 22px; }
+.gsi-result__tel { color: rgba(232, 242, 250, 0.85); font-size: 15px; text-decoration: none; }
+.gsi-result__tel:hover { color: #fff; text-decoration: underline; }
+.gsi-result__more { margin-top: 18px !important; font-size: 14px !important; }
+.gsi-result__more a { color: var(--sky, #8fd0f0); }
+.gsi-result__more button {
+  font: inherit;
+  font-size: 13px;
+  color: #e8f2fa;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 5px 12px;
+  margin: 6px 6px 0 0;
+  cursor: pointer;
+}
+.gsi-result__more button:hover { background: rgba(255, 255, 255, 0.16); }
+
+.gsi-hero__count { margin: 18px 0 0; font-size: 14px; color: rgba(226, 238, 248, 0.6); }
+
+/* Why check first */
+.gsi-why { padding: 96px 0 40px; }
+.gsi-why__grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 56px; align-items: start; }
+.gsi-why h2, .gsi-all h2 {
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 400;
+  font-size: clamp(30px, 3.6vw, 44px);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+  margin: 0;
+  color: var(--ink, #0d1e3a);
+  text-wrap: balance;
+}
+.gsi-why__list { list-style: none; margin: 0; padding: 0; counter-reset: why; display: grid; gap: 14px; }
+.gsi-why__list li {
+  counter-increment: why;
+  position: relative;
+  padding: 20px 22px 20px 64px;
+  background: var(--card, #fbfaf7);
+  border: 1px solid var(--hairline, rgba(13, 30, 58, 0.1));
+  border-radius: 16px;
+  font-size: 16px;
+  line-height: 1.6;
+  color: #3f4a5c;
+}
+.gsi-why__list li::before {
+  content: counter(why);
+  position: absolute;
+  left: 20px;
+  top: 20px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #0d2044 var(--tex-hero) center / cover;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gsi-why__list strong { color: var(--ink, #0d1e3a); }
+.gsi-why__links { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 40px; }
+
+/* Full list */
+.gsi-all { padding: 72px 0 104px; }
+.gsi-all__head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 420px); gap: 40px; align-items: end; margin-bottom: 28px; }
+.gsi-all__head > p { margin: 0; font-size: 15px; line-height: 1.6; color: #5d6878; }
+.gsi-jump { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 36px; }
+.gsi-jump a {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink, #0d1e3a);
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--paper-2, #ece9e0);
+}
+.gsi-jump a:hover { background: #dfe9ef; }
+.gsi-states { columns: 3 280px; column-gap: 40px; }
+.gsi-state { break-inside: avoid; margin: 0 0 32px; scroll-margin-top: 100px; }
+.gsi-state h3 {
+  font-family: var(--serif, Georgia, serif);
+  font-weight: 400;
+  font-size: 24px;
+  margin: 0 0 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--hairline, rgba(13, 30, 58, 0.1));
+  color: var(--ink, #0d1e3a);
+}
+.gsi-state h3 span { font-family: "Inter", sans-serif; font-size: 13px; color: #5d6878; margin-left: 6px; }
+.gsi-state ul { list-style: none; margin: 0; padding: 0; }
+.gsi-state li { padding: 7px 0; cursor: pointer; line-height: 1.35; }
+.gsi-state li:hover .gsi-list__name { color: #1f6f99; text-decoration: underline; }
+.gsi-list__name { display: block; font-size: 15px; font-weight: 500; color: var(--ink, #0d1e3a); }
+.gsi-list__sub { display: block; font-size: 13px; color: #5d6878; }
+
+/* Homepage lookup band */
+.gsi-home { position: relative; }
+.gsi-home__inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.gsi-home .gsi-search { margin-top: 0; }
+.gsi-home__note { margin: 14px 0 0; font-size: 14px; color: rgba(226, 238, 248, 0.6); }
+
+@media (max-width: 900px) {
+  .gsi-why__grid, .gsi-all__head, .gsi-home__inner { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .gsi-why__links { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .gsi-hero { padding: 116px 0 52px; }
+  .gsi-search { padding: 6px 6px 6px 14px; border-radius: 16px; }
+  .gsi-search input { font-size: 16px; padding: 10px 2px; }
+  .gsi-search .btn-primary { padding: 11px 16px; }
+  .gsi-search__icon { display: none; }
+  .gsi-result { padding: 22px 20px; }
+  .gsi-result h2 { font-size: 26px; }
+  .gsi-why { padding: 64px 0 24px; }
+  .gsi-all { padding: 48px 0 72px; }
+}
+.gsi-home__note a { color: var(--sky, #8fd0f0); }
+.gsi-result__choices { margin-top: 4px !important; }
+.gsi-result__choices button { font-size: 14px; padding: 7px 14px; }
+.qa-hero.gsi-hero { overflow: visible; position: relative; z-index: 5; }
+.gsi-home { overflow: visible !important; z-index: 5; }
+.gsi-search .btn-primary { width: auto; flex: 0 0 auto; justify-content: center; }

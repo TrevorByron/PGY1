@@ -205,6 +205,7 @@ NAV = f"""<nav>
     </span>
   </a>
   <div class="nav-right">
+    <a href="/gsi/" class="nav-link">GSI lookup</a>
     <a href="/questions/" class="nav-link">Questions</a>
     <a href="tel:{PHONE_TEL}" class="nav-link nav-link-tel"><span>{PHONE_DISPLAY}</span></a>
     <a href="/#questionnaire-embed" class="nav-cta">Get started →</a>
@@ -217,6 +218,7 @@ FOOTER = f"""<footer>
   <p>© 2026 PGY1 Financial Solutions Corp · Jay Weinberg, CLU ChFC</p>
   <div class="footer-links">
     <a href="tel:{PHONE_TEL}" class="footer-tel"><span>{PHONE_DISPLAY}</span></a>
+    <a href="/gsi/">GSI lookup</a>
     <a href="/questions/">Questions</a>
     <a href="/">Home</a>
   </div>
@@ -324,8 +326,9 @@ def page(q, by_slug):
         side_card = ('<p class="qa-side__title">Just matched?</p><p>Disability insurance is usually near the top of the list. '
                      '<a href="/questions/disability-insurance-before-residency/">Do these three things before you apply</a>.</p>')
     else:
-        side_card = ('<p class="qa-side__title">Does your hospital have a GSI policy?</p><p>Email '
-                     '<a href="mailto:jay@pgy1.com">jay@pgy1.com</a> with where you\'re training and Jay will let you know.</p>')
+        side_card = ('<p class="qa-side__title">Does your hospital have a GSI policy?</p><p>'
+                     '<a href="/gsi/">Look up your hospital</a> on Jay\'s list of teaching hospitals with a GSI, '
+                     'or email <a href="mailto:jay@pgy1.com">jay@pgy1.com</a> with where you\'re training.</p>')
     toc = "".join(f'<li><a href="#{slugify(h)}">{inline(h)}</a></li>' for h in headings(q["body"]))
     related = "".join(
         f'<a class="qa-rel" href="/questions/{s}/"><span class="qa-rel__stage">{html.escape(by_slug[s]["stage"])}</span>'
