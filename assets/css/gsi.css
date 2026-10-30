@@ -237,3 +237,6 @@
 .gsi-home .gsi-search { border-color: rgba(13, 30, 58, 0.08); box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.55), 0 24px 50px -30px rgba(13, 30, 58, 0.45); }
 .gsi-home__note { color: #5d6878; }
 .gsi-home__note a { color: #1f6f99; }
+
+/* Lookup hero always fills the screen; grows if a result needs more room */
+.qa-hero.gsi-hero { min-height: 100vh; min-height: 100svh; box-sizing: border-box; }
