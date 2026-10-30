@@ -124,7 +124,7 @@ def about():
   </article>
   <aside class="qa-side">
     <div class="qa-side__sticky">
-      <div class="gsi-side__card">
+      <div class="gsi-side__card pg-reveal" id="about-card">
         <img src="/assets/images/jay-face.jpg" alt="" width="64" height="64" />
         <p class="gsi-side__name">Jay Weinberg, CLU, ChFC</p>
         <p class="gsi-side__label">No fees to talk. Conversations are confidential.</p>
@@ -135,6 +135,14 @@ def about():
     </div>
   </aside>
 </main>
+<script>
+(function () {{
+  var card = document.getElementById("about-card"), hero = document.querySelector(".qa-hero");
+  if (!card || !hero || !("IntersectionObserver" in window)) {{ if (card) card.classList.add("is-in"); return; }}
+  new IntersectionObserver(function (e) {{ card.classList.toggle("is-in", !e[0].isIntersecting); }},
+    {{ rootMargin: "-100px 0px 0px 0px" }}).observe(hero);
+}})();
+</script>
 """
         + bq.CTA + bq.FOOTER
     )

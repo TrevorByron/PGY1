@@ -38,3 +38,12 @@
 }
 .cl-group, .cl-list, .cl-item, .cl-item label { min-width: 0; }
 .cl-text span { overflow-wrap: anywhere; }
+
+/* About: sidebar card waits until the hero has scrolled away, then stays in view */
+@media (min-width: 961px) {
+  .pg-reveal { opacity: 0; transform: translateY(16px); pointer-events: none; visibility: hidden;
+    transition: opacity .35s ease, transform .35s ease, visibility 0s linear .35s; }
+  .pg-reveal.is-in { opacity: 1; transform: none; pointer-events: auto; visibility: visible;
+    transition: opacity .35s ease, transform .35s ease, visibility 0s; }
+}
+@media (prefers-reduced-motion: reduce) { .pg-reveal, .pg-reveal.is-in { transition: none; transform: none; } }

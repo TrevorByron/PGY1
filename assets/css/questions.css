@@ -285,10 +285,10 @@
 .qa-sources li a:hover > span:last-child { color: #1f6f99; text-decoration: underline; }
 
 /* Sidebar */
-.qa-side { padding-top: 32px; }
+.qa-side { padding-top: 32px; align-self: stretch; }
 .qa-side__sticky {
   position: sticky;
-  top: 88px;
+  top: 112px;
   display: flex;
   flex-direction: column;
   gap: 20px;
