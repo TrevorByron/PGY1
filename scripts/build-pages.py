@@ -28,7 +28,7 @@ PERSON = {
     "jobTitle": "Founder",
     "worksFor": {"@id": SITE + "/#organization"},
     "url": SITE + "/about/",
-    "image": SITE + "/assets/images/jay-face.jpg",
+    "image": SITE + "/assets/images/jay-headshot.jpg",
     "description": "Independent disability insurance broker who works exclusively with physicians, "
                    "specializing in coverage for medical students, residents and fellows.",
     "award": "#1 Individual Disability Insurance Broker Award with Guardian (2024)",
@@ -81,7 +81,7 @@ def about():
         + bq.NAV
         + f"""<header class="qa-hero qa-hero--page pg-about-hero">
   <div class="qa-shell pg-about-hero__inner">
-    <img class="pg-about-photo" src="/assets/images/jay-face.jpg" alt="Jay Weinberg" width="160" height="160" />
+    <img class="pg-about-photo" src="/assets/images/jay-face.jpg" alt="Jay Weinberg" width="200" height="200" />
     <div>
       <p class="qa-eyebrow qa-eyebrow--light">About Jay</p>
       <h1>Jay Weinberg, CLU, ChFC</h1>

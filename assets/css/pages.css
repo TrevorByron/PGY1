@@ -1,6 +1,6 @@
 /* About Jay + Match Day checklist (built by scripts/build-pages.py) */
 .pg-about-hero__inner { display: flex; align-items: center; gap: 40px; }
-.pg-about-photo { flex: none; width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 5px solid rgba(58, 173, 222, 0.9); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
+.pg-about-photo { flex: none; width: 200px; height: 200px; border-radius: 50%; object-fit: cover; border: 5px solid rgba(58, 173, 222, 0.9); box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.7); }
 @media (max-width: 720px) {
   .pg-about-hero__inner { flex-direction: column; align-items: flex-start; gap: 24px; }
   .pg-about-photo { width: 128px; height: 128px; border-width: 4px; }
