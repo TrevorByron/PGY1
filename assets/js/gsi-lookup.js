@@ -1,15 +1,17 @@
-/* GSI hospital lookup (/gsi/). Data: window.GSI_HOSPITALS, built from data/gsi-hospitals.csv. */
+/* GSI hospital lookup (/gsi/). Data: window.GSI_HOSPITALS, built from data/gsi-hospitals.csv.
+   Each row: id, d (display name), y (health system), n (Jay's original name), st (states), a (aliases). */
 (function () {
   const H = window.GSI_HOSPITALS || [];
-  const form = document.querySelector('.gsi-search');
+  const form = document.querySelector('.gsi-hero .gsi-search');
   const input = document.getElementById('gsi-q');
   const list = document.getElementById('gsi-options');
   const result = document.getElementById('gsi-result');
   if (!form || !input || !H.length) return;
 
-  const STATE_NAMES = { AL: 'Alabama', AR: 'Arkansas', AZ: 'Arizona', CA: 'California', CT: 'Connecticut', DC: 'Washington DC', DE: 'Delaware', FL: 'Florida', GA: 'Georgia', IL: 'Illinois', IN: 'Indiana', KY: 'Kentucky', LA: 'Louisiana', MA: 'Massachusetts', MD: 'Maryland', ME: 'Maine', MI: 'Michigan', MN: 'Minnesota', MO: 'Missouri', MS: 'Mississippi', NC: 'North Carolina', NE: 'Nebraska', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NV: 'Nevada', NY: 'New York', OH: 'Ohio', OK: 'Oklahoma', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', TN: 'Tennessee', TX: 'Texas', VA: 'Virginia', VT: 'Vermont', WA: 'Washington', WI: 'Wisconsin' };
+  const STATE_NAMES = { AL: 'Alabama', AR: 'Arkansas', AZ: 'Arizona', CA: 'California', CT: 'Connecticut', DC: 'Washington, DC', DE: 'Delaware', FL: 'Florida', GA: 'Georgia', IL: 'Illinois', IN: 'Indiana', KY: 'Kentucky', LA: 'Louisiana', MA: 'Massachusetts', MD: 'Maryland', ME: 'Maine', MI: 'Michigan', MN: 'Minnesota', MO: 'Missouri', MS: 'Mississippi', NC: 'North Carolina', NE: 'Nebraska', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NV: 'Nevada', NY: 'New York', OH: 'Ohio', OK: 'Oklahoma', PA: 'Pennsylvania', RI: 'Rhode Island', SC: 'South Carolina', TN: 'Tennessee', TX: 'Texas', VA: 'Virginia', VT: 'Vermont', WA: 'Washington', WI: 'Wisconsin' };
   const STOP = new Set(['the', 'of', 'at', 'and', 'for', 'in', 'hospital', 'medical', 'center', 'centre', 'health', 'university', 'med', 'ctr', 'system', 'residency', 'program']);
 
+  /* ── Matching ─────────────────────────────────────── */
   function norm(s) {
     return s.toLowerCase()
       .replace(/&/g, ' and ')
@@ -20,8 +22,7 @@
       .trim();
   }
   function toks(s) { return norm(s).split(' ').filter(Boolean); }
-  // true when a and b are within one edit (typos like "vanderbuilt", "presbyterain")
-  function near(a, b) {
+  function near(a, b) { // within one edit: "vanderbuilt", "presbyterain"
     if (Math.abs(a.length - b.length) > 1) return false;
     let i = 0, j = 0, edits = 0;
     while (i < a.length && j < b.length) {
@@ -34,15 +35,13 @@
     }
     return edits + (a.length - i) + (b.length - j) <= 1;
   }
-
-  // Pre-index: name tokens weigh more than alias tokens
-  const IDX = H.map((h) => {
-    const nameT = toks(h.t + ' ' + h.s);
-    const aliasStr = h.a.map(norm);
-    const aliasT = toks(h.a.join(' ') + ' ' + h.st.map((s) => STATE_NAMES[s] + ' ' + s).join(' '));
-    return { h, nameT, aliasT, aliasStr, full: norm(h.t + ' ' + h.s) };
-  });
-
+  const IDX = H.map((h) => ({
+    h,
+    nameT: toks(h.d + ' ' + h.y + ' ' + h.n),
+    aliasT: toks(h.a.join(' ') + ' ' + h.st.map((s) => STATE_NAMES[s] + ' ' + s).join(' ')),
+    aliasStr: h.a.map(norm),
+    full: norm(h.d),
+  }));
   let lastScores = [];
   function score(q) {
     const nq = norm(q);
@@ -53,39 +52,165 @@
     const out = [];
     IDX.forEach((e) => {
       let s = 0;
-      let all = true;
       for (const t of qt) {
-        const inName = e.nameT.some((w) => w === t) ? 3 : e.nameT.some((w) => w.startsWith(t)) ? 2 : 0;
-        const inAlias = e.aliasT.some((w) => w === t) ? 2 : e.aliasT.some((w) => w.startsWith(t) && t.length > 1) ? 1 : 0;
+        const inName = e.nameT.includes(t) ? 3 : e.nameT.some((w) => w.startsWith(t)) ? 2 : 0;
+        const inAlias = e.aliasT.includes(t) ? 2 : e.aliasT.some((w) => w.startsWith(t) && t.length > 1) ? 1 : 0;
         let best = Math.max(inName, inAlias);
         if (!best && t.length >= 5 && (e.nameT.some((w) => near(w, t)) || e.aliasT.some((w) => near(w, t)))) best = 1;
-        if (!best) { all = false; break; }
+        if (!best) return;
         s += best;
       }
-      if (!all) return;
-      if (e.aliasStr.includes(nq)) s += 6;          // typed an exact alias (HUP, MGH, Bellevue)
+      if (e.aliasStr.includes(nq)) s += 6;
       if (e.full.startsWith(nq)) s += 4;
       else if (e.full.includes(nq)) s += 2;
       out.push({ e, s });
     });
-    out.sort((a, b) => b.s - a.s || a.e.h.t.localeCompare(b.e.h.t));
+    out.sort((a, b) => b.s - a.s || a.e.h.d.localeCompare(b.e.h.d));
     lastScores = out.map((o) => o.s);
     return out.map((o) => o.e.h);
   }
+  window.__gsiScore = score;
 
-  function esc(s) { return s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
-  function where(h) { return h.st.map((s) => STATE_NAMES[s]).join(', '); }
+  /* ── Rendering ────────────────────────────────────── */
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const where = (h) => h.st.map((s) => STATE_NAMES[s]).join(', ');
+  const byId = (id) => H.find((o) => o.id === id);
 
+  const intro = document.querySelector('.gsi-intro');
+  const checked = document.querySelector('.gsi-checked');
+  const profile = document.getElementById('gsi-profile');
+  const why = document.querySelector('.gsi-why');
+  const baseTitle = document.title;
+  const CHECK = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  const DASH = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M6 12h12"/></svg>';
+  const ARROW = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+
+  const SIDE = (label) =>
+    '<aside class="gsi-side"><div class="gsi-side__card">' +
+      '<img src="/assets/images/jay-face.jpg" alt="" width="64" height="64" />' +
+      '<p class="gsi-side__name">Jay Weinberg, CLU, ChFC</p>' +
+      `<p class="gsi-side__label">${label}</p>` +
+      '<a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a>' +
+      '<a class="gsi-side__tel" href="tel:+16094328862">or call (609) 432-8862</a>' +
+      '<a class="gsi-side__tel" href="mailto:jay@pgy1.com">jay@pgy1.com</a>' +
+    '</div></aside>';
+
+  const INLINE_CTA = '<div class="gsi-inline-cta"><a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a><a href="tel:+16094328862">or call Jay at (609) 432-8862</a></div>';
+
+  const CLIP =
+    '<section class="gsi-block"><h2>Watch Jay explain GSI</h2>' +
+    '<figure class="qa-clip"><video src="/assets/video/what-is-gsi-disability-insurance.mp4" poster="/assets/video/what-is-gsi-disability-insurance.jpg" controls playsinline preload="none" title="Jay Weinberg answers: What is a GSI disability policy?"></video>' +
+    '<figcaption class="qa-clip__side"><span class="qa-video__label">What is a GSI disability policy?</span>' +
+    '<p>Thirty seconds from his webinar for residents and fellows.</p>' +
+    `<a class="qa-link" href="/questions/what-is-gsi-disability-insurance/">Read the full answer ${ARROW}</a></figcaption></figure></section>`;
+
+  function enterProfile(state, title, whereLine, crumb, bodyHtml, url) {
+    intro.hidden = true;
+    result.hidden = true;
+    checked.hidden = false;
+    document.getElementById('gsi-status').innerHTML = state;
+    document.getElementById('gsi-name').textContent = title;
+    document.getElementById('gsi-where').textContent = whereLine;
+    document.getElementById('gsi-crumb-state').textContent = crumb;
+    profile.innerHTML = bodyHtml;
+    profile.hidden = false;
+    if (why) why.hidden = true;
+    document.title = title + ' GSI disability insurance | PGY1.com';
+    history.replaceState(null, '', url);
+  }
+
+  function leaveProfile() {
+    checked.hidden = true;
+    profile.hidden = true;
+    profile.innerHTML = '';
+    intro.hidden = false;
+    if (why) why.hidden = false;
+    document.title = baseTitle;
+    input.value = '';
+    history.replaceState(null, '', '/gsi/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => input.focus(), 250);
+  }
+
+  function showProfile(h) {
+    const siblings = h.y ? H.filter((o) => o !== h && o.y === h.y) : [];
+    const sib = siblings.length
+      ? `<section class="gsi-block"><h2>Also on Jay's list from ${esc(h.y)}</h2><ul class="gsi-siblings">` +
+        siblings.map((o) => `<li><a href="/gsi/?h=${o.id}" data-id="${o.id}">${esc(o.d)}<span>${esc(where(o))}</span></a></li>`).join('') +
+        '</ul></section>'
+      : '';
+    enterProfile(
+      `<span class="gsi-badge is-yes">${CHECK}GSI available</span><span class="gsi-checked__note">Checked against Jay's list</span>`,
+      h.d,
+      (h.y ? h.y + ' · ' : '') + where(h),
+      where(h),
+      '<div class="qa-shell gsi-profile-grid"><div class="gsi-profile-main">' +
+        '<section class="gsi-block"><h2>At a glance</h2><dl class="gsi-facts">' +
+          '<div><dt>Policy</dt><dd>Guardian guaranteed standard issue (GSI)</dd></div>' +
+          '<div><dt>Health questions</dt><dd>None</dd></div>' +
+          '<div><dt>Who can get it</dt><dd>Residents and fellows in eligible programs</dd></div>' +
+          '<div><dt>How long it takes</dt><dd>A few days to a week</dd></div>' +
+        '</dl>' +
+        '<p class="gsi-warn"><strong>Don\'t apply for any other disability policy first.</strong> Most GSI policies ask whether you\'ve applied before, and if you have, you may not be eligible.</p>' + INLINE_CTA + '</section>' +
+        '<section class="gsi-block"><h2>What happens next</h2><ol class="gsi-steps">' +
+          '<li><strong>Answer a few questions.</strong> The questionnaire takes about 2 minutes and covers your training, program and current coverage.</li>' +
+          `<li><strong>Jay confirms your eligibility.</strong> He checks the GSI against your program and start date.</li>` +
+          '<li><strong>Decide together.</strong> Jay walks you through the policy and whether anything else makes sense for you.</li>' +
+        '</ol></section>' +
+        CLIP + sib +
+      '</div>' + SIDE('Places this policy for residents and fellows here') + '</div>',
+      '/gsi/?h=' + h.id
+    );
+  }
+
+  function showNotFound(q) {
+    enterProfile(
+      `<span class="gsi-badge is-no">${DASH}Not on Jay's list</span><span class="gsi-checked__note">Checked against Jay's list</span>`,
+      q,
+      'We couldn\'t match this to a hospital on Jay\'s GSI list.',
+      'Not found',
+      '<div class="qa-shell gsi-profile-grid"><div class="gsi-profile-main">' +
+        '<section class="gsi-block"><h2>That doesn\'t mean there\'s no GSI</h2>' +
+        '<p class="gsi-p">Hospitals go by different names, offers change, and some GSIs are through other insurance companies. Jay keeps track of the ones he knows about and will point you to the right person if he can\'t offer it himself.</p>' +
+        '<p class="gsi-warn"><strong>Until you know, don\'t apply for any other disability policy.</strong> Most GSI policies ask whether you\'ve applied before.</p>' + INLINE_CTA + '</section>' +
+        '<section class="gsi-block"><h2>What to do</h2><ol class="gsi-steps">' +
+          '<li><strong>Tell Jay where you\'re training.</strong> Start the questionnaire or email jay@pgy1.com with your hospital and program.</li>' +
+          '<li><strong>Jay checks for a GSI.</strong> If he can\'t offer it, he\'ll tell you who can.</li>' +
+          '<li><strong>Then decide.</strong> With or without a GSI, Jay walks you through what makes sense.</li>' +
+        '</ol></section>' +
+        CLIP +
+      '</div>' + SIDE('Will check your hospital for you') + '</div>',
+      '/gsi/?q=' + encodeURIComponent(q)
+    );
+  }
+
+  function showChoices(q, hits) {
+    result.innerHTML =
+      '<article class="gsi-profile gsi-profile--list">' +
+        `<p class="gsi-profile__status is-yes"><span class="gsi-dot"></span>${hits.length} matches on Jay's list</p>` +
+        '<h2>Which one is yours?</h2>' +
+        '<ul class="gsi-choices">' +
+          hits.slice(0, 8).map((o) => `<li><a href="/gsi/?h=${o.id}" data-id="${o.id}"><span>${esc(o.d)}</span><small>${o.y ? esc(o.y) + ' · ' : ''}${esc(where(o))}</small></a></li>`).join('') +
+        '</ul>' +
+        (hits.length > 8 ? '<p class="gsi-profile__hint">Keep typing to narrow it down.</p>' : '') +
+      '</article>';
+    result.hidden = false;
+    history.replaceState(null, '', '/gsi/?q=' + encodeURIComponent(q));
+  }
+
+  document.querySelector('.gsi-again').addEventListener('click', leaveProfile);
+  document.querySelector('.gsi-back').addEventListener('click', (ev) => { ev.preventDefault(); leaveProfile(); });
+
+  /* ── Combobox ─────────────────────────────────────── */
   let options = [];
   let active = -1;
-
   function renderOptions(items) {
-    options = items.slice(0, 8);
+    options = items.slice(0, 7);
     active = -1;
     if (!options.length || !input.value.trim()) { closeOptions(); return; }
     list.innerHTML = options.map((h, i) =>
-      `<li role="option" id="gsi-opt-${i}" data-i="${i}"><span class="gsi-opt__name">${esc(h.t)}</span>` +
-      `<span class="gsi-opt__meta">${esc(h.s ? h.s + ' · ' : '')}${esc(where(h))}</span></li>`).join('');
+      `<li role="option" id="gsi-opt-${i}" data-i="${i}"><span class="gsi-opt__name">${esc(h.d)}</span>` +
+      `<span class="gsi-opt__meta">${h.y ? esc(h.y) + ' · ' : ''}${esc(where(h))}</span></li>`).join('');
     list.hidden = false;
     input.setAttribute('aria-expanded', 'true');
   }
@@ -99,63 +224,20 @@
     [...list.children].forEach((li, k) => li.classList.toggle('is-active', k === i));
     if (i >= 0) input.setAttribute('aria-activedescendant', 'gsi-opt-' + i);
   }
-
-  const CTA = '<div class="gsi-result__actions">' +
-    '<a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a>' +
-    '<a class="gsi-result__tel" href="tel:+16094328862">or call Jay at (609) 432-8862</a></div>';
-
-  function showFound(h, others) {
-    const more = others && others.length
-      ? `<p class="gsi-result__more">Also in the same system: ${others.slice(0, 4).map((o) => `<button type="button" data-id="${o.id}">${esc(o.t)}${o.s ? ' · ' + esc(o.s) : ''}</button>`).join('')}</p>`
-      : '';
-    result.className = 'gsi-result gsi-result--found';
-    result.innerHTML =
-      '<p class="gsi-result__status"><span class="gsi-dot"></span>On Jay\'s GSI list</p>' +
-      `<h2>${esc(h.t)}${h.s ? `<span>${esc(h.s)}</span>` : ''}</h2>` +
-      `<p>Residents and fellows at this program can get a Guardian guaranteed standard issue policy, with no health questions. <strong>Talk to Jay before you apply for any other disability policy.</strong> Applying elsewhere first can make you ineligible.</p>` +
-      CTA + more;
-    result.hidden = false;
-    history.replaceState(null, '', '/gsi/?h=' + h.id);
-  }
-
-  function showNotFound(q) {
-    result.className = 'gsi-result gsi-result--none';
-    result.innerHTML =
-      '<p class="gsi-result__status"><span class="gsi-dot"></span>Not on the list yet</p>' +
-      `<h2>We couldn't find “${esc(q)}”</h2>` +
-      '<p>That doesn\'t mean there\'s no GSI. Hospitals use different names, offers change, and some GSIs are through other insurance companies. Jay keeps track of the ones he knows about and will point you to the right person if he can\'t offer it himself.</p>' +
-      CTA + '<p class="gsi-result__more">Or <a href="#all">browse the full list by state</a>.</p>';
-    result.hidden = false;
-    history.replaceState(null, '', '/gsi/?q=' + encodeURIComponent(q));
-  }
-
   function choose(h) {
-    input.value = h.t + (h.s ? ' · ' + h.s : '');
+    input.value = h.d;
     closeOptions();
-    const family = H.filter((o) => o !== h && o.t === h.t);
-    showFound(h, family);
+    showProfile(h);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
-  function showChoices(q, hits) {
-    result.className = 'gsi-result gsi-result--found';
-    result.innerHTML =
-      `<p class="gsi-result__status"><span class="gsi-dot"></span>${hits.length} matches on Jay's GSI list</p>` +
-      `<h2>Which one is yours?</h2>` +
-      `<p class="gsi-result__more gsi-result__choices">${hits.slice(0, 12).map((o) => `<button type="button" data-id="${o.id}">${esc(o.t)}${o.s ? ' · ' + esc(o.s) : ''}</button>`).join('')}</p>` +
-      (hits.length > 12 ? '<p class="gsi-result__more">Keep typing to narrow it down, or <a href="#all">browse the full list</a>.</p>' : '');
-    result.hidden = false;
-    history.replaceState(null, '', '/gsi/?q=' + encodeURIComponent(q));
-  }
-
   function submit(q) {
     q = q.trim();
     if (!q) return;
     const hits = score(q);
     closeOptions();
-    if (!hits.length) { showNotFound(q); return; }
-    // A clear winner gets the answer; a tie (e.g. "Northwell", "Mayo") asks which one
-    if (hits.length === 1 || lastScores[0] > lastScores[1]) choose(hits[0]);
-    else showChoices(q, hits.filter((h, i) => lastScores[i] === lastScores[0]).concat(hits.filter((h, i) => lastScores[i] !== lastScores[0])));
+    if (!hits.length) { showNotFound(q); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+    else if (hits.length === 1 || lastScores[0] > lastScores[1]) choose(hits[0]);
+    else showChoices(q, hits);
   }
 
   input.addEventListener('input', () => renderOptions(score(input.value)));
@@ -174,29 +256,21 @@
   });
   input.addEventListener('blur', () => setTimeout(closeOptions, 120));
   form.addEventListener('submit', (ev) => { ev.preventDefault(); submit(input.value); });
-  result.addEventListener('click', (ev) => {
-    const b = ev.target.closest('button[data-id]');
-    if (!b) return;
-    const h = H.find((o) => o.id === b.dataset.id);
-    if (h) choose(h);
-  });
-  // Clicking a hospital in the full list selects it
-  document.querySelectorAll('.gsi-states li[data-id]').forEach((li) => {
-    li.addEventListener('click', () => {
-      const h = H.find((o) => o.id === li.dataset.id);
-      if (!h) return;
-      choose(h);
-      form.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    });
+
+  // Any in-page link to a hospital (profile siblings, choices, the full list) opens its profile without a reload
+  document.addEventListener('click', (ev) => {
+    const a = ev.target.closest('a[data-id]');
+    if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey) return;
+    const h = byId(a.dataset.id);
+    if (!h) return;
+    ev.preventDefault();
+    choose(h);
   });
 
   // Deep links: /gsi/?h=<id> or /gsi/?q=<text> (the homepage search posts here)
   const params = new URLSearchParams(location.search);
   const hid = params.get('h');
   const q = params.get('q');
-  if (hid) { const h = H.find((o) => o.id === hid); if (h) choose(h); }
+  if (hid && byId(hid)) choose(byId(hid));
   else if (q) { input.value = q; submit(q); }
-
-  // Expose the matcher for testing
-  window.__gsiScore = score;
 })();
