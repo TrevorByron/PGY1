@@ -1,0 +1,21 @@
+{
+  "hospital": "Baylor College of Medicine",
+  "city": "Houston",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "Provided at no cost to house staff"
+      ],
+      [
+        "Short-term disability",
+        "Optional, paid by house staff"
+      ]
+    ],
+    "source": [
+      "Baylor College of Medicine GME stipends and benefits",
+      "https://www.bcm.edu/education/school-of-medicine/graduate-medical-education/current-trainee-resources/stipends-and-benefits"
+    ]
+  },
+  "group_note": "Baylor doesn't publish the benefit percentage or monthly cap on this page. Check the plan summary, or ask Jay to compare it for you."
+}

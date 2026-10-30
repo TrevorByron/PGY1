@@ -1,0 +1,28 @@
+{
+  "hospital": "University of Rochester",
+  "city": "Rochester",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "60% of covered income, up to $3,000 a month, after six months of disability"
+      ],
+      [
+        "Who pays",
+        "The university"
+      ],
+      [
+        "At graduation",
+        "Can be converted to an individual policy (up to $3,000 a month)"
+      ],
+      [
+        "Short-term disability",
+        "Full salary for up to six months"
+      ]
+    ],
+    "source": [
+      "URMC GME compensation and benefits table",
+      "https://www.urmc.rochester.edu/education/graduate-medical-education/benefits-table"
+    ]
+  }
+}

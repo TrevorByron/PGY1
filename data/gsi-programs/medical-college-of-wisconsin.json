@@ -1,0 +1,28 @@
+{
+  "hospital": "Medical College of Wisconsin",
+  "city": "Milwaukee",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "80% of base stipend, up to $5,000 a month"
+      ],
+      [
+        "When it starts paying",
+        "60 days after a disability begins"
+      ],
+      [
+        "Definition",
+        "Own occupation"
+      ],
+      [
+        "Supplemental individual policy",
+        "Offered to MCWAH housestaff: true own occupation/specialty, discounted, portable after graduation"
+      ]
+    ],
+    "source": [
+      "MCW GME benefits, conditions and terms of employment",
+      "https://www.mcw.edu/education/graduate-medical-education/mcwah-gme-residency-and-fellowship-programs/benefits-conditions-and-terms-of-employment"
+    ]
+  }
+}

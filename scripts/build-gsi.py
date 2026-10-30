@@ -40,7 +40,7 @@ STATES = {
 
 
 def slugify(text):
-    return re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", "and")).strip("-")
+    return re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", "and").replace("'", "").replace("’", "")).strip("-")
 
 
 def load():
@@ -75,7 +75,7 @@ def page(rows):
     for st in state_keys:
         items = sorted(by_state[st], key=lambda r: r["display"].lower())
         lis = "".join(
-            (f'<li><a href="{r["page"]}" class="has-page"' if r.get("page") else f'<li><a href="/gsi/?h={r["id"]}" data-id="{r["id"]}"')
+            f'<li><a href="/gsi/{slugify(r["display"])}/"'
             + ""
             + (f' title="{html.escape(r["system"])}"' if r["system"] else "")
             + f'>{html.escape(r["display"])}</a></li>'
@@ -152,19 +152,34 @@ def page(rows):
     )
 
 
+# Jay's Guardian GSI, from the brochure linked on his quote page. Same for every hospital on his list.
+BROCHURE = ("Guardian GSI brochure on Jay's quote page (2025)", "https://www.disabilityquotes.com/pages/pages/brochure/10061")
+GSI_FACTS = [
+    ("Health questions", "None. Guaranteed standard issue, no medical underwriting"),
+    ("Insurance company", "Guardian (issued by Berkshire Life Insurance Company of America, a Guardian subsidiary)"),
+    ("Definition of disability", "True own occupation to age 67, with medical specialty language"),
+    ("Monthly benefit", "Up to $8,000, subject to new-professional limits, or up to $15,000 with financial underwriting"),
+    ("Increase later", "Future Increase Option rider or Benefit Purchase Rider: add coverage later without health questions, up to $15,000 total"),
+    ("Waiting period", "90 days"),
+    ("Benefits paid to", "Age 67"),
+    ("Mental health claims", "Paid for up to 24 months"),
+    ("Partial disability", "Enhanced Partial Benefit rider: triggered by a 15% loss of income, or of time or duties"),
+]
+QUESTIONS = ["what-is-gsi-disability-insurance", "group-disability-insurance-enough", "do-gsi-policies-cost-more",
+             "gsi-eligibility-and-limitations", "mental-health-and-disability-insurance", "already-applied-can-i-still-get-gsi"]
+
+
 def load_programs(rows):
-    """data/gsi-programs/*.json: full pages for hospitals Jay has a direct relationship with."""
-    by_name = {r["name"]: r for r in rows}
-    progs = []
+    """data/gsi-programs/*.json: hospital-specific content (published group coverage, program notes) keyed by `hospital`."""
+    names = {r["name"] for r in rows}
+    extra = {}
     folder = os.path.join(ROOT, "data", "gsi-programs")
     for fn in sorted(os.listdir(folder)) if os.path.isdir(folder) else []:
-        if not fn.endswith(".json"):
-            continue
-        pr = json.load(open(os.path.join(folder, fn)))
-        assert pr["hospital"] in by_name, f"{fn}: hospital not in gsi-hospitals.csv: {pr['hospital']}"
-        pr["row"] = by_name[pr["hospital"]]
-        progs.append(pr)
-    return progs
+        if fn.endswith(".json"):
+            pr = json.load(open(os.path.join(folder, fn)))
+            assert pr["hospital"] in names, f"{fn}: hospital not in gsi-hospitals.csv: {pr['hospital']}"
+            extra[pr["hospital"]] = pr
+    return extra
 
 
 def question_title(slug):
@@ -174,104 +189,127 @@ def question_title(slug):
     return html.unescape(m.group(1))
 
 
-def program_page(pr):
-    r = pr["row"]
-    url = f"{bq.SITE}/gsi/{pr['slug']}/"
-    state = r["states"][0]
-    facts = "".join(f"<tr><th scope=\"row\">{html.escape(k)}</th><td>{html.escape(v)}</td></tr>" for k, v in pr["facts"])
-    qs = "".join(
-        f'<a class="qa-rel" href="/questions/{s}/"><span class="qa-rel__stage">Jay answers</span>'
-        f'<span class="qa-rel__title">{html.escape(question_title(s))}</span>{bq.ARROW}</a>'
-        for s in pr["questions"]
+def table(rows):
+    return '<table class="gsi-table">' + "".join(
+        f"<tr><th scope=\"row\">{html.escape(k)}</th><td>{html.escape(v)}</td></tr>" for k, v in rows) + "</table>"
+
+
+def profile_page(r, pr):
+    """One profile per hospital on Jay's list. Indexable only when it carries something specific to that hospital."""
+    name = r["display"]
+    short_name = re.sub(r"\s*\(.*?\)\s*$", "", name)
+    url = f"{bq.SITE}{r['page']}"
+    where_ = ", ".join(STATES[s] for s in r["states"])
+    specific = bool(pr and (pr.get("group") or pr.get("specific")))
+    sources = [BROCHURE]
+    toc = [("at-a-glance", "Jay's Guardian GSI at a glance")]
+    body = []
+    if pr and pr.get("specific"):
+        sp = pr["specific"]
+        body.append(f'<h2 id="program">{html.escape(sp["title"])}</h2><p>{html.escape(sp["body"])}</p>')
+        sources.append(tuple(sp["source"]))
+        toc.insert(0, ("program", sp["title"]))
+    if pr and pr.get("group"):
+        gr = pr["group"]
+        note = f'<p class="gsi-table__note">{html.escape(pr["group_note"])}</p>' if pr.get("group_note") else ""
+        body.append(
+            f'<h2 id="already-covered">What {html.escape(short_name)} already gives you</h2>'
+            f'<p>Residents here get group disability coverage through their employer. It\'s a good start, but group policies are usually capped, '
+            f'tied to the job and taxable when they pay out. Jay\'s view: make an individual policy your primary line of defense and layer the group coverage behind it.</p>'
+            + table(gr["rows"])
+            + f'<p class="gsi-table__note">Source: <a href="{html.escape(gr["source"][1])}" rel="nofollow">{html.escape(gr["source"][0])}</a>. Plan documents govern.</p>'
+            + note
+            + f'<p><a class="qa-link" href="/questions/group-disability-insurance-enough/">Is group disability insurance enough? {bq.ARROW}</a></p>'
+        )
+        sources.append(tuple(gr["source"]))
+        toc.insert(0 if not (pr.get("specific")) else 1, ("already-covered", f"What {short_name} already gives you"))
+    body.append(
+        '<h2 id="at-a-glance">Jay\'s Guardian GSI at a glance</h2>'
+        + table(GSI_FACTS)
+        + f'<p class="gsi-table__note">From the {html.escape(BROCHURE[0])}. Optional riders cost extra, terms vary by state, and offers can change. '
+        f'Jay confirms the current details for {html.escape(short_name)} before you apply.</p>'
+        '<h2 id="before-you-apply">Get it before any other application</h2>'
+        '<p>Most GSI policies ask whether you\'ve applied for disability insurance before. If you have, there\'s a good chance you won\'t be eligible, '
+        'so lock in the GSI first, then decide whether to add anything on top.</p>'
     )
-    sources = "".join(f'<li><a href="{html.escape(u)}" rel="nofollow">{html.escape(t)}</a></li>' for t, u in pr["sources"])
-    clip = pr.get("clip")
-    clip_html = (
-        f"""<figure class="qa-clip">
-      <video src="/assets/video/{clip}.mp4" poster="/assets/video/{clip}.jpg" controls playsinline preload="none" title="Jay Weinberg answers: {html.escape(pr['clip_title'])}"></video>
+    toc.append(("before-you-apply", "Get it before any other application"))
+    toc.append(("program-questions", "Questions residents ask"))
+    clip = "apply-underwritten-before-gsi"
+    clip_html = f"""<figure class="qa-clip">
+      <video src="/assets/video/{clip}.mp4" poster="/assets/video/{clip}.jpg" controls playsinline preload="none" title="Jay Weinberg answers: Should I apply before checking for a GSI?"></video>
       <figcaption class="qa-clip__side">
-        <span class="qa-video__label">{html.escape(pr['clip_title'])}</span>
+        <span class="qa-video__label">Should I apply before checking for a GSI?</span>
         <p>Jay's answer, from his webinar for residents and fellows.</p>
         <a class="qa-link" href="/questions/{clip}/">Read the full answer {bq.ARROW}</a>
       </figcaption>
     </figure>"""
-        if clip else ""
-    )
+    qs = "".join(
+        f'<a class="qa-rel" href="/questions/{q}/"><span class="qa-rel__stage">Jay answers</span>'
+        f'<span class="qa-rel__title">{html.escape(question_title(q))}</span>{bq.ARROW}</a>' for q in QUESTIONS)
+    src = "".join(f'<li><a href="{html.escape(u)}" rel="nofollow">{html.escape(t)}</a></li>' for t, u in dict.fromkeys(sources))
+    title = f"{name} GSI disability insurance"
+    desc = (f"Residents and fellows at {name} can get a Guardian GSI disability policy through Jay Weinberg, with no health questions. "
+            "What it includes and why to get it before any other application.")[:300]
     ld = {
         "@context": "https://schema.org",
         "@graph": [
-            {
-                "@type": "WebPage",
-                "name": pr["title"],
-                "description": pr["description"],
-                "url": url,
-                "author": bq.JAY,
-                "datePublished": bq.PUBLISHED,
-                "dateModified": bq.UPDATED,
-                "about": {"@type": "Hospital", "name": r["display"],
-                          "address": {"@type": "PostalAddress", "addressLocality": pr.get("city", ""), "addressRegion": state, "addressCountry": "US"}},
-                "publisher": {"@id": bq.SITE + "/#organization"},
-            },
-            {
-                "@type": "BreadcrumbList",
-                "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "GSI lookup", "item": bq.SITE + "/gsi/"},
-                    {"@type": "ListItem", "position": 2, "name": r["display"], "item": url},
-                ],
-            },
+            {"@type": "WebPage", "name": title, "description": desc, "url": url, "author": bq.JAY,
+             "datePublished": bq.PUBLISHED, "dateModified": bq.UPDATED, "publisher": {"@id": bq.SITE + "/#organization"},
+             "about": {"@type": "Hospital", "name": name,
+                       "address": {"@type": "PostalAddress", **({"addressLocality": pr["city"]} if pr and pr.get("city") else {}),
+                                   "addressRegion": r["states"][0], "addressCountry": "US"}}},
+            {"@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "GSI lookup", "item": bq.SITE + "/gsi/"},
+                {"@type": "ListItem", "position": 2, "name": name, "item": url}]},
         ],
     }
-    head = bq.head(pr["seo_title"], pr["description"], url, ld).replace(
+    head = bq.head(f"{name} GSI Disability Insurance for Residents & Fellows | PGY1.com", desc, url, ld).replace(
         '<link rel="stylesheet" href="/assets/css/refresh.css" />',
         '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
+    if not specific:  # generic profiles stay out of search until Jay adds something specific
+        head = head.replace('<meta name="robots" content="index,follow" />', '<meta name="robots" content="noindex,follow" />')
+    sys_line = f"{r['system']} · " if r["system"] else ""
     return (
-        head
-        + bq.NAV
+        head + bq.NAV
         + f"""<header class="qa-hero qa-hero--page gsi-program-hero">
   <div class="qa-shell">
-    <div class="qa-crumbs"><a href="/gsi/">GSI lookup</a><span aria-hidden="true">/</span><span>{STATES[state]}</span></div>
-    <p class="gsi-card__status gsi-program-status"><span class="gsi-dot"></span>On Jay's GSI list</p>
-    <h1>{html.escape(pr['title'])}</h1>
-    <p class="qa-lede">{html.escape(pr['lede'])}</p>
+    <div class="qa-crumbs"><a href="/gsi/">GSI lookup</a><span aria-hidden="true">/</span><span>{html.escape(where_)}</span></div>
+    <p class="gsi-card__status gsi-program-status"><span class="gsi-dot"></span>Jay offers a GSI here</p>
+    <h1>{html.escape(title)}</h1>
+    <p class="qa-lede">{html.escape(sys_line)}{html.escape((pr or {}).get('city', '') + ', ' if (pr or {}).get('city') else '')}{html.escape(where_)}</p>
     <div class="qa-author">
       <span class="qa-author__mark"><img src="/assets/images/Icon.svg" alt="" width="22" height="22" /></span>
-      <span><strong>Jay Weinberg, CLU, ChFC</strong><span>Broker for Cooper's GSI program · PGY1 Financial Solutions</span><span class="qa-dateline">{"Reviewed by Jay · " if bq.REVIEWED_BY_JAY else ""}Updated <time datetime="{bq.UPDATED}">{bq.pretty_date(bq.UPDATED)}</time></span></span>
+      <span><strong>Jay Weinberg, CLU, ChFC</strong><span>Offers Guardian GSI policies at {html.escape(short_name)} · PGY1 Financial Solutions</span><span class="qa-dateline">{"Reviewed by Jay · " if bq.REVIEWED_BY_JAY else ""}Updated <time datetime="{bq.UPDATED}">{bq.pretty_date(bq.UPDATED)}</time></span></span>
     </div>
   </div>
 </header>
 <main class="qa-shell qa-grid">
   <article class="qa-main">
     <section class="qa-short" aria-label="Short answer">
-      <p class="qa-eyebrow">Can Cooper residents get a GSI policy?</p>
-      <p class="qa-short__text">{html.escape(pr['short'])}</p>
+      <p class="qa-eyebrow">Can {html.escape(short_name)} residents get a GSI policy?</p>
+      <p class="qa-short__text">Yes. Jay offers a Guardian GSI policy to residents and fellows at {html.escape(short_name)}: no health questions, true own-occupation coverage with medical specialty language, and up to $8,000 a month to start, with room to increase later. Get it before you complete any other disability application.</p>
     </section>
     <div class="qa-body">
-      <h2 id="at-a-glance">Cooper's GSI at a glance</h2>
-      <table class="gsi-table">{facts}</table>
-      <p class="gsi-table__note">{html.escape(pr['facts_note'])}</p>
-      <h2 id="before-you-apply">Get it before any other application</h2>
-      <p>Most GSI policies ask whether you've applied for disability insurance before. If you have, there's a good chance you won't be eligible, so lock in the GSI first, then decide whether to add anything on top.</p>
+      {''.join(body)}
     </div>
     {clip_html}
-    <div class="qa-body">
-      <h2 id="program-questions">Questions Cooper residents ask</h2>
-    </div>
+    <div class="qa-body"><h2 id="program-questions">Questions residents ask</h2></div>
     <div class="gsi-program-questions">{qs}</div>
     <section class="qa-sources">
       <h2>Sources</h2>
-      <ul class="gsi-sources">{sources}</ul>
+      <ul class="gsi-sources">{src}</ul>
     </section>
   </article>
   <aside class="qa-side">
     <div class="qa-side__sticky">
       <div class="qa-toc">
         <p class="qa-eyebrow">On this page</p>
-        <ol><li><a href="#at-a-glance">Cooper's GSI at a glance</a></li><li><a href="#before-you-apply">Get it before any other application</a></li><li><a href="#program-questions">Questions Cooper residents ask</a></li></ol>
+        <ol>{''.join(f'<li><a href="#{i}">{html.escape(t)}</a></li>' for i, t in toc)}</ol>
       </div>
       <div class="gsi-side__card">
         <img src="/assets/images/jay-face.jpg" alt="" width="64" height="64" />
         <p class="gsi-side__name">Jay Weinberg, CLU, ChFC</p>
-        <p class="gsi-side__label">Places Cooper's GSI policy for residents and fellows</p>
+        <p class="gsi-side__label">Offers this policy to residents and fellows at {html.escape(short_name)}</p>
         <a class="btn-primary" href="/#questionnaire-embed">Start the questionnaire</a>
         <a class="gsi-side__tel" href="tel:+16094328862">or call (609) 432-8862</a>
       </div>
@@ -279,29 +317,30 @@ def program_page(pr):
   </aside>
 </main>
 """
-        + bq.CTA
-        + bq.FOOTER
+        + bq.CTA + bq.FOOTER
     )
 
 
 def main():
     rows = load()
-    progs = load_programs(rows)
-    for pr in progs:
-        pr["row"]["page"] = f"/gsi/{pr['slug']}/"
-    data = [{"id": r["id"], "d": r["display"], "y": r["system"], "n": r["name"], "st": r["states"], "a": r["aliases"],
-             **({"p": r["page"]} if r.get("page") else {})} for r in rows]
+    extra = load_programs(rows)
+    for r in rows:
+        r["page"] = f"/gsi/{slugify(r['display'])}/"
+    data = [{"id": r["id"], "d": r["display"], "y": r["system"], "n": r["name"], "st": r["states"], "a": r["aliases"], "p": r["page"]} for r in rows]
     with open(os.path.join(ROOT, "assets", "js", "gsi-data.js"), "w") as f:
         f.write("/* Generated by scripts/build-gsi.py from data/gsi-hospitals.csv. Don't edit by hand. */\n")
         f.write("window.GSI_HOSPITALS=" + json.dumps(data, ensure_ascii=False, separators=(",", ":")) + ";\n")
     out = os.path.join(ROOT, "gsi", "index.html")
     os.makedirs(os.path.dirname(out), exist_ok=True)
     open(out, "w").write(page(rows))
-    for pr in progs:
-        out = os.path.join(ROOT, "gsi", pr["slug"], "index.html")
+    n_specific = 0
+    for r in rows:
+        pr = extra.get(r["name"])
+        n_specific += bool(pr and (pr.get("group") or pr.get("specific")))
+        out = os.path.join(ROOT, r["page"].strip("/"), "index.html")
         os.makedirs(os.path.dirname(out), exist_ok=True)
-        open(out, "w").write(program_page(pr))
-    print(f"Built /gsi/ with {len(rows)} hospitals and {len(progs)} program page(s). Draft/noindex: {bq.DRAFT}")
+        open(out, "w").write(profile_page(r, pr))
+    print(f"Built /gsi/ and {len(rows)} hospital profiles ({n_specific} with hospital-specific content). Draft/noindex: {bq.DRAFT}")
 
 
 if __name__ == "__main__":

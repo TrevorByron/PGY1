@@ -1,0 +1,24 @@
+{
+  "hospital": "University of Chicago",
+  "city": "Chicago",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "Up to 60% of monthly earnings, no premium for residents and fellows"
+      ],
+      [
+        "When it starts paying",
+        "After 90 continuous days unable to work"
+      ],
+      [
+        "Short-term disability",
+        "50% of biweekly earnings after a 14-day wait, no premium"
+      ]
+    ],
+    "source": [
+      "UChicago GME handbook: long- and short-term disability",
+      "https://gme.uchicago.edu/current-gme-handbook/long-and-short-term-disability-coverage-required"
+    ]
+  }
+}

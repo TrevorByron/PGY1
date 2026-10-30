@@ -1,0 +1,17 @@
+{
+  "hospital": "University of Wisconsin",
+  "city": "Madison",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "Hospital-paid group plan for all residents and fellows"
+      ]
+    ],
+    "source": [
+      "UW School of Medicine and Public Health GME compensation and benefits",
+      "https://www.med.wisc.edu/education/graduate-medical-education/compensation-and-benefits/"
+    ]
+  },
+  "group_note": "UW doesn't publish the benefit percentage or monthly cap on this page."
+}

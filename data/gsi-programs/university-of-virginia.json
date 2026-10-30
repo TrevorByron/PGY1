@@ -1,0 +1,28 @@
+{
+  "hospital": "University of Virginia",
+  "city": "Charlottesville",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "60% of monthly income, up to $4,000 a month"
+      ],
+      [
+        "When it starts paying",
+        "After a 90-day elimination period"
+      ],
+      [
+        "Who pays",
+        "The university"
+      ],
+      [
+        "Insurance company",
+        "Unum"
+      ]
+    ],
+    "source": [
+      "UVA housestaff long-term disability benefit summary (Unum, PDF)",
+      "https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf"
+    ]
+  }
+}

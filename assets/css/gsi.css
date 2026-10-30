@@ -245,8 +245,6 @@
 /* Link from a lookup result to a hospital's program page */
 .gsi-card__guide { display: inline-flex; align-items: center; gap: 8px; margin-top: 18px; padding: 10px 16px; border-radius: 12px; border: 1px solid rgba(143, 208, 240, 0.45); background: rgba(143, 208, 240, 0.1); color: #e8f6fd; font-size: 15px; font-weight: 600; text-decoration: none; }
 .gsi-card__guide:hover { background: rgba(143, 208, 240, 0.2); }
-.gsi-state a.has-page { font-weight: 600; }
-.gsi-state a.has-page::after { content: " · guide"; font-weight: 400; color: #1f6f99; }
 
 /* ── Program page (/gsi/<hospital>/) ─────────────────── */
 .gsi-program-status { margin-bottom: 14px; color: #8ff0bf; }

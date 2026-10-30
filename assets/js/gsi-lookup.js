@@ -167,7 +167,7 @@
         `<p class="gsi-card__where">${h.y ? esc(h.y) + ' · ' : ''}${esc(where(h))}</p>` +
         '<p>Residents and fellows at this program can get a Guardian guaranteed standard issue policy, with no health questions. <strong>Talk to Jay before you apply for any other disability policy.</strong> Applying elsewhere first can make you ineligible.</p>' +
         CTA +
-        (h.p ? `<a class="gsi-card__guide" href="${h.p}">Read Jay's guide to the ${esc(h.d)} GSI <span aria-hidden="true">→</span></a>` : '') +
+        (h.p ? `<a class="gsi-card__guide" href="${h.p}">See the ${esc(h.d)} GSI profile <span aria-hidden="true">→</span></a>` : '') +
         sib +
       '</article>',
       '/gsi/?h=' + h.id

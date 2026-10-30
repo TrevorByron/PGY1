@@ -1,0 +1,28 @@
+{
+  "hospital": "Albany Medical College",
+  "city": "Albany",
+  "group": {
+    "rows": [
+      [
+        "Long-term disability",
+        "60% of basic monthly earnings, up to $8,500 a month"
+      ],
+      [
+        "When it starts paying",
+        "After a disability lasts more than six months"
+      ],
+      [
+        "When coverage starts",
+        "After three months of employment"
+      ],
+      [
+        "Short-term disability",
+        "50% of basic earnings, up to $1,750 a week, for up to 26 weeks"
+      ]
+    ],
+    "source": [
+      "Albany Med housestaff appointment contract (PDF)",
+      "https://www.amc.edu/wp-content/uploads/sites/3/2025/09/Housestaff-Appointment-Contract_protected.pdf"
+    ]
+  }
+}
