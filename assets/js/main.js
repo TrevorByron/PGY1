@@ -203,3 +203,49 @@
     else if (href.startsWith('mailto:')) track('Email click', { page: page, place: where(a) });
   });
 })();
+
+/* ── Mobile menu: a menu button next to the CTA opens the site links below the bar (≤1140px, where the text links hide) ── */
+(function () {
+  const nav = document.querySelector('nav');
+  const right = nav && nav.querySelector('.nav-right');
+  if (!right || nav.querySelector('.nav-toggle')) return;
+  const LINKS = [
+    ['/', 'Home'],
+    ['/about/', 'About Jay'],
+    ['/gsi/', 'GSI lookup'],
+    ['/questions/', 'Questions'],
+    ['/match-day-checklist/', 'Match Day checklist'],
+    ['/life-insurance/', 'Life insurance'],
+  ];
+  const here = location.pathname.replace(/index\.html$/, '');
+  const menu = document.createElement('div');
+  menu.className = 'nav-menu';
+  menu.id = 'nav-menu';
+  menu.hidden = true;
+  menu.innerHTML = LINKS.map(([href, label]) => {
+    const cur = href === '/' ? here === '/' : here.startsWith(href);
+    return `<a href="${href}"${cur ? ' aria-current="page"' : ''}>${label}</a>`;
+  }).join('') +
+    '<div class="nav-menu__foot"><a href="tel:+16094328862" class="nav-menu__tel">(609) 432-8862</a>' +
+    '<a href="mailto:jay@pgy1.com" class="nav-menu__tel">jay@pgy1.com</a></div>';
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'nav-toggle';
+  btn.setAttribute('aria-controls', 'nav-menu');
+  btn.setAttribute('aria-expanded', 'false');
+  btn.setAttribute('aria-label', 'Menu');
+  btn.innerHTML = '<span></span><span></span><span></span>';
+  right.appendChild(btn);
+  nav.appendChild(menu);
+  function set(open) {
+    menu.hidden = !open;
+    btn.setAttribute('aria-expanded', String(open));
+    btn.setAttribute('aria-label', open ? 'Close menu' : 'Menu');
+    nav.classList.toggle('nav--menu-open', open);
+  }
+  btn.addEventListener('click', (e) => { e.stopPropagation(); set(menu.hidden); });
+  menu.addEventListener('click', (e) => { if (e.target.closest('a')) set(false); });
+  document.addEventListener('click', (e) => { if (!menu.hidden && !nav.contains(e.target)) set(false); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
+  window.addEventListener('resize', () => { if (window.innerWidth > 1140 && !menu.hidden) set(false); });
+})();
