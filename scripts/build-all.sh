@@ -7,3 +7,4 @@ python3 scripts/build-questions.py "../Question Pages - Draft Content.md"
 python3 scripts/build-gsi.py
 python3 scripts/build-pages.py
 python3 scripts/build-sitemap.py
+python3 scripts/build-markdown.py

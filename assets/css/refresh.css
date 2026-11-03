@@ -496,3 +496,22 @@ nav.nav--on-light {
 @media (max-width: 640px) { .nav-toggle { width: 40px; height: 40px; } }
 @keyframes navMenuIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .nav-menu:not([hidden]) { animation: none; } .nav-toggle span { transition: none; } }
+
+/* Zite form fallback (main.js): shown when the embed is blocked or stalls.
+   Sits inside the white questionnaire shell, so no card of its own. */
+.questionnaire-embed > .form-fallback {
+  min-height: 0; height: auto;
+  margin: 0; padding: 32px 28px 8px; color: var(--ink);
+  font-size: 17px; line-height: 1.55;
+}
+.form-fallback p { margin: 0 0 10px; max-width: 560px; }
+.form-fallback a { color: #1f6f99; font-weight: 600; }
+.form-fallback__title { font-family: var(--serif); font-size: 26px; line-height: 1.2; }
+.form-fallback__contact { display: flex; flex-wrap: wrap; gap: 10px 12px; margin: 18px 0 0 !important; }
+.form-fallback__contact a {
+  display: inline-flex; align-items: center; padding: 11px 18px; border-radius: 999px;
+  background: rgba(31, 111, 153, 0.09); text-decoration: none;
+}
+.form-fallback__contact a:hover { background: rgba(31, 111, 153, 0.15); }
+.questionnaire-embed:has(> .form-fallback) { min-height: 0; padding-bottom: 24px; }
+.questionnaire-embed__host.is-stalled { min-height: 0 !important; height: auto !important; }

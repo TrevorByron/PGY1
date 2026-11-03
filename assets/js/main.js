@@ -249,3 +249,45 @@
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !menu.hidden) { set(false); btn.focus(); } });
   window.addEventListener('resize', () => { if (window.innerWidth > 1140 && !menu.hidden) set(false); });
 })();
+
+/* ── Zite form fallback ──
+   Some networks (hospitals, offices) block zite.so or fillout.com. The embed then spins forever.
+   If the form hasn't reported loaded after 10s, show a way to reach Jay instead.
+   "Loaded" = Fillout hides its own .fillout-embed-loading spinner. No spinner at all = script blocked. */
+(function () {
+  const hosts = document.querySelectorAll('[data-zite-id]');
+  if (!hosts.length) return;
+  const WAIT = 10000;
+  const PHONE = '(609) 432-8862', TEL = '+16094328862', EMAIL = 'jay@pgy1.com';
+
+  function loaded(host) {
+    const spin = host.querySelector('.fillout-embed-loading');
+    return !!spin && getComputedStyle(spin).display === 'none';
+  }
+
+  hosts.forEach((host) => {
+    const id = host.getAttribute('data-zite-id');
+    let box = null, poll = null;
+
+    function show() {
+      if (box || loaded(host)) return;
+      box = document.createElement('div');
+      box.className = 'form-fallback';
+      box.setAttribute('role', 'status');
+      box.innerHTML =
+        '<p class="form-fallback__title">The form is taking a while to load.</p>' +
+        '<p>Some hospital and work networks block it. You can <a href="https://' + id + '.zite.so/" target="_blank" rel="noopener">open the form in a new tab</a>, ' +
+        'try again on your phone, or reach Jay directly.</p>' +
+        '<p class="form-fallback__contact"><a href="tel:' + TEL + '">Call ' + PHONE + '</a>' +
+        '<a href="mailto:' + EMAIL + '">Email ' + EMAIL + '</a></p>';
+      host.parentNode.insertBefore(box, host);
+      host.classList.add('is-stalled');
+      // Keep watching. If the form shows up late, put things back.
+      poll = setInterval(() => {
+        if (loaded(host)) { clearInterval(poll); box.remove(); box = null; host.classList.remove('is-stalled'); }
+      }, 1000);
+    }
+
+    setTimeout(show, WAIT);
+  });
+})();

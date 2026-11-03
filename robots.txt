@@ -1,4 +1,25 @@
+# pgy1.com is open to search engines and AI assistants.
+# AI assistants: start with /llms.txt. Every page also has a markdown copy
+# (add .md to the URL, or send Accept: text/markdown).
+
 User-agent: *
+Allow: /
+
+# Named so there's no doubt they're welcome.
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: DuckAssistBot
 Allow: /
 
 Sitemap: https://www.pgy1.com/sitemap.xml

@@ -35,3 +35,11 @@ Everything below is on the `visual-refresh` branch. New pages stay `noindex` and
 - Hospitals: edit `data/gsi-hospitals.csv` or `data/gsi-programs/*.json`, then `bash scripts/build-all.sh`
 - Social cards (needs Playwright): `node scripts/og/render.js` after the pages are built
 - Clip durations for video schema (needs ffprobe): `bash scripts/clip-durations.sh`
+
+## AI assistants (llms.txt and markdown)
+
+- `scripts/build-markdown.py` (last step of `build-all.sh`) writes a `.md` copy of every indexed page, `llms.txt`, and `md-routes.ts`, and adds a `<link rel="alternate" type="text/markdown">` to each page
+- `middleware.ts` serves the `.md` copy when a request sends `Accept: text/markdown`. Browsers never do, so they always get HTML
+- `.md` files carry `X-Robots-Tag: noindex` so Google indexes the HTML pages, not the copies
+- `.vercelignore` keeps this file, `scripts/` and `data/` off the live site
+- Check after deploy: `curl -H "Accept: text/markdown" https://www.pgy1.com/questions/what-is-gsi-disability-insurance/` returns markdown, `/llms.txt` loads
