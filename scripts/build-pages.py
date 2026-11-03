@@ -11,6 +11,7 @@ import html
 import importlib.util
 import json
 import os
+import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
@@ -295,9 +296,46 @@ def checklist():
     )
 
 
+def notfound():
+    """404.html. Served with a real 404 status: by Vercel for missing files, and by middleware.ts
+    for page addresses that aren't on the site."""
+    desc = "This page isn't on PGY1.com. Find Jay's answers to residents' disability insurance questions, or check your hospital for a GSI policy."
+    h = with_css(bq.head("Page not found | PGY1.com", desc, SITE + "/", {"@context": "https://schema.org", "@type": "WebPage", "name": "Page not found"}))
+    h = re.sub(r'<meta name="robots" content="[^"]*" />', '<meta name="robots" content="noindex,follow" />', h)
+    h = re.sub(r'\s*<link rel="canonical" href="[^"]*" />', "", h)
+    links = [
+        ("/questions/", "Questions, answered by Jay", "28 short answers from his webinars, each with a clip."),
+        ("/gsi/", "Does your hospital have a GSI policy?", "Look up your hospital. GSI policies ask no health questions."),
+        ("/match-day-checklist/", "Match Day checklist", "What to sort out between Match Day and July 1."),
+        ("/#questionnaire-embed", "Start the questionnaire", "About 2 minutes. Jay builds your file from it."),
+    ]
+    rows = "".join(f'<li><a class="qa-row" href="{u}"><span class="qa-row__text"><span class="qa-row__title">{html.escape(t)}</span>'
+                   f'<span class="qa-row__preview">{html.escape(d)}</span></span>{bq.ARROW}</a></li>' for u, t, d in links)
+    return (
+        h + bq.NAV
+        + f"""<header class="qa-hero qa-hero--hub">
+  <div class="qa-shell">
+    <p class="qa-eyebrow qa-eyebrow--light">Page not found</p>
+    <h1>We can't find that page</h1>
+    <p class="qa-lede">The link may be old, or the address has a typo. Here's where most people are headed.</p>
+  </div>
+</header>
+<main class="qa-shell">
+  <section class="qa-stage nf-stage">
+    <ul class="qa-rows">{rows}</ul>
+  </section>
+  <p class="nf-contact">Still stuck? Call Jay at <a href="tel:+16094328862">(609) 432-8862</a> or email <a href="mailto:jay@pgy1.com">jay@pgy1.com</a>.</p>
+</main>
+"""
+        + bq.FOOTER
+    )
+
+
 def main():
     write("about", about())
     write("match-day-checklist", checklist())
+    with open(os.path.join(ROOT, "404.html"), "w", encoding="utf-8") as f:
+        f.write(notfound())
     print(f"Built /about/ and /match-day-checklist/. Draft/noindex: {bq.DRAFT}")
 
 

@@ -352,7 +352,18 @@ with open(os.path.join(ROOT, "md-routes.ts"), "w", encoding="utf-8") as f:
     f.write("export const MD_ROUTES: Record<string, string> = {\n")
     for k, v in routes.items():
         f.write(f'  "{k}": "{v}",\n')
-    f.write("};\n")
+    f.write("};\n\n")
+    # every page address on the site, indexed or not, so middleware.ts can 404 the rest
+    allp = []
+    for dirpath, dirs, files in os.walk(ROOT):
+        dirs[:] = sorted(d for d in dirs if d not in SKIP_DIRS)
+        if "index.html" in files:
+            rel = os.path.relpath(dirpath, ROOT).replace(os.sep, "/")
+            allp.append("/" if rel == "." else "/" + rel + "/")
+    f.write("export const PAGES = new Set<string>([\n")
+    for k in sorted(allp):
+        f.write(f'  "{k}",\n')
+    f.write("]);\n")
 
 # point each page at its markdown copy, once
 for u, i in info.items():
