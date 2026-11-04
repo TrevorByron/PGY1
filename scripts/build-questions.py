@@ -53,6 +53,11 @@ _dur = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
 CLIP_DURATIONS = json.load(open(_dur)) if os.path.exists(_dur) else {}
 
 
+
+def iso_datetime(d):
+    """Google wants uploadDate as a full datetime with a timezone, not just a date."""
+    return d if "T" in d else f"{d}T12:00:00-05:00"
+
 def secs(ts):
     parts = [int(p) for p in ts.split(":")]
     total = 0
@@ -292,12 +297,12 @@ def page(q, by_slug):
                 "description": q["description"],
                 **({
                     "thumbnailUrl": f"{SITE}/assets/video/{q['clip']}.jpg",
-                    "uploadDate": "2026-10-30",
+                    "uploadDate": iso_datetime("2026-10-30"),
                     **({"duration": CLIP_DURATIONS[q["clip"]]} if q["clip"] in CLIP_DURATIONS else {}),
                     "contentUrl": f"{SITE}/assets/video/{q['clip']}.mp4",
                 } if q.get("clip") else {
                     "thumbnailUrl": f"https://i.ytimg.com/vi/{vid}/hqdefault.jpg",
-                    "uploadDate": upload,
+                    "uploadDate": iso_datetime(upload),
                     "embedUrl": f"https://www.youtube-nocookie.com/embed/{vid}",
                     "contentUrl": f"https://www.youtube.com/watch?v={vid}",
                 }),
