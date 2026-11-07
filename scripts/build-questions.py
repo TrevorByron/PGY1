@@ -54,6 +54,15 @@ CLIP_DURATIONS = json.load(open(_dur)) if os.path.exists(_dur) else {}
 
 
 
+def page_title(q, limit=60):
+    """<title> for a question page: the question itself when it fits, otherwise the shorter `seo:` line
+    from the content file. The H1 always stays the full question."""
+    for t in (f"{q['title']} | PGY1.com", f"{q.get('seo', '')} | PGY1.com", q["title"], q.get("seo", "")):
+        if t.strip(" |") and len(t) <= limit and not t.startswith(" |"):
+            return t
+    return q.get("seo") or q["title"]
+
+
 def iso_datetime(d):
     """Google wants uploadDate as a full datetime with a timezone, not just a date."""
     return d if "T" in d else f"{d}T12:00:00-05:00"
@@ -368,7 +377,7 @@ def page(q, by_slug):
         for s in q["related"] if s in by_slug
     )
     return (
-        head(f"{q['title']} | PGY1.com", q["description"], url, ld, og_image=f"{SITE}/assets/og/q-{q['slug']}.jpg")
+        head(page_title(q), q["description"], url, ld, og_image=f"{SITE}/assets/og/q-{q['slug']}.jpg")
         + NAV
         + f"""<header class="qa-hero qa-hero--page">
   <div class="qa-shell">
@@ -452,9 +461,9 @@ def hub(qs):
         "url": url,
         "hasPart": [{"@type": "Article", "headline": q["title"], "url": f"{SITE}/questions/{q['slug']}/"} for q in qs],
     }
-    desc = "Jay Weinberg, CLU, ChFC, answers the disability and life insurance questions residents, fellows and graduating medical students ask most, with clips from his webinars."
+    desc = "Jay Weinberg, CLU, ChFC, answers the disability insurance questions residents, fellows and MS4s ask most, with clips from his webinars."
     return (
-        head("Disability Insurance Questions for Residents & Fellows | PGY1.com", desc, url, ld, og_image=f"{SITE}/assets/og/questions.jpg", og_type="website")
+        head("Disability Insurance Questions from Residents | PGY1.com", desc, url, ld, og_image=f"{SITE}/assets/og/questions.jpg", og_type="website")
         + NAV
         + f"""<header class="qa-hero qa-hero--hub">
   <div class="qa-shell">

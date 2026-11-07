@@ -66,8 +66,8 @@ def webinar_links():
 
 def about():
     url = SITE + "/about/"
-    desc = ("Jay Weinberg, CLU, ChFC, is an independent disability insurance broker who works exclusively with physicians. "
-            "Over 25 years in the business, lecturing to 100+ residency and fellowship programs a year.")
+    desc = ("Jay Weinberg, CLU, ChFC, is an independent disability insurance broker who works only with physicians "
+            "and lectures at 100+ residency programs a year.")
     ld = {"@context": "https://schema.org", "@graph": [
         {"@type": "ProfilePage", "@id": url, "url": url, "name": "About Jay Weinberg, CLU, ChFC",
          "mainEntity": {"@id": SITE + "/#jay"}, "isPartOf": {"@id": SITE + "/#website"}},
@@ -77,7 +77,7 @@ def about():
             {"@type": "ListItem", "position": 2, "name": "About Jay", "item": url}]},
     ]}
     return (
-        with_css(bq.head("About Jay Weinberg, CLU, ChFC | Physician Disability Insurance | PGY1.com", desc, url, ld,
+        with_css(bq.head("About Jay Weinberg, CLU, ChFC | PGY1.com", desc, url, ld,
                          og_image=SITE + "/assets/og/about.jpg", og_type="profile"))
         + bq.NAV
         + f"""<header class="qa-hero qa-hero--page pg-about-hero">
@@ -212,7 +212,7 @@ CHECKLIST = [
 def checklist():
     url = SITE + "/match-day-checklist/"
     desc = ("Jay Weinberg's Match Day checklist for the move from MS4 to PGY1: taxes, student loans, disability insurance, "
-            "moving, your first paycheck, budget and emergency fund.")
+            "moving and your first paycheck.")
     n = sum(len(items) for _, items in CHECKLIST)
     groups, k = [], 0
     for g, items in CHECKLIST:

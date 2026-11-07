@@ -39,6 +39,39 @@ STATES = {
 }
 
 
+# Titles Google won't cut off (about 60 characters). Longest-first fallbacks, then a few by hand.
+TITLE_OVERRIDES = {
+    "NewYork-Presbyterian Morgan Stanley Children's Hospital": "Morgan Stanley Children's Hospital GSI Disability Insurance",
+    "NewYork-Presbyterian / Weill Cornell": "NewYork-Presbyterian Weill Cornell GSI Disability Insurance",
+}
+
+
+def desc_for(name, short_name, limit=155):
+    """Meta description that fits: full name, then the abbreviation in parentheses, then a shorter form."""
+    abbr = re.search(r"\(([^)]+)\)\s*$", name)
+    alt = TITLE_OVERRIDES.get(name, "").replace(" GSI Disability Insurance", "")
+    for n in (short_name, abbr.group(1) if abbr else "", alt):
+        if not n:
+            continue
+        d = f"Residents and fellows at {n} can get a Guardian GSI disability policy through Jay Weinberg, with no health questions."
+        if len(d) <= limit:
+            return d + (" Get it before any other application." if len(d) + 37 <= limit else "")
+    return d
+
+
+def seo_title(name, short_name, limit=60):
+    if name in TITLE_OVERRIDES:
+        return TITLE_OVERRIDES[name]
+    abbr = re.search(r"\(([^)]+)\)\s*$", name)
+    for t in (f"{name} GSI Disability Insurance | PGY1.com",
+              f"{short_name} GSI Disability Insurance | PGY1.com",
+              f"{short_name} GSI Disability Insurance",
+              *( [f"{abbr.group(1)} GSI Disability Insurance | PGY1.com"] if abbr else [] )):
+        if len(t) <= limit:
+            return t
+    return f"{short_name} GSI Disability Insurance"
+
+
 def slugify(text):
     return re.sub(r"[^a-z0-9]+", "-", text.lower().replace("&", "and").replace("'", "").replace("’", "")).strip("-")
 
@@ -90,8 +123,8 @@ def page(rows):
         "about": "Teaching hospitals where residents and fellows can get a guaranteed standard issue (GSI) disability insurance policy",
         "publisher": {"@type": "Organization", "name": "PGY1 Financial Solutions Corp", "url": bq.SITE},
     }
-    desc = ("Check whether your residency or fellowship hospital offers a guaranteed standard issue (GSI) disability policy, "
-            "with no health questions. The " + str(len(rows)) + " teaching hospitals and programs where Jay Weinberg offers one.")
+    desc = ("Does your residency hospital offer a GSI disability policy with no health questions? Search the "
+            + str(len(rows)) + " teaching hospitals where Jay Weinberg offers one.")
     return (
         bq.head("Does Your Hospital Have a GSI Disability Policy? | PGY1.com", desc, url, ld, og_image=bq.SITE + "/assets/og/gsi.jpg", og_type="website")
         .replace('<link rel="stylesheet" href="/assets/css/refresh.css" />',
@@ -248,8 +281,7 @@ def profile_page(r, pr):
         f'<span class="qa-rel__title">{html.escape(question_title(q))}</span>{bq.ARROW}</a>' for q in QUESTIONS)
     src = "".join(f'<li><a href="{html.escape(u)}" rel="nofollow">{html.escape(t)}</a></li>' for t, u in dict.fromkeys(sources))
     title = f"{name} GSI disability insurance"
-    desc = (f"Residents and fellows at {name} can get a Guardian GSI disability policy through Jay Weinberg, with no health questions. "
-            "What it includes and why to get it before any other application.")[:300]
+    desc = desc_for(name, short_name)
     ld = {
         "@context": "https://schema.org",
         "@graph": [
@@ -263,7 +295,7 @@ def profile_page(r, pr):
                 {"@type": "ListItem", "position": 2, "name": name, "item": url}]},
         ],
     }
-    head = bq.head(f"{name} GSI Disability Insurance for Residents & Fellows | PGY1.com", desc, url, ld, og_image=f"{bq.SITE}/assets/og/gsi-{slugify(r['display'])}.jpg").replace(
+    head = bq.head(seo_title(name, short_name), desc, url, ld, og_image=f"{bq.SITE}/assets/og/gsi-{slugify(r['display'])}.jpg").replace(
         '<link rel="stylesheet" href="/assets/css/refresh.css" />',
         '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
     if not specific:  # generic profiles stay out of search until Jay adds something specific
