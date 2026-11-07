@@ -46,12 +46,20 @@ VIDEOS = {
     "Physician Disability Insurance (2019 clip)": ("vAOUJKaQ-Qg", "2019-04-05", "4 3 19 Jay Weinberg speaking on Physician Disability Insurance"),
     "How to Secure a Comprehensive Individual Disability Policy (2019 clip)": ("ejAw4gmIM9c", "2019-10-15", "Jay Weinberg - How to Secure Comprehensive Individual Disability Policy"),
     "Roth IRA (2019 clip)": ("wQk-ccpDshI", "2019-04-05", "4 3 19 Jay Weinberg speaking on Roth IRA"),
+    "Disability Insurance - Own Occupation (2019 clip)": ("bgIzpPZVG4g", "2019-10-15", "Jay Weinberg - Disability Insurance - Own Occupation"),
 }
 VIDEO_BY_ID = {v[0]: v for v in VIDEOS.values()}
 # ISO 8601 durations for the local clips (written by scripts/clip-durations.sh)
 _dur = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data", "clip-durations.json")
 CLIP_DURATIONS = json.load(open(_dur)) if os.path.exists(_dur) else {}
 
+
+
+def is_draft(q):
+    """`draft: yes` in the content file: the page is built so Jay can read it at its URL, but it's noindex,
+    left out of the /questions/ hub and of related links on other pages, and so also out of the sitemap,
+    llms.txt and the markdown copies (those follow noindex)."""
+    return q.get("draft", "").strip().lower() in ("yes", "true", "1")
 
 
 def page_title(q, limit=60):
@@ -376,10 +384,11 @@ def page(q, by_slug):
     related = "".join(
         f'<a class="qa-rel" href="/questions/{s}/"><span class="qa-rel__stage">{html.escape(by_slug[s]["stage"])}</span>'
         f'<span class="qa-rel__title">{html.escape(by_slug[s]["title"])}</span>{ARROW}</a>'
-        for s in q["related"] if s in by_slug
+        for s in q["related"] if s in by_slug and (is_draft(q) or not is_draft(by_slug[s]))
     )
     return (
-        head(page_title(q), q["description"], url, ld, og_image=f"{SITE}/assets/og/q-{q['slug']}.jpg")
+        (lambda h: h.replace('<meta name="robots" content="index,follow" />', '<meta name="robots" content="noindex,follow" />') if is_draft(q) else h)(
+            head(page_title(q), q["description"], url, ld, og_image=f"{SITE}/assets/og/q-{q['slug']}.jpg"))
         + NAV
         + f"""<header class="qa-hero qa-hero--page">
   <div class="qa-shell">
@@ -437,6 +446,7 @@ def page(q, by_slug):
 
 
 def hub(qs):
+    qs = [q for q in qs if not is_draft(q)]
     url = f"{SITE}/questions/"
     stages = [s for s in STAGE_ORDER if any(q["stage"] == s for q in qs)]
     chips = "".join(f'<a href="#{slugify(s)}">{html.escape(s)}</a>' for s in stages)
