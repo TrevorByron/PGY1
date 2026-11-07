@@ -20,7 +20,7 @@ Why check first
 
 ## The 37 hospitals and programs Jay works with
 
-Grouped by state. Offers can change, and Jay confirms eligibility before you apply. Don't see your program? [Ask Jay](mailto:jay@pgy1.com) and he'll find out.
+Grouped by state (2 systems appear under more than one state). Offers can change, and Jay confirms eligibility before you apply. Don't see your program? [Ask Jay](mailto:jay@pgy1.com) and he'll find out.
 
 ### Arizona
 

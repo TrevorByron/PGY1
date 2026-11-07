@@ -125,6 +125,9 @@ def page(rows):
     }
     desc = ("Does your residency hospital offer a GSI disability policy with no health questions? Search the "
             + str(len(rows)) + " teaching hospitals where Jay Weinberg offers one.")
+    multi = sum(1 for r in rows if len(r["states"]) > 1)
+    # count is unique hospitals; a few systems are listed under more than one state
+    multi_note = f" ({multi} {'system appears' if multi == 1 else 'systems appear'} under more than one state)" if multi else ""
     return (
         bq.head("Does Your Hospital Have a GSI Disability Policy? | PGY1.com", desc, url, ld, og_image=bq.SITE + "/assets/og/gsi.jpg", og_type="website")
         .replace('<link rel="stylesheet" href="/assets/css/refresh.css" />',
@@ -169,7 +172,7 @@ def page(rows):
     <div class="qa-shell">
       <div class="gsi-all__head">
         <h2>The {len(rows)} hospitals and programs Jay works with</h2>
-        <p>Grouped by state. Offers can change, and Jay confirms eligibility before you apply. Don't see your program? <a href="mailto:jay@pgy1.com">Ask Jay</a> and he'll find out.</p>
+        <p>Grouped by state{multi_note}. Offers can change, and Jay confirms eligibility before you apply. Don't see your program? <a href="mailto:jay@pgy1.com">Ask Jay</a> and he'll find out.</p>
       </div>
       <div class="gsi-states">
 {chr(10).join(groups)}
