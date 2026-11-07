@@ -18,7 +18,7 @@ import re
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from site_config import LAUNCH, REVIEWED_BY_JAY, PUBLISHED, UPDATED  # noqa: E402
+from site_config import LAUNCH, REVIEWED_BY_JAY, PUBLISHED, UPDATED, license_line  # noqa: E402
 DRAFT = not LAUNCH
 JAY = {"@type": "Person", "@id": "https://www.pgy1.com/#jay", "name": "Jay Weinberg", "honorificSuffix": "CLU, ChFC",
        "url": "https://www.pgy1.com/about/"}
@@ -245,9 +245,10 @@ NAV = f"""<nav>
 </nav>
 """
 
+LICENSE_HTML = f'\n  <p class="footer-license">{license_line()}</p>' if license_line() else ""
 FOOTER = f"""<footer>
   <div class="dot-grid" aria-hidden="true"></div>
-  <p>© 2026 PGY1 Financial Solutions Corp · Jay Weinberg, CLU ChFC</p>
+  <p>© 2026 PGY1 Financial Solutions Corp · Jay Weinberg, CLU ChFC</p>{LICENSE_HTML}
   <div class="footer-links">
     <a href="tel:{PHONE_TEL}" class="footer-tel"><span>{PHONE_DISPLAY}</span></a>
     <a href="/about/">About Jay</a>

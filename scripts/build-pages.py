@@ -43,6 +43,16 @@ PERSON = {
 }
 
 
+from site_config import LICENSE_NPN, LICENSED_STATES  # noqa: E402
+
+if LICENSE_NPN:
+    PERSON["identifier"] = {"@type": "PropertyValue", "propertyID": "NPN", "value": LICENSE_NPN}
+if LICENSED_STATES:
+    PERSON["hasCredential"].append({"@type": "EducationalOccupationalCredential", "credentialCategory": "license",
+                                    "name": "Insurance producer license",
+                                    "recognizedBy": [{"@type": "State", "name": st} for st in LICENSED_STATES]})
+
+
 def with_css(head):
     return head.replace('<link rel="stylesheet" href="/assets/css/refresh.css" />',
                         '<link rel="stylesheet" href="/assets/css/gsi.css" />\n  <link rel="stylesheet" href="/assets/css/pages.css" />\n  <link rel="stylesheet" href="/assets/css/refresh.css" />')
@@ -114,7 +124,7 @@ def about():
         <li><strong>CLU</strong>, Chartered Life Underwriter</li>
         <li><strong>ChFC</strong>, Chartered Financial Consultant</li>
         <li>Founder, PGY1 Financial Solutions Corp</li>
-        <li>#1 Individual Disability Insurance Broker Award with Guardian, 2024</li>
+        <li>#1 Individual Disability Insurance Broker Award with Guardian, 2024</li>{(chr(10) + "        <li>" + html.escape(bq.license_line()) + "</li>") if bq.license_line() else ""}
       </ul>
     </div>
     <section class="qa-sources">
