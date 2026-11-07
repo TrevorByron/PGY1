@@ -39,7 +39,7 @@ PERSON = {
     ],
     "knowsAbout": ["Physician disability insurance", "Guaranteed standard issue (GSI) disability insurance",
                    "True own-occupation disability insurance", "Life insurance for physicians"],
-    "sameAs": [YT_CHANNEL],
+    "sameAs": [YT_CHANNEL, "https://www.emra.org/jay-weinberg"],
 }
 
 
