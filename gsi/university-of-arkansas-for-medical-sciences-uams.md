@@ -18,7 +18,6 @@ Residents here get group disability coverage through their employer. It's a good
 
 | Long-term disability | 60% salary replacement, at no cost to housestaff |
 | --- | --- |
-| Insurance company | The Standard |
 
 Source: [UAMS housestaff benefit summary, April 2026 (PDF)](https://hr.uams.edu/benefits/wp-content/uploads/sites/5/2021/10/Housestaff-Benefit-Summary-April-2026.pdf). Plan documents govern.
 

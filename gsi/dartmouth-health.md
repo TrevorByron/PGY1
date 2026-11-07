@@ -19,7 +19,6 @@ Residents here get group disability coverage through their employer. It's a good
 | Long-term disability | 80% of base salary, up to $3,750 a month |
 | --- | --- |
 | Short-term disability | 100% of base salary for up to 90 days |
-| Insurance company | Sun Life Financial |
 
 Source: [Dartmouth Health GME resident and fellow benefits](https://www.dartmouth-health.org/graduate-medical-education/benefits/resident-fellow-benefits). Plan documents govern.
 

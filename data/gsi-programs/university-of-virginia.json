@@ -14,14 +14,10 @@
       [
         "Who pays",
         "The university"
-      ],
-      [
-        "Insurance company",
-        "Unum"
       ]
     ],
     "source": [
-      "UVA housestaff long-term disability benefit summary (Unum, PDF)",
+      "UVA housestaff long-term disability benefit summary (PDF)",
       "https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf"
     ]
   }

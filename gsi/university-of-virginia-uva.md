@@ -20,9 +20,8 @@ Residents here get group disability coverage through their employer. It's a good
 | --- | --- |
 | When it starts paying | After a 90-day elimination period |
 | Who pays | The university |
-| Insurance company | Unum |
 
-Source: [UVA housestaff long-term disability benefit summary (Unum, PDF)](https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf). Plan documents govern.
+Source: [UVA housestaff long-term disability benefit summary (PDF)](https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf). Plan documents govern.
 
 [Is group disability insurance enough?](https://www.pgy1.com/questions/group-disability-insurance-enough/)
 
@@ -58,7 +57,7 @@ Jay's answer, from his webinar for residents and fellows.
 ## Sources
 
 - [Guardian GSI brochure on Jay's quote page (2025)](https://www.disabilityquotes.com/pages/pages/brochure/10061)
-- [UVA housestaff long-term disability benefit summary (Unum, PDF)](https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf)
+- [UVA housestaff long-term disability benefit summary (PDF)](https://hr.virginia.edu/sites/default/files/PDFs/Leave/UNUM%20-%20353431%20-%20Housestaff%20LTD%20benefit%20summary%20eq.pdf.pdf)
 
 Jay Weinberg, CLU, ChFC
 
