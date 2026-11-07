@@ -43,3 +43,9 @@ Everything below is on the `visual-refresh` branch. New pages stay `noindex` and
 - `.md` files carry `X-Robots-Tag: noindex` so Google indexes the HTML pages, not the copies
 - `.vercelignore` keeps this file, `scripts/` and `data/` off the live site
 - Check after deploy: `curl -H "Accept: text/markdown" https://www.pgy1.com/questions/what-is-gsi-disability-insurance/` returns markdown, `/llms.txt` loads
+
+## After each deploy: IndexNow
+
+`python3 scripts/indexnow.py` tells Bing (and Yandex, Seznam, Naver) which pages changed, using the
+sitemap's lastmod dates. Run it from your Mac once Vercel says Ready. `--all` sends every URL.
+The key file is `/51b8831addf8a4f3c4b0a41d9a53007f.txt`; don't delete it.
