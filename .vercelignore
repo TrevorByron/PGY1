@@ -6,3 +6,4 @@ server.js
 render.yaml
 .DS_Store
 .gitignore
+docs/
