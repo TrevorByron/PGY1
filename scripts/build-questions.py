@@ -319,8 +319,9 @@ def page(q, by_slug):
             {
                 "@type": "BreadcrumbList",
                 "itemListElement": [
-                    {"@type": "ListItem", "position": 1, "name": "Questions", "item": SITE + "/questions/"},
-                    {"@type": "ListItem", "position": 2, "name": q["title"], "item": url},
+                    {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+                    {"@type": "ListItem", "position": 2, "name": "Questions", "item": SITE + "/questions/"},
+                    {"@type": "ListItem", "position": 3, "name": q["title"], "item": url},
                 ],
             },
         ],
@@ -456,10 +457,27 @@ def hub(qs):
         )
     ld = {
         "@context": "https://schema.org",
-        "@type": "CollectionPage",
-        "name": "Disability insurance questions for residents and fellows",
-        "url": url,
-        "hasPart": [{"@type": "Article", "headline": q["title"], "url": f"{SITE}/questions/{q['slug']}/"} for q in qs],
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": url,
+                "name": "Disability insurance questions for residents and fellows",
+                "url": url,
+                "isPartOf": {"@id": SITE + "/#website"},
+                "publisher": {"@id": SITE + "/#organization"},
+                "author": JAY,
+                "hasPart": [{"@type": "Article", "headline": q["title"], "url": f"{SITE}/questions/{q['slug']}/"} for q in qs],
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "numberOfItems": len(qs),
+                    "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": q["title"],
+                                         "url": f"{SITE}/questions/{q['slug']}/"} for i, q in enumerate(qs)],
+                },
+            },
+            {"@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Questions", "item": url}]},
+        ],
     }
     desc = "Jay Weinberg, CLU, ChFC, answers the disability insurance questions residents, fellows and MS4s ask most, with clips from his webinars."
     return (

@@ -115,13 +115,29 @@ def page(rows):
             for r in items
         )
         groups.append(f'<section class="gsi-state" id="state-{st.lower()}"><h3>{STATES[st]}</h3><ul>{lis}</ul></section>')
+    hosp = sorted(rows, key=lambda r: r["display"])
     ld = {
         "@context": "https://schema.org",
-        "@type": "WebPage",
-        "name": "GSI disability insurance hospital lookup for residents and fellows",
-        "url": url,
-        "about": "Teaching hospitals where residents and fellows can get a guaranteed standard issue (GSI) disability insurance policy",
-        "publisher": {"@type": "Organization", "name": "PGY1 Financial Solutions Corp", "url": bq.SITE},
+        "@graph": [
+            {
+                "@type": "CollectionPage",
+                "@id": url,
+                "name": "GSI disability insurance hospital lookup for residents and fellows",
+                "url": url,
+                "about": "Teaching hospitals where residents and fellows can get a guaranteed standard issue (GSI) disability insurance policy",
+                "isPartOf": {"@id": bq.SITE + "/#website"},
+                "publisher": {"@id": bq.SITE + "/#organization"},
+                "mainEntity": {
+                    "@type": "ItemList",
+                    "numberOfItems": len(hosp),
+                    "itemListElement": [{"@type": "ListItem", "position": i + 1, "name": r["display"],
+                                         "url": f"{bq.SITE}/gsi/{slugify(r['display'])}/"} for i, r in enumerate(hosp)],
+                },
+            },
+            {"@type": "BreadcrumbList", "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": bq.SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": "GSI lookup", "item": url}]},
+        ],
     }
     desc = ("Does your residency hospital offer a GSI disability policy with no health questions? Search the "
             + str(len(rows)) + " teaching hospitals where Jay Weinberg offers one.")
@@ -294,8 +310,9 @@ def profile_page(r, pr):
                        "address": {"@type": "PostalAddress", **({"addressLocality": pr["city"]} if pr and pr.get("city") else {}),
                                    "addressRegion": r["states"][0], "addressCountry": "US"}}},
             {"@type": "BreadcrumbList", "itemListElement": [
-                {"@type": "ListItem", "position": 1, "name": "GSI lookup", "item": bq.SITE + "/gsi/"},
-                {"@type": "ListItem", "position": 2, "name": name, "item": url}]},
+                {"@type": "ListItem", "position": 1, "name": "Home", "item": bq.SITE + "/"},
+                {"@type": "ListItem", "position": 2, "name": "GSI lookup", "item": bq.SITE + "/gsi/"},
+                {"@type": "ListItem", "position": 3, "name": name, "item": url}]},
         ],
     }
     head = bq.head(seo_title(name, short_name), desc, url, ld, og_image=f"{bq.SITE}/assets/og/gsi-{slugify(r['display'])}.jpg").replace(
