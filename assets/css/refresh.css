@@ -384,27 +384,36 @@ footer a, footer a.footer-tel, footer a.footer-tel:visited {
   .q-hero-intro { padding-top: 116px; }
   .q-hero-intro h1 { font-size: clamp(36px, 10vw, 46px); }
   .q-hero-intro .hero-badge { font-size: 14px; letter-spacing: 0; }
-  /* Full-bleed form shell on phones — no side gutters around the embed card */
+  /* Full-bleed form shell on phones — no blue side gutters around the embed */
   .questionnaire-page { padding-left: 0; padding-right: 0; padding-bottom: 48px; }
   .questionnaire-shell {
     border-radius: 0;
     border-left: 0;
     border-right: 0;
+    /* Match Fillout’s gray page bg so the shell never flashes site-blue/white */
+    background: #f5f7fa;
     box-shadow: 0 30px 60px -30px rgba(2, 8, 20, 0.75);
   }
   /*
-   * Zite/Fillout forms use Tailwind px-4 (16px) around the gray/white card inside
-   * the iframe. Widen the iframe so that card meets the screen edges on mobile.
+   * Home questionnaire keeps Fillout’s gray px-4 gutter around the white card
+   * (and needs that room so the top stepper isn’t clipped).
+   * Update + life insurance are single-card embeds — widen those iframes so the
+   * card meets the screen edges with no blue side gutters.
    */
-  .questionnaire-embed,
-  .questionnaire-embed__host,
-  .questionnaire-embed-host,
-  .fillout-embed-standard,
-  .fillout-embed-iframe-container {
+  #update-embed,
+  #life-embed,
+  #update-embed .questionnaire-embed__host,
+  #life-embed .questionnaire-embed__host,
+  #update-embed .fillout-embed-standard,
+  #life-embed .fillout-embed-standard,
+  #update-embed .fillout-embed-iframe-container,
+  #life-embed .fillout-embed-iframe-container {
     overflow-x: hidden;
   }
-  .questionnaire-embed iframe,
-  .fillout-embed-iframe-container > iframe {
+  #update-embed iframe,
+  #life-embed iframe,
+  #update-embed .fillout-embed-iframe-container > iframe,
+  #life-embed .fillout-embed-iframe-container > iframe {
     width: calc(100% + 32px) !important;
     max-width: none !important;
     margin-left: -16px;
