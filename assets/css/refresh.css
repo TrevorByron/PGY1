@@ -423,7 +423,10 @@ footer a, footer a.footer-tel, footer a.footer-tel:visited {
   .section-sub { font-size: 16px; }
   .trust-strip { padding: 16px 20px; }
   .step-card h3 { font-size: 24px; }
-  .stat-card .num { font-size: 26px; }
+  .stats-grid { gap: 14px; }
+  .stat-card { padding: 22px 20px; }
+  .stat-card .num { font-size: 28px; margin-bottom: 8px; }
+  .stat-card p { font-size: 15px; line-height: 1.55; }
   .cta-section { padding: 88px 20px; }
   .testi-card blockquote { font-size: 18px; }
   .qa-hero--page { padding: 112px 0 92px; }
