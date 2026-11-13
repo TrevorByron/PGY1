@@ -157,7 +157,7 @@ def page(rows):
       <form class="gsi-search" role="search" action="/gsi/" method="get" autocomplete="off">
         <label for="gsi-q" class="gsi-sr">Hospital or program</label>
         <svg class="gsi-search__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
-        <input id="gsi-q" name="q" type="search" placeholder="e.g. Penn, Mass General, Johns Hopkins, Mayo Clinic" role="combobox" aria-expanded="false" aria-controls="gsi-options" aria-autocomplete="list" />
+        <input id="gsi-q" name="q" type="search" placeholder="e.g. Mass General, Johns Hopkins, Mayo Clinic, Jefferson" role="combobox" aria-expanded="false" aria-controls="gsi-options" aria-autocomplete="list" />
         <button type="submit" class="btn-primary">Check</button>
         <ul id="gsi-options" class="gsi-options" role="listbox" hidden></ul>
       </form>
