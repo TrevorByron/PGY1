@@ -47,6 +47,7 @@ VIDEOS = {
     "How to Secure a Comprehensive Individual Disability Policy (2019 clip)": ("ejAw4gmIM9c", "2019-10-15", "Jay Weinberg - How to Secure Comprehensive Individual Disability Policy"),
     "Roth IRA (2019 clip)": ("wQk-ccpDshI", "2019-04-05", "4 3 19 Jay Weinberg speaking on Roth IRA"),
     "Disability Insurance - Own Occupation (2019 clip)": ("bgIzpPZVG4g", "2019-10-15", "Jay Weinberg - Disability Insurance - Own Occupation"),
+    "Disability Insurance for Residents and Fellows (Winter 2027)": ("zWMMN99n4a8", "2026-11-13", "Disability Insurance for Residents and Fellows Winter 2027"),
 }
 VIDEO_BY_ID = {v[0]: v for v in VIDEOS.values()}
 # ISO 8601 durations for the local clips (written by scripts/clip-durations.sh)

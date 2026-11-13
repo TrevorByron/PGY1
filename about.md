@@ -41,6 +41,7 @@ Jay is upfront about this in his webinars. He's not a student loan specialist, a
 
 Full recordings on [his YouTube channel](https://www.youtube.com/@JayWeinbergDisabilityInsurance).
 
+- [Disability Insurance for Residents and Fellows Winter 2027](https://www.youtube.com/watch?v=zWMMN99n4a8)
 - [Disability Insurance and GSI Policies for Resident and Fellow Physicians](https://www.youtube.com/watch?v=4ya8ytnG_iA)
 - [Masterclass - Disability Insurance and GSI Policies for Resident and Fellow Physicians](https://www.youtube.com/watch?v=OGv0T4QPqWo)
 - [Spring 2026 Financial Transition from Medical Student to PGY1 Intern Resident Physician](https://www.youtube.com/watch?v=mwKg8wIhO0o)
