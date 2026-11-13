@@ -898,9 +898,9 @@
 
       .step-card { padding: 28px 22px; }
 
-      .stats-grid { grid-template-columns: 1fr 1fr; }
-      .stat-card  { padding: 24px 18px; }
-      .stat-card .num { font-size: 26px; }
+      .stats-grid { grid-template-columns: 1fr; gap: 14px; }
+      .stat-card  { padding: 22px 20px; }
+      .stat-card .num { font-size: 28px; }
 
       .about-grid { gap: 40px; }
       /* Taller frame than 3/2 so cover-crop favors width fill and keeps heads (with object-position: top) */

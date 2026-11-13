@@ -384,14 +384,49 @@ footer a, footer a.footer-tel, footer a.footer-tel:visited {
   .q-hero-intro { padding-top: 116px; }
   .q-hero-intro h1 { font-size: clamp(36px, 10vw, 46px); }
   .q-hero-intro .hero-badge { font-size: 14px; letter-spacing: 0; }
-  .questionnaire-page { padding-left: 12px; padding-right: 12px; padding-bottom: 48px; }
-  .questionnaire-shell { box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.08), 0 30px 60px -30px rgba(2, 8, 20, 0.75); }
+  /* Full-bleed form shell on phones — no blue side gutters around the embed */
+  .questionnaire-page { padding-left: 0; padding-right: 0; padding-bottom: 48px; }
+  .questionnaire-shell {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    /* Match Fillout’s gray page bg so the shell never flashes site-blue/white */
+    background: #f5f7fa;
+    box-shadow: 0 30px 60px -30px rgba(2, 8, 20, 0.75);
+  }
+  /*
+   * Home questionnaire keeps Fillout’s gray px-4 gutter around the white card
+   * (and needs that room so the top stepper isn’t clipped).
+   * Update + life insurance are single-card embeds — widen those iframes so the
+   * card meets the screen edges with no blue side gutters.
+   */
+  #update-embed,
+  #life-embed,
+  #update-embed .questionnaire-embed__host,
+  #life-embed .questionnaire-embed__host,
+  #update-embed .fillout-embed-standard,
+  #life-embed .fillout-embed-standard,
+  #update-embed .fillout-embed-iframe-container,
+  #life-embed .fillout-embed-iframe-container {
+    overflow-x: hidden;
+  }
+  #update-embed iframe,
+  #life-embed iframe,
+  #update-embed .fillout-embed-iframe-container > iframe,
+  #life-embed .fillout-embed-iframe-container > iframe {
+    width: calc(100% + 32px) !important;
+    max-width: none !important;
+    margin-left: -16px;
+  }
   .section { padding: 72px 20px; }
   .section-title { font-size: clamp(30px, 8.4vw, 40px); }
   .section-sub { font-size: 16px; }
   .trust-strip { padding: 16px 20px; }
   .step-card h3 { font-size: 24px; }
-  .stat-card .num { font-size: 26px; }
+  .stats-grid { gap: 14px; }
+  .stat-card { padding: 22px 20px; }
+  .stat-card .num { font-size: 28px; margin-bottom: 8px; }
+  .stat-card p { font-size: 15px; line-height: 1.55; }
   .cta-section { padding: 88px 20px; }
   .testi-card blockquote { font-size: 18px; }
   .qa-hero--page { padding: 112px 0 92px; }
