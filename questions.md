@@ -28,6 +28,8 @@ Guaranteed standard issue: the no-health-questions option many teaching hospital
 - [How do I tell a strong GSI policy from a scaled-back one? · Check the definition of disability, the knockout questions, whether there's pre-existing conditions wording, the level of riders offered, the insurance company's financial strength, and whether it has a future increase option.](https://www.pgy1.com/questions/how-to-compare-gsi-policies/)
 - [Can I wait until I finish training to get a GSI policy? · I wouldn't. These policies aren't guaranteed to exist in the future, and the insurance company can end the offer at any time, usually without advance notice.](https://www.pgy1.com/questions/wait-until-end-of-training-for-gsi/)
 - [Does a GSI policy cover hobbies like scuba diving or rock climbing? · The GSI policies I'm talking about overlook pre-existing conditions and hazardous activities.](https://www.pgy1.com/questions/gsi-hazardous-activities/)
+- [Can I get disability insurance as a resident with type 1 diabetes? · It depends on who you go to. If you go to an insurance professional that can't offer you a GSI policy, it's highly unlikely you'd be able to get a policy.](https://www.pgy1.com/questions/disability-insurance-type-1-diabetes/)
+- [My hospital isn't on the GSI list. Could there still be a GSI policy? · Possibly. If your hospital isn't listed, that does not mean a special disability policy doesn't exist.](https://www.pgy1.com/questions/hospital-not-on-gsi-list/)
 
 ## Choosing a policy
 
