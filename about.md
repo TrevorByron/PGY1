@@ -20,7 +20,7 @@ In Jay's words
 
 Jay has spent his career making sure physicians don't reach their attending years without the income protection they've earned, and he built PGY1.com specifically for residents and fellows. For them it usually starts with one question: does your hospital have a guaranteed standard issue (GSI) policy? If it does, residents there can get coverage with no health questions. [Look up your hospital](https://www.pgy1.com/gsi/).
 
-He's an independent broker, which means he represents multiple insurance companies rather than one. He also offers [life insurance](https://www.pgy1.com/life-insurance/). In 2024 Jay received Guardian's #1 Individual Disability Insurance Broker Award.
+He's an independent broker, which means he represents multiple insurance companies rather than one. He also offers [life insurance](https://www.pgy1.com/life-insurance/). In 2024 and 2025 Jay received Guardian's #1 Individual Disability Insurance Broker Award.
 
 ## Lectures and webinars
 
@@ -35,7 +35,7 @@ Jay is upfront about this in his webinars. He's not a student loan specialist, a
 - **CLU**, Chartered Life Underwriter
 - **ChFC**, Chartered Financial Consultant
 - Founder, PGY1 Financial Solutions Corp
-- #1 Individual Disability Insurance Broker Award with Guardian, 2024
+- #1 Individual Disability Insurance Broker Award with Guardian, 2024 and 2025
 
 ## Watch Jay's webinars
 

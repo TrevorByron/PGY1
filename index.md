@@ -62,7 +62,7 @@ Short answers, with the moment in Jay's webinars where he explains each one.
 
 [See all questions →](https://www.pgy1.com/questions/)
 
-#1 Individual Disability Insurance Broker Award with Guardian 2024
+#1 Individual Disability Insurance Broker Award with Guardian 2024 and 2025
 
 About
 

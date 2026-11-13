@@ -32,7 +32,7 @@ PERSON = {
     "image": SITE + "/assets/images/jay-headshot.jpg",
     "description": "Independent disability insurance broker who works exclusively with physicians, "
                    "specializing in coverage for medical students, residents and fellows.",
-    "award": "#1 Individual Disability Insurance Broker Award with Guardian (2024)",
+    "award": "#1 Individual Disability Insurance Broker Award with Guardian (2024 and 2025)",
     "hasCredential": [
         {"@type": "EducationalOccupationalCredential", "name": "Chartered Life Underwriter (CLU)", "credentialCategory": "Professional designation"},
         {"@type": "EducationalOccupationalCredential", "name": "Chartered Financial Consultant (ChFC)", "credentialCategory": "Professional designation"},
@@ -114,7 +114,7 @@ def about():
     <div class="qa-body">
       <h2 id="what-jay-does">What Jay does</h2>
       <p>Jay has spent his career making sure physicians don't reach their attending years without the income protection they've earned, and he built PGY1.com specifically for residents and fellows. For them it usually starts with one question: does your hospital have a guaranteed standard issue (GSI) policy? If it does, residents there can get coverage with no health questions. <a href="/gsi/">Look up your hospital</a>.</p>
-      <p>He's an independent broker, which means he represents multiple insurance companies rather than one. He also offers <a href="/life-insurance/">life insurance</a>. In 2024 Jay received Guardian's #1 Individual Disability Insurance Broker Award.</p>
+      <p>He's an independent broker, which means he represents multiple insurance companies rather than one. He also offers <a href="/life-insurance/">life insurance</a>. In 2024 and 2025 Jay received Guardian's #1 Individual Disability Insurance Broker Award.</p>
       <h2 id="lectures">Lectures and webinars</h2>
       <p>In a given year Jay lectures to well over 100 residency programs, fellowship programs, medical schools, societies and associations. He also hosts free webinars for graduating medical students, residents and fellows. Many of the <a href="/questions/">answers on this site</a> come straight from those webinars, with short clips of Jay explaining each one.</p>
       <h2 id="what-jay-doesnt-do">What Jay doesn't do</h2>
@@ -124,7 +124,7 @@ def about():
         <li><strong>CLU</strong>, Chartered Life Underwriter</li>
         <li><strong>ChFC</strong>, Chartered Financial Consultant</li>
         <li>Founder, PGY1 Financial Solutions Corp</li>
-        <li>#1 Individual Disability Insurance Broker Award with Guardian, 2024</li>{(chr(10) + "        <li>" + html.escape(bq.license_line()) + "</li>") if bq.license_line() else ""}
+        <li>#1 Individual Disability Insurance Broker Award with Guardian, 2024 and 2025</li>{(chr(10) + "        <li>" + html.escape(bq.license_line()) + "</li>") if bq.license_line() else ""}
       </ul>
     </div>
     <section class="qa-sources">
