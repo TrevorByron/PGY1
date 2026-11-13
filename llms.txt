@@ -12,7 +12,7 @@ Contact: (609) 432-8862 · jay@pgy1.com. General information, not advice for a s
 
 - [Disability Insurance for Resident and Fellow Physicians](https://www.pgy1.com/?utm_source=llms.txt): GSI policies with no health questions, true own-occupation coverage and an independent broker for residents and fellows. Start with a 2-minute form. (markdown: https://www.pgy1.com/index.md)
 - [Disability insurance questions from residents and fellows](https://www.pgy1.com/questions/?utm_source=llms.txt): Jay Weinberg, CLU, ChFC, answers the disability insurance questions residents, fellows and MS4s ask most, with clips from his webinars. (markdown: https://www.pgy1.com/questions.md)
-- [Does your hospital have a GSI policy?](https://www.pgy1.com/gsi/?utm_source=llms.txt): Does your residency hospital offer a GSI disability policy with no health questions? Search the 29 teaching hospitals where Jay Weinberg offers one. (markdown: https://www.pgy1.com/gsi.md)
+- [Does your hospital have a GSI policy?](https://www.pgy1.com/gsi/?utm_source=llms.txt): Does your residency hospital offer a GSI disability policy with no health questions? Search the 32 teaching hospitals where Jay Weinberg offers one. (markdown: https://www.pgy1.com/gsi.md)
 - [Jay Weinberg, CLU, ChFC](https://www.pgy1.com/about/?utm_source=llms.txt): Jay Weinberg, CLU, ChFC, is an independent disability insurance broker who works only with physicians and lectures at 100+ residency programs a year. (markdown: https://www.pgy1.com/about.md)
 
 ## Questions: Before Match
