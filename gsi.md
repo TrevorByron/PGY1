@@ -6,7 +6,7 @@ GSI lookup
 
 Jay offers a Guardian guaranteed standard issue policy, with no health questions, to residents and fellows at the hospitals below. Type your hospital, program or medical school.
 
-37 hospitals and programs · as of October 2026 · don't see yours? [Ask Jay](mailto:jay@pgy1.com)
+29 hospitals and programs · as of October 2026 · don't see yours? [Ask Jay](mailto:jay@pgy1.com)
 
 Why check first
 
@@ -18,7 +18,7 @@ Why check first
 
 [Watch Jay explain · What is a GSI disability policy?](https://www.pgy1.com/questions/what-is-gsi-disability-insurance/) [Watch Jay explain · Should I apply before checking for a GSI?](https://www.pgy1.com/questions/apply-underwritten-before-gsi/) [Watch Jay explain · Why can't my GME office tell me?](https://www.pgy1.com/questions/why-gme-cant-tell-you-about-gsi/)
 
-## The 37 hospitals and programs Jay works with
+## The 29 hospitals and programs Jay works with
 
 Grouped by state (2 systems appear under more than one state). Offers can change, and Jay confirms eligibility before you apply. Don't see your program? [Ask Jay](mailto:jay@pgy1.com) and he'll find out.
 
@@ -29,10 +29,6 @@ Grouped by state (2 systems appear under more than one state). Offers can change
 ### Arkansas
 
 - [University of Arkansas for Medical Sciences (UAMS)](https://www.pgy1.com/gsi/university-of-arkansas-for-medical-sciences-uams/)
-
-### Delaware
-
-- [ChristianaCare](https://www.pgy1.com/gsi/christianacare/)
 
 ### District of Columbia
 
@@ -55,17 +51,9 @@ Grouped by state (2 systems appear under more than one state). Offers can change
 
 - [Mass General Brigham](https://www.pgy1.com/gsi/mass-general-brigham/)
 
-### Michigan
-
-- [Corewell Health](https://www.pgy1.com/gsi/corewell-health/)
-
 ### Minnesota
 
 - [Mayo Clinic](https://www.pgy1.com/gsi/mayo-clinic/)
-
-### Missouri
-
-- [Washington University in St. Louis](https://www.pgy1.com/gsi/washington-university-in-st-louis/)
 
 ### New Hampshire
 
@@ -80,18 +68,12 @@ Grouped by state (2 systems appear under more than one state). Offers can change
 
 ### New York
 
-- [Albany Medical College](https://www.pgy1.com/gsi/albany-medical-college/)
 - [Hospital for Special Surgery (HSS)](https://www.pgy1.com/gsi/hospital-for-special-surgery-hss/)
 - [NewYork-Presbyterian / Columbia](https://www.pgy1.com/gsi/newyork-presbyterian-columbia/)
 - [NewYork-Presbyterian / Weill Cornell](https://www.pgy1.com/gsi/newyork-presbyterian-weill-cornell/)
 - [NewYork-Presbyterian Morgan Stanley Children's Hospital](https://www.pgy1.com/gsi/newyork-presbyterian-morgan-stanley-childrens-hospital/)
 - [NewYork-Presbyterian Queens](https://www.pgy1.com/gsi/newyork-presbyterian-queens/)
-- [NYU Langone Health](https://www.pgy1.com/gsi/nyu-langone-health/)
 - [University of Rochester](https://www.pgy1.com/gsi/university-of-rochester/)
-
-### Ohio
-
-- [University of Cincinnati](https://www.pgy1.com/gsi/university-of-cincinnati/)
 
 ### Pennsylvania
 
@@ -103,7 +85,6 @@ Grouped by state (2 systems appear under more than one state). Offers can change
 - [Reading Hospital](https://www.pgy1.com/gsi/reading-hospital/)
 - [St. Luke's University Health Network](https://www.pgy1.com/gsi/st-lukes-university-health-network/)
 - [Temple University](https://www.pgy1.com/gsi/temple-university/)
-- [University of Pennsylvania (Penn)](https://www.pgy1.com/gsi/university-of-pennsylvania-penn/)
 
 ### Texas
 
@@ -116,7 +97,6 @@ Grouped by state (2 systems appear under more than one state). Offers can change
 
 ### Wisconsin
 
-- [Medical College of Wisconsin](https://www.pgy1.com/gsi/medical-college-of-wisconsin/)
 - [University of Wisconsin](https://www.pgy1.com/gsi/university-of-wisconsin/)
 
 ---
